@@ -55,6 +55,20 @@ tasks.jacocoTestReport {  // 이미 존재하는 태스크를 설정
         xml.required = true
         html.required = true
     }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            '**/core/**',
+                            '**/accountBook/adapter/in/web/*Controller*',
+                            '**/question/adapter/in/web/*Controller*',
+                            '**/receipt/adapter/in/web/*Controller*',
+                            '**/user/adapter/in/web/*Controller*'
+                    ])
+                })
+        )
+    }
 }
 
 tasks.register("uploadCoverageToCodecov", Exec) {
