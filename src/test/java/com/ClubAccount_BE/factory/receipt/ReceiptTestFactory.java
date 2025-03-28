@@ -1,7 +1,6 @@
 package com.ClubAccount_BE.factory.receipt;
 
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateReceiptRequestDto;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import java.math.BigDecimal;
@@ -19,19 +18,6 @@ public class ReceiptTestFactory {
                 "김밥천국",
                 new BigDecimal("12000"),
                 "점심 회의"
-        );
-    }
-
-    @Description("영수증 등록 Response DTO 생성")
-    public static CreateReceiptResponseDto createReceiptResponseDto() {
-        return new CreateReceiptResponseDto(
-                1L,
-                ReceiptCategory.SUBSCRIPTION.getDisplayName(),
-                LocalDate.of(2025, 3, 28),
-                "김밥천국",
-                new BigDecimal("12000"),
-                "점심 회의",
-                "test image url"
         );
     }
 
