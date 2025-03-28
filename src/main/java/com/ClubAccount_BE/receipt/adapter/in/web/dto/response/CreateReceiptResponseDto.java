@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import lombok.Builder;
 
 @Builder
-public record CreateResponseDto(
+public record CreateReceiptResponseDto(
         Long receiptId,
         String category,
         LocalDate date,
@@ -16,8 +16,8 @@ public record CreateResponseDto(
         String receiptImageUrl
 ) {
 
-    public static CreateResponseDto of(Long receiptId, Receipt receipt) {
-        return CreateResponseDto.builder()
+    public static CreateReceiptResponseDto of(Long receiptId, Receipt receipt) {
+        return CreateReceiptResponseDto.builder()
                 .receiptId(receiptId)
                 .category(receipt.getCategory().getDisplayName())
                 .date(receipt.getDate())

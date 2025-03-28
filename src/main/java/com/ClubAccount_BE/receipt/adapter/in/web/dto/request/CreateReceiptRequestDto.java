@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record CreateRequestDto(
+public record CreateReceiptRequestDto(
 
         @Schema(
                 description = "영수증 분류 카테고리",

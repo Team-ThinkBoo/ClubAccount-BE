@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.application.service;
 
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateRequestDto;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateResponseDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateReceiptRequestDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
@@ -19,20 +19,23 @@ public class CreateReceiptService implements CreateReceiptUseCase {
     private final UploadReceiptPort uploadReceiptPort;
 
     @Override
-    public CreateResponseDto createReceipt(MultipartFile image, CreateRequestDto createRequestDto) {
+    public CreateReceiptResponseDto createReceipt(
+            MultipartFile image,
+            CreateReceiptRequestDto createReceiptRequestDto
+    ) {
         String imageURL = uploadReceiptPort.uploadReceipt(image);
 
         Receipt receipt = Receipt.create(
                 null,
-                createRequestDto.category(),
-                createRequestDto.businessName(),
-                createRequestDto.date(),
-                createRequestDto.amount(),
-                createRequestDto.etc(),
+                createReceiptRequestDto.category(),
+                createReceiptRequestDto.businessName(),
+                createReceiptRequestDto.date(),
+                createReceiptRequestDto.amount(),
+                createReceiptRequestDto.etc(),
                 imageURL
         );
 
         Long receiptId = createReceiptPort.createReceipt(receipt);
-        return CreateResponseDto.of(receiptId, receipt);
+        return CreateReceiptResponseDto.of(receiptId, receipt);
     }
 }
