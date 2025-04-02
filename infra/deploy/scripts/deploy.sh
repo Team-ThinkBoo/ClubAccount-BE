@@ -57,6 +57,19 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+jwt:
+  secretKey: ${JWT_SECRET_KEY}
+  issuer: club-account-api
+  expirySeconds: 3600000
+
 logging:
   file:
     name: /app/logs/app.log

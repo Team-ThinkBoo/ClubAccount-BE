@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.accountBook.infrastructure.adapter.entity;
 
-import com.ClubAccount_BE.user.infrastructure.adapter.persistence.entity.UserEntity;
+import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
