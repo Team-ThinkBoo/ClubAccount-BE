@@ -23,16 +23,17 @@ public class CreateReceiptService implements CreateReceiptUseCase {
             MultipartFile image,
             CreateReceiptRequestDto createReceiptRequestDto
     ) {
-        String imageURL = uploadReceiptPort.uploadReceipt(image);
-
         Receipt receipt = Receipt.create(
+                //TODO : 회원 정보 추가
                 null,
                 createReceiptRequestDto.category(),
+                createReceiptRequestDto.categoryName(),
                 createReceiptRequestDto.businessName(),
                 createReceiptRequestDto.date(),
                 createReceiptRequestDto.amount(),
                 createReceiptRequestDto.etc(),
-                imageURL
+                //TODO : 직접 등록시 기본 이미지로 설정 로직 추가
+                image == null ? "" : uploadReceiptPort.uploadReceipt(image)
         );
 
         Long receiptId = createReceiptPort.createReceipt(receipt);

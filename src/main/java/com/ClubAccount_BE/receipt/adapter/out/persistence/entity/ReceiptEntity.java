@@ -1,9 +1,12 @@
 package com.ClubAccount_BE.receipt.adapter.out.persistence.entity;
 
 import com.ClubAccount_BE.core.entity.TimeBaseEntity;
+import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import com.ClubAccount_BE.user.infrastructure.adapter.persistence.entity.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Table(name = "recepit")
+@Table(name = "receipt")
 @Entity
 @Getter
 @SuperBuilder
@@ -34,7 +37,11 @@ public class ReceiptEntity extends TimeBaseEntity {
     private UserEntity user;
 
     @Column(nullable = false)
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private ReceiptCategory category;
+
+    @Column(nullable = false)
+    private String categoryName;
 
     @Column(nullable = false)
     private String businessName;

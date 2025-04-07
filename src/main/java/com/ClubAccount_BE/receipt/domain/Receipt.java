@@ -13,6 +13,7 @@ public class Receipt {
     private final Long id;
     private final UserEntity user;
     private final ReceiptCategory category;
+    private final String categoryName;
     private final String businessName;
     private final LocalDate date;
     private final BigDecimal amount;
@@ -24,6 +25,7 @@ public class Receipt {
             Long id,
             UserEntity user,
             ReceiptCategory category,
+            String categoryName,
             String businessName,
             LocalDate date,
             BigDecimal amount,
@@ -33,6 +35,7 @@ public class Receipt {
         this.id = id;
         this.user = user;
         this.category = category;
+        this.categoryName = categoryName;
         this.businessName = businessName;
         this.date = date;
         this.amount = amount;
@@ -43,6 +46,7 @@ public class Receipt {
     public static Receipt create(
             UserEntity user,
             ReceiptCategory category,
+            String categoryName,
             String businessName,
             LocalDate date,
             BigDecimal amount,
@@ -52,6 +56,7 @@ public class Receipt {
         return Receipt.builder()
                 .user(user)
                 .category(category)
+                .categoryName(categoryName)
                 .businessName(businessName)
                 .amount(amount)
                 .date(date)

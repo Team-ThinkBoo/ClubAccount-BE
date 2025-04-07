@@ -19,7 +19,7 @@ public class CreateReceiptController implements CreateReceiptApi {
 
     @PostMapping("/create")
     public CreateReceiptResponseDto createReceipt(
-            @RequestPart(value = "image") MultipartFile image,
+            @RequestPart(value = "image", required = false) MultipartFile image,
             @RequestPart(value = "request") CreateReceiptRequestDto createReceiptRequestDto
     ) {
         return createReceiptUseCase.createReceipt(image, createReceiptRequestDto);

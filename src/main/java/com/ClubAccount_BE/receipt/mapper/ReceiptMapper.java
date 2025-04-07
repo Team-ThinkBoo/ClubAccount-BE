@@ -11,12 +11,27 @@ public class ReceiptMapper {
         return ReceiptEntity.builder()
                 .id(receipt.getId())
                 .user(receipt.getUser())
-                .category(receipt.getCategory().getDisplayName())
+                .category(receipt.getCategory())
+                .categoryName(receipt.getCategory().getDisplayName())
                 .businessName(receipt.getBusinessName())
                 .amount(receipt.getAmount())
                 .date(receipt.getDate())
                 .etc(receipt.getEtc())
                 .receiptImageUrl(receipt.getReceiptImageUrl())
+                .build();
+    }
+
+    public Receipt mapToDomainEntity(ReceiptEntity receiptEntity) {
+        return Receipt.builder()
+                .id(receiptEntity.getId())
+                .user(receiptEntity.getUser())
+                .category(receiptEntity.getCategory())
+                .categoryName(receiptEntity.getCategoryName())
+                .businessName(receiptEntity.getBusinessName())
+                .amount(receiptEntity.getAmount())
+                .date(receiptEntity.getDate())
+                .etc(receiptEntity.getEtc())
+                .receiptImageUrl(receiptEntity.getReceiptImageUrl())
                 .build();
     }
 }

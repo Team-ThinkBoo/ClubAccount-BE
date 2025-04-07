@@ -13,6 +13,9 @@ public record CreateReceiptRequestDto(
         )
         ReceiptCategory category,
 
+        @Schema(description = "OTHER(기타) - 카테고리 분류 이름", example = "이체비")
+        String categoryName,
+
         @Schema(description = "영수증 승인 일자", example = "2023-10-01")
         LocalDate date,
 
