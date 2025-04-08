@@ -14,14 +14,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptPort {
 
-    private final ReceiptMapper receiptMapper;
-
     private final ReceiptRepository receiptRepository;
 
     @Override
     public Long createReceipt(Receipt receipt) {
         return receiptRepository
-                .save(receiptMapper.mapToJpaEntity(receipt))
+                .save(ReceiptMapper.toEntity(receipt))
                 .getId();
     }
 
@@ -29,6 +27,6 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
     public Page<Receipt> getReceipts(Pageable pageable) {
         return receiptRepository
                 .findAll(pageable)
-                .map(receiptMapper::mapToDomainEntity);
+                .map(ReceiptMapper::toDomain);
     }
 }

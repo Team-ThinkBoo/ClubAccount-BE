@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class ReceiptMapperTest {
 
-    private final ReceiptMapper receiptMapper = new ReceiptMapper();
-
     @Test
     @DisplayName("영수증 매퍼 클래스 테스트")
     void mapToJpaEntity() {
@@ -19,7 +17,7 @@ class ReceiptMapperTest {
         Receipt receipt = ReceiptTestFactory.createReceipt();
 
         // when
-        ReceiptEntity entity = receiptMapper.mapToJpaEntity(receipt);
+        ReceiptEntity entity = ReceiptMapper.toEntity(receipt);
 
         // then
         assertThat(entity.getId()).isEqualTo(receipt.getId());

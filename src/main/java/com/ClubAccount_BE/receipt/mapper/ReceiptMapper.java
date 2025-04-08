@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReceiptMapper {
 
-    public ReceiptEntity mapToJpaEntity(Receipt receipt) {
+    public static ReceiptEntity toEntity(Receipt receipt) {
         return ReceiptEntity.builder()
                 .id(receipt.getId())
                 .user(receipt.getUser())
@@ -21,7 +21,7 @@ public class ReceiptMapper {
                 .build();
     }
 
-    public Receipt mapToDomainEntity(ReceiptEntity receiptEntity) {
+    public static Receipt toDomain(ReceiptEntity receiptEntity) {
         return Receipt.builder()
                 .id(receiptEntity.getId())
                 .user(receiptEntity.getUser())
