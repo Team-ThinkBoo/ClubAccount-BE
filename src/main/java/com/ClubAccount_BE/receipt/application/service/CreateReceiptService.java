@@ -6,6 +6,8 @@ import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.user.domain.User;
+import com.ClubAccount_BE.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,12 +22,12 @@ public class CreateReceiptService implements CreateReceiptUseCase {
 
     @Override
     public CreateReceiptResponseDto createReceipt(
+            User user,
             MultipartFile image,
             CreateReceiptRequestDto createReceiptRequestDto
     ) {
         Receipt receipt = Receipt.create(
-                //TODO : 회원 정보 추가
-                null,
+                UserMapper.toEntity(user),
                 createReceiptRequestDto.category(),
                 createReceiptRequestDto.categoryName(),
                 createReceiptRequestDto.businessName(),

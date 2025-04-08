@@ -10,6 +10,7 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptRespo
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,10 +36,23 @@ class CreateReceiptServiceTest {
 
     private Long expectedId;
 
+    private User user;
+
     @BeforeEach
     void setUp() {
         expectedUrl = "https://s3.amazon.com/bucket/test.png";
         expectedId = 1L;
+
+        user = User.builder()
+                .id(expectedId)
+                .authId("test")
+                .password("testPassword")
+                .department("testDepartment")
+                .profileUrl("testProfileUrl")
+                .rink("testRink")
+                .createdAt(null)
+                .updatedAt(null)
+                .build();
     }
 
     @Test
@@ -52,7 +66,8 @@ class CreateReceiptServiceTest {
         given(createReceiptPort.createReceipt(any(Receipt.class))).willReturn(expectedId);
 
         // when
-        CreateReceiptResponseDto result = createReceiptService.createReceipt(mockFile, requestDto);
+        CreateReceiptResponseDto result = createReceiptService.createReceipt(user, mockFile,
+                requestDto);
 
         // then
         assertThat(result.receiptId()).isEqualTo(expectedId);
