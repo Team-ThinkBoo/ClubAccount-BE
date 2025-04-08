@@ -37,7 +37,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         User user = findUserUseCase.getUserByAuthId(String.valueOf(authenticationToken.getPrincipal()));
         String userPassword = String.valueOf(authenticationToken.getCredentials());
         if(!user.matchPassword(passwordEncoder, userPassword)) {
-            throw new UnAuthorizedException(INCORRECT_PASSWORD.toString());
+            throw new UnAuthorizedException(INCORRECT_PASSWORD);
         }
         return new JwtAuthenticationToken(
                 user.getId(), null, Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
