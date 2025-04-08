@@ -3,12 +3,10 @@ package com.ClubAccount_BE.user.mapper;
 
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import com.ClubAccount_BE.user.domain.User;
-import org.springframework.stereotype.Component;
 
-@Component
 public class UserMapper {
 
-    public User toDomain(UserEntity userEntity) {
+    public static User toDomain(UserEntity userEntity) {
         return User.builder()
                 .id(userEntity.getId())
                 .authId(userEntity.getAuthId())
@@ -21,7 +19,7 @@ public class UserMapper {
                 .build();
     }
 
-    public UserEntity toEntity(User user) {
+    public static UserEntity toEntity(User user) {
         return UserEntity.builder()
                 .id(user.getId())
                 .authId(user.getAuthId())
