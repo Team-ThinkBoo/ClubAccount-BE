@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.question.infrastructure.adapter.entity;
 
 import com.ClubAccount_BE.core.entity.TimeBaseEntity;
-import com.ClubAccount_BE.user.infrastructure.adapter.persistence.entity.UserEntity;
+import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
