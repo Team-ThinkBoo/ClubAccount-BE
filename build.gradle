@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // swagger
+    implementation 'software.amazon.awssdk:s3:2.25.14'                       // aws s3 (버전 체크 필요)
     implementation 'com.auth0:java-jwt:4.4.0'
     implementation 'com.google.guava:guava:32.1.2-jre'
 }
@@ -55,6 +56,20 @@ tasks.jacocoTestReport {  // 이미 존재하는 태스크를 설정
     reports {
         xml.required = true
         html.required = true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: [
+                            '**/core/**',
+                            '**/accountBook/adapter/in/web/*Controller*',
+                            '**/question/adapter/in/web/*Controller*',
+                            '**/receipt/adapter/in/web/*Controller*',
+                            '**/user/adapter/in/web/*Controller*'
+                    ])
+                })
+        )
     }
 }
 
