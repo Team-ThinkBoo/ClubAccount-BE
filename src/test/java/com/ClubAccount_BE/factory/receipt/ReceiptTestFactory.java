@@ -14,6 +14,7 @@ public class ReceiptTestFactory {
     public static CreateReceiptRequestDto createReceiptRequestDto() {
         return new CreateReceiptRequestDto(
                 ReceiptCategory.SUBSCRIPTION,
+                "카테고리 이름",
                 LocalDate.of(2025, 3, 28),
                 "김밥천국",
                 new BigDecimal("12000"),
