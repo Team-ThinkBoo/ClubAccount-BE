@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.domain;
 
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
-import com.ClubAccount_BE.user.infrastructure.adapter.persistence.entity.UserEntity;
+import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Builder;
