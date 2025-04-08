@@ -7,7 +7,6 @@ services:
     env_file:
       - .env  # 환경 변수 관리 (DB 정보, JWT 등)
     volumes:
-      - /home/ubuntu/app/config/application.yml:/app/config/application.yml  # application.yml 컨테이너에 연결
       - logs:/app/logs  # 로그 데이터 유지
     networks:
       - thinkboo_network
