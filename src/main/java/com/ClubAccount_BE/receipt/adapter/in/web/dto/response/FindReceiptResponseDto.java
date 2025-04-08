@@ -8,6 +8,7 @@ import lombok.Builder;
 
 @Builder
 public record FindReceiptResponseDto(
+        Long id,
         ReceiptCategory category,
         String categoryName,
         String businessName,
@@ -19,6 +20,7 @@ public record FindReceiptResponseDto(
 
     public static FindReceiptResponseDto of(Receipt receipt) {
         return FindReceiptResponseDto.builder()
+                .id(receipt.getId())
                 .category(receipt.getCategory())
                 .categoryName(receipt.getCategoryName())
                 .businessName(receipt.getBusinessName())
