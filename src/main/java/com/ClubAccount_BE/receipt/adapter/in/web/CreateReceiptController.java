@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/receipts")
+@RequestMapping("/api/v1/receipts")
 public class CreateReceiptController implements CreateReceiptApi {
 
     private final CreateReceiptUseCase createReceiptUseCase;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/receipts")
+@RequestMapping("/api/v1/receipts")
 public class FindReceiptController implements FindReceiptApi {
 
     private final FindReceiptUseCase findReceiptUseCase;
