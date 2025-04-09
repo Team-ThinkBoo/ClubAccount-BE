@@ -4,6 +4,7 @@ import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public class Receipt {
     private final BigDecimal amount;
     private final String etc;
     private final String receiptImageUrl;
+    private final List<ReceiptItem> receiptItems;
 
     @Builder
     private Receipt(
@@ -30,7 +32,8 @@ public class Receipt {
             LocalDate date,
             BigDecimal amount,
             String etc,
-            String receiptImageUrl
+            String receiptImageUrl,
+            List<ReceiptItem> receiptItems
     ) {
         this.id = id;
         this.user = user;
@@ -41,6 +44,7 @@ public class Receipt {
         this.amount = amount;
         this.etc = etc;
         this.receiptImageUrl = receiptImageUrl;
+        this.receiptItems = receiptItems;
     }
 
     public static Receipt create(

@@ -1,9 +1,12 @@
 package com.ClubAccount_BE.receipt.application.service;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.DetailReceiptResponseDto;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.FindReceiptResponseDto;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
+import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +21,17 @@ public class FindReceiptService implements FindReceiptUseCase {
     private final FindReceiptPort findReceiptPort;
 
     @Override
-    public PagingResponse<FindReceiptResponseDto> getReceipts(Pageable pageable) {
+    public PagingResponse<FindReceiptResponseDto> getReceipts(User user, Pageable pageable) {
         Page<FindReceiptResponseDto> page = findReceiptPort
-                .getReceipts(pageable)
+                .getReceipts(user, pageable)
                 .map(FindReceiptResponseDto::of);
 
         return PagingResponse.of(page);
+    }
+
+    @Override
+    public DetailReceiptResponseDto getReceipt(User user, Long receiptId) {
+        Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
+        return DetailReceiptResponseDto.of(receipt);
     }
 }

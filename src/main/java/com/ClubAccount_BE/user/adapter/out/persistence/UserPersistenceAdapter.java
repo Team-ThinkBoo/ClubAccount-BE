@@ -15,26 +15,25 @@ import org.springframework.stereotype.Component;
 public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
 
     @Override
     public User saveUser(User user) {
-        UserEntity entity = userMapper.toEntity(user);
+        UserEntity entity = UserMapper.toEntity(user);
         UserEntity saved = userRepository.save(entity);
-        return userMapper.toDomain(saved);
+        return UserMapper.toDomain(saved);
     }
 
     @Override
     public User getUserByAuthId(String authId) {
         return userRepository.getByAuthId(authId)
-                .map(userMapper::toDomain)
+                .map(UserMapper::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 사용자를 찾을 수 없습니다."));
     }
 
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .map(userMapper::toDomain)
+                .map(UserMapper::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 사용자를 찾을 수 없습니다."));
     }
 

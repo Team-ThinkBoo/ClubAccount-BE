@@ -1,6 +1,5 @@
 package com.ClubAccount_BE.factory.receipt;
 
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateReceiptRequestDto;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import java.math.BigDecimal;
@@ -10,17 +9,17 @@ import org.springframework.mock.web.MockMultipartFile;
 
 public class ReceiptTestFactory {
 
-    @Description("영수증 등록 Request DTO 생성")
-    public static CreateReceiptRequestDto createReceiptRequestDto() {
-        return new CreateReceiptRequestDto(
-                ReceiptCategory.SUBSCRIPTION,
-                "카테고리 이름",
-                LocalDate.of(2025, 3, 28),
-                "김밥천국",
-                new BigDecimal("12000"),
-                "점심 회의"
-        );
-    }
+//    @Description("영수증 등록 Request DTO 생성")
+//    public static CreateReceiptRequestDto createReceiptRequestDto() {
+//        return new CreateReceiptRequestDto(
+//                ReceiptCategory.SUBSCRIPTION,
+//                "카테고리 이름",
+//                LocalDate.of(2025, 3, 28),
+//                "김밥천국",
+//                new BigDecimal("12000"),
+//                "점심 회의"
+//        );
+//    }
 
     @Description("멀티파트파일 객체 생성")
     public static MockMultipartFile createMockMultipartFile() {

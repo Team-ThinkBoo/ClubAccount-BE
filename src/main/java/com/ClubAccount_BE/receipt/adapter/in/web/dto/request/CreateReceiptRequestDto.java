@@ -4,6 +4,7 @@ import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 public record CreateReceiptRequestDto(
 
@@ -25,7 +26,10 @@ public record CreateReceiptRequestDto(
         BigDecimal amount,
 
         @Schema(description = "영수증 비고")
-        String etc
+        String etc,
+
+        @Schema(description = "영수증 내 아이템 리스트")
+        List<CreateReceiptItemRequestDto> receiptItems
 ) {
 
 }
