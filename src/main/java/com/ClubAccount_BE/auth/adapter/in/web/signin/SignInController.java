@@ -9,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import java.time.Duration;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -18,7 +22,19 @@ public class SignInController implements SignInApiPresentation{
     private final SignInUseCase signInUseCase;
 
     @PostMapping("/sign-in")
-    public TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest) {
-        return signInUseCase.signIn(signInRequest.getAuthId(), signInRequest.getPassword());
+    public TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest, HttpServletResponse response) {
+        TokenResponse tokenResponse = signInUseCase.signIn(signInRequest.getAuthId(), signInRequest.getPassword());
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenResponse.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("Lax")
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return TokenResponse.from(tokenResponse.getAccessToken());
     }
 }
