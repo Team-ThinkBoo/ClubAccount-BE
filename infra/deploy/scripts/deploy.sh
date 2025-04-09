@@ -37,60 +37,10 @@ echo "🛑 기존 컨테이너 중지 중..."
 docker-compose down  # 기존 컨테이너 중지 및 제거
 
 echo "🐳 최신 Docker 이미지 가져오는 중..."
-docker pull $DOCKER_USERNAME/thinkboo-backend-app:latest  # 최신 이미지 가져오기
-
-echo "📂 application.yml 파일 생성 중..."
-mkdir -p /home/ubuntu/config
-cat > /home/ubuntu/config/application.yml <<EOL
-server:
-  port: 8080
-
-spring:
-  config:
-    activate:
-      on-profile: prod
-    location: /app/config/application.yml
-
-  datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-
-jwt:
-  secretKey: ${JWT_SECRET_KEY}
-  issuer: club-account-api
-  expirySeconds: 3600000
-
-logging:
-  file:
-    name: /app/logs/app.log
-  level:
-    root: INFO
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info
-  endpoint:
-    health:
-      show-details: always
-  server:
-    address: 0.0.0.0
-EOL
+docker pull tiemo0708/thinkboo-backend-app:latest # 최신 이미지 가져오기
 
 echo "🔒 파일 권한 설정 중..."
 chmod 600 /home/ubuntu/.env
-chmod 600 /home/ubuntu/config/application.yml
 
 echo "🔄 컨테이너 재시작 중..."
 docker-compose up -d --force-recreate --remove-orphans  # 최신 이미지로 컨테이너 재시작
