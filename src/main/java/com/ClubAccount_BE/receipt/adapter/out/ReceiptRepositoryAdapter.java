@@ -8,6 +8,7 @@ import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.mapper.ReceiptMapper;
 import com.ClubAccount_BE.user.domain.User;
+import com.ClubAccount_BE.user.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,5 +37,13 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
         return receiptRepository
                 .findAllByUserId(user.getId(), pageable)
                 .map(ReceiptMapper::toDomain);
+    }
+
+    @Override
+    public Receipt getReceipt(User user, Long receiptId) {
+        return receiptRepository
+                .findByUserAndId(UserMapper.toEntity(user), receiptId)
+                .map(ReceiptMapper::toDomain)
+                .orElseThrow(() -> new IllegalArgumentException("Receipt not found"));
     }
 }

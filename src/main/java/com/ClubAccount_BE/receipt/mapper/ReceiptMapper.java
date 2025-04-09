@@ -11,22 +11,18 @@ import org.springframework.stereotype.Component;
 public class ReceiptMapper {
 
     public static ReceiptEntity toEntity(Receipt receipt) {
-        return ReceiptEntity.builder()
-                .id(receipt.getId())
-                .user(receipt.getUser())
+        return ReceiptEntity.builder().id(receipt.getId()).user(receipt.getUser())
                 .category(receipt.getCategory())
                 .categoryName(receipt.getCategory().getDisplayName())
                 .businessName(receipt.getBusinessName())
                 .amount(receipt.getAmount())
                 .date(receipt.getDate())
                 .etc(receipt.getEtc())
-                .receiptImageUrl(receipt.getReceiptImageUrl())
-                .build();
+                .receiptImageUrl(receipt.getReceiptImageUrl()).build();
     }
 
     public static Receipt toDomain(ReceiptEntity receiptEntity) {
-        return Receipt.builder()
-                .id(receiptEntity.getId())
+        return Receipt.builder().id(receiptEntity.getId())
                 .user(receiptEntity.getUser())
                 .category(receiptEntity.getCategory())
                 .categoryName(receiptEntity.getCategoryName())
@@ -35,12 +31,17 @@ public class ReceiptMapper {
                 .date(receiptEntity.getDate())
                 .etc(receiptEntity.getEtc())
                 .receiptImageUrl(receiptEntity.getReceiptImageUrl())
+                .receiptItems(
+                        receiptEntity.getReceiptItems()
+                                .stream()
+                                .map(ReceiptItemMapper::toDomain)
+                                .toList()
+                )
                 .build();
     }
 
     public static ReceiptItemEntity toEntity(ReceiptItem receiptItem) {
-        return ReceiptItemEntity.builder()
-                .id(receiptItem.getId())
+        return ReceiptItemEntity.builder().id(receiptItem.getId())
                 .receipt(toEntity(receiptItem.getReceipt()))
                 .name(receiptItem.getName())
                 .price(receiptItem.getPrice())
@@ -49,10 +50,7 @@ public class ReceiptMapper {
                 .build();
     }
 
-    public static void toEntity(
-            List<ReceiptItem> items,
-            ReceiptEntity receiptEntity
-    ) {
+    public static void toEntity(List<ReceiptItem> items, ReceiptEntity receiptEntity) {
         items.stream()
                 .map(ReceiptMapper::toEntity)
                 .forEach(receiptEntity::addReceiptItem);

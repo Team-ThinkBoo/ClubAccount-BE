@@ -28,7 +28,7 @@ public record CreateReceiptRequestDto(
         @Schema(description = "영수증 비고")
         String etc,
 
-        @Schema(description = "영수증 내 아이템 리스트", example = "")
+        @Schema(description = "영수증 내 아이템 리스트")
         List<CreateReceiptItemRequestDto> receiptItems
 ) {
 
