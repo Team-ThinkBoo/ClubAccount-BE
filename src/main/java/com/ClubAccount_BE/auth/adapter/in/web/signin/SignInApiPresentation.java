@@ -6,11 +6,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpServletResponse;
 
-    @Tag(name = "SignIn", description = "로그인 API")
-    public interface SignInApiPresentation {
+@Tag(name = "SignIn", description = "로그인 API")
+public interface SignInApiPresentation {
 
-        @Operation(summary = "로그인")
-        TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest);
+    @Operation(summary = "로그인")
+    TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest, HttpServletResponse response);
 
 }

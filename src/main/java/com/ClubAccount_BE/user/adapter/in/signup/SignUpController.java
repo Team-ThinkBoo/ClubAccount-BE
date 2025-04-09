@@ -25,7 +25,8 @@ public class SignUpController implements SignUpApiPresentation {
 
     @GetMapping(value = "/sign-up/check-duplicate-auth-id", produces = "application/json")
     public AuthIdDuplicationResponse checkAuthIdDuplication(
-            @RequestParam("auth-id") @Size(min = 6, max = 20, message = "INVALIDATED_AUTHID_TYPE") String authId) {
+            @RequestParam("auth-id") @Size(min = 6, message = "INVALIDATED_AUTHID_TYPE") String authId
+    ) {
         return checkAuthIdDuplicationUseCase.checkAuthIdDuplication(authId);
     }
 }
