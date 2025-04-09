@@ -15,6 +15,11 @@ public class FindUserService implements FindUserUseCase {
     private final FindUserPort findUserPort;
 
     @Override
+    public User getUserById(Long userId) {
+        return findUserPort.getUserById(userId);
+    }
+
+    @Override
     public User getUserByAuthId(String authId) {
         return findUserPort.getUserByAuthId(authId);
     }
