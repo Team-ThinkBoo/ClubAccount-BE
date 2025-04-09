@@ -1,7 +1,10 @@
 package com.ClubAccount_BE.receipt.mapper;
 
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
+import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptItemEntity;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,5 +36,25 @@ public class ReceiptMapper {
                 .etc(receiptEntity.getEtc())
                 .receiptImageUrl(receiptEntity.getReceiptImageUrl())
                 .build();
+    }
+
+    public static ReceiptItemEntity toEntity(ReceiptItem receiptItem) {
+        return ReceiptItemEntity.builder()
+                .id(receiptItem.getId())
+                .receipt(toEntity(receiptItem.getReceipt()))
+                .name(receiptItem.getName())
+                .price(receiptItem.getPrice())
+                .totalPrice(receiptItem.getTotalPrice())
+                .quantity(receiptItem.getQuantity())
+                .build();
+    }
+
+    public static void toEntity(
+            List<ReceiptItem> items,
+            ReceiptEntity receiptEntity
+    ) {
+        items.stream()
+                .map(ReceiptMapper::toEntity)
+                .forEach(receiptEntity::addReceiptItem);
     }
 }

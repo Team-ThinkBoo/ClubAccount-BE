@@ -4,6 +4,8 @@ import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,6 +21,7 @@ public class Receipt {
     private final BigDecimal amount;
     private final String etc;
     private final String receiptImageUrl;
+    private final List<ReceiptItem> receiptItems = new ArrayList<>();
 
     @Builder
     private Receipt(

@@ -33,7 +33,7 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, Check
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .map(userMapper::toDomain)
+                .map(UserMapper::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 사용자를 찾을 수 없습니다."));
     }
 
