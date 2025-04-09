@@ -40,7 +40,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED);
         }
 
-        String authId = authentication.getName();
-        return findUserUseCase.getUserByAuthId(authId);
+        Long authId = Long.valueOf(authentication.getName());
+        return findUserUseCase.getUserById(authId);
     }
 }
