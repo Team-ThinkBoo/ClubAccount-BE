@@ -7,6 +7,7 @@ import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.mapper.ReceiptMapper;
+import com.ClubAccount_BE.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,9 +32,9 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
     }
 
     @Override
-    public Page<Receipt> getReceipts(Pageable pageable) {
+    public Page<Receipt> getReceipts(User user, Pageable pageable) {
         return receiptRepository
-                .findAll(pageable)
+                .findAllByUserId(user.getId(), pageable)
                 .map(ReceiptMapper::toDomain);
     }
 }
