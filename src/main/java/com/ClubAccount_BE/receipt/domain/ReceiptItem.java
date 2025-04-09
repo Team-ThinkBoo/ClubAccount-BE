@@ -15,7 +15,7 @@ public class ReceiptItem {
     private final int quantity;
 
     @Builder
-    public ReceiptItem(
+    private ReceiptItem(
             Long id,
             Receipt receipt,
             String name,
