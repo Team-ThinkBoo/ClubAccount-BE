@@ -24,16 +24,13 @@ public class SignInController implements SignInApiPresentation{
     @PostMapping("/sign-in")
     public TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest, HttpServletResponse response) {
         TokenResponse tokenResponse = signInUseCase.signIn(signInRequest.getAuthId(), signInRequest.getPassword());
-
         ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenResponse.getRefreshToken())
                 .httpOnly(true)
-                .secure(true)
                 .path("/")
                 .maxAge(Duration.ofDays(7))
                 .sameSite("None")
-                .secure(true)
+                .secure(false)
                 .build();
-
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return TokenResponse.from(tokenResponse.getAccessToken());
