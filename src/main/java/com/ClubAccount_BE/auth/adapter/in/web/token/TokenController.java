@@ -23,17 +23,11 @@ public class TokenController implements TokenApiPresentation{
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-
         String refreshToken = extractRefreshTokenFromCookies(request);  // 쿠키에서 리프레시 토큰 추출
         AccessTokenResponse accessTokenResponse = tokenUseCase.createNewToken(refreshToken);
 
         // 새 리프레시 토큰을 쿠키에 설정
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken);
-
-        AccessTokenResponse accessTokenResponse = tokenUseCase.createNewToken(tokenRequest.getRefreshToken());
-
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenRequest.getRefreshToken())
-
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
                 .path("/")
                 .maxAge(Duration.ofDays(7))
@@ -42,7 +36,6 @@ public class TokenController implements TokenApiPresentation{
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
 
         return accessTokenResponse;  // 새로 발급된 액세스 토큰 반환
     }
@@ -57,7 +50,5 @@ public class TokenController implements TokenApiPresentation{
             }
         }
         throw new IllegalArgumentException("Refresh token not found in cookies");
-
-        return accessTokenResponse;
     }
 }
