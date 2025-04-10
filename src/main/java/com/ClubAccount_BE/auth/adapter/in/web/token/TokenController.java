@@ -28,7 +28,7 @@ public class TokenController implements TokenApiPresentation{
         AccessTokenResponse accessTokenResponse = tokenUseCase.createNewToken(refreshToken);
 
         // 새 리프레시 토큰을 쿠키에 설정
-        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken)
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken);
 
         AccessTokenResponse accessTokenResponse = tokenUseCase.createNewToken(tokenRequest.getRefreshToken());
 
