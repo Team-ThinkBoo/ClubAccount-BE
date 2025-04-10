@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - TB-13
 
 jobs:
   deploy:
