@@ -10,7 +10,10 @@ import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
+import java.time.Duration;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -25,6 +28,18 @@ public class TokenController implements TokenApiPresentation {
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        return tokenUseCase.createNewToken(tokenRequest.getRefreshToken());
+        AccessTokenResponse accessTokenResponse = tokenUseCase.createNewToken(tokenRequest.getRefreshToken());
+
+        ResponseCookie cookie = ResponseCookie.from("refreshToken", tokenRequest.getRefreshToken())
+                .httpOnly(true)
+                .path("/")
+                .maxAge(Duration.ofDays(7))
+                .sameSite("None")
+                .secure(false)
+                .build();
+
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+        return accessTokenResponse;
     }
 }
