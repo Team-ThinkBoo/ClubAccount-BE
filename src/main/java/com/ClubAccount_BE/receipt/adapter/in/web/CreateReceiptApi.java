@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.adapter.in.web;
 
 import com.ClubAccount_BE.core.meta.LoginUser;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateReceiptRequestDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
 import com.ClubAccount_BE.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +16,6 @@ public interface CreateReceiptApi {
     CreateReceiptResponseDto createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image") MultipartFile image,
-            @RequestPart(value = "request") CreateReceiptRequestDto createReceiptRequestDto
+            @RequestPart(value = "request") ReceiptRequest receiptRequest
     );
 }

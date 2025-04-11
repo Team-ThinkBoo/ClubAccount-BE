@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public record CreateReceiptRequestDto(
+public record ReceiptRequest(
 
         @Schema(
                 description = "영수증 분류 카테고리",
@@ -29,7 +29,7 @@ public record CreateReceiptRequestDto(
         String etc,
 
         @Schema(description = "영수증 내 아이템 리스트")
-        List<CreateReceiptItemRequestDto> receiptItems
+        List<ReceiptItemRequest> receiptItems
 ) {
 
 }

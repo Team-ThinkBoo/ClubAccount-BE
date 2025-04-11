@@ -1,14 +1,14 @@
 package com.ClubAccount_BE.receipt.application.service;
 
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.CreateReceiptRequestDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.domain.service.ReceiptItemEditor;
 import com.ClubAccount_BE.user.domain.User;
-import com.ClubAccount_BE.user.mapper.UserMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,42 +22,27 @@ public class CreateReceiptService implements CreateReceiptUseCase {
 
     private final UploadReceiptPort uploadReceiptPort;
 
+    private final ReceiptItemEditor receiptItemEditor;
+
     @Override
     public CreateReceiptResponseDto createReceipt(
             User user,
             MultipartFile image,
-            CreateReceiptRequestDto createReceiptRequestDto
+            ReceiptRequest receiptRequest
     ) {
         Receipt receipt = Receipt.create(
-                UserMapper.toEntity(user),
-                createReceiptRequestDto.category(),
-                createReceiptRequestDto.categoryName(),
-                createReceiptRequestDto.businessName(),
-                createReceiptRequestDto.date(),
-                createReceiptRequestDto.amount(),
-                createReceiptRequestDto.etc(),
-                //TODO : 직접 등록시 기본 이미지로 설정 로직 추가
+                user,
+                receiptRequest.category(),
+                receiptRequest.categoryName(),
+                receiptRequest.businessName(),
+                receiptRequest.date(),
+                receiptRequest.amount(),
+                receiptRequest.etc(),
                 image == null ? "" : uploadReceiptPort.uploadReceipt(image)
         );
 
-        List<ReceiptItem> receiptItems = toReceiptItems(createReceiptRequestDto, receipt);
-
+        List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);
         Long receiptId = createReceiptPort.createReceipt(receipt, receiptItems);
         return CreateReceiptResponseDto.of(receiptId, receipt);
-    }
-
-    private List<ReceiptItem> toReceiptItems(
-            CreateReceiptRequestDto createReceiptRequestDto,
-            Receipt receipt
-    ) {
-        return createReceiptRequestDto.receiptItems().stream()
-                .map(receiptItem -> ReceiptItem.create(
-                        receipt,
-                        receiptItem.name(),
-                        receiptItem.price(),
-                        receiptItem.totalPrice(),
-                        receiptItem.quantity()
-                ))
-                .toList();
     }
 }
