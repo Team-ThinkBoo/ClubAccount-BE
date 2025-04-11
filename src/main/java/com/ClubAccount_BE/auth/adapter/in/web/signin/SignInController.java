@@ -28,7 +28,7 @@ public class SignInController implements SignInApiPresentation{
                 .httpOnly(true)
                 .path("/")
                 .maxAge(Duration.ofDays(7))
-                .sameSite("None")
+                .sameSite("Lax")
                 .secure(false)
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());

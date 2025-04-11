@@ -31,7 +31,7 @@ public class TokenController implements TokenApiPresentation{
                 .httpOnly(true)
                 .path("/")
                 .maxAge(Duration.ofDays(7))
-                .sameSite("None")
+                .sameSite("Lax")
                 .secure(false)
                 .build();
 
