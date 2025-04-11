@@ -27,7 +27,7 @@ public class SignInService implements SignInUseCase {
         String accessToken = tokenProvider.generateToken(userId);
         String refreshToken = tokenProvider.generateRefreshToken();
         saveRefreshTokenPort.saveRefreshToken(refreshToken, userId);
-        return TokenResponse.from(accessToken);
+        return TokenResponse.from(accessToken, refreshToken);
     }
 
     private Authentication authenticateCommand(String authId, String password) {
