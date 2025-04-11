@@ -1,6 +1,5 @@
 package com.ClubAccount_BE.user.application.service.email;
 
-import com.ClubAccount_BE.user.adapter.out.persistence.repository.VerificationRepository;
 import com.ClubAccount_BE.user.application.port.in.email.EmailUseCase;
 import com.ClubAccount_BE.user.application.port.out.email.VerificationCodePort;
 import lombok.RequiredArgsConstructor;
