@@ -39,6 +39,8 @@ public class SecurityConfig {
                     API_V1_PREFIX + "/users/password",
                     API_V1_PREFIX + "/health",
                     API_V1_PREFIX + "/users/sign-up/check-duplicate-auth-id",
+                    API_V1_PREFIX + "/email/send",
+                    API_V1_PREFIX + "/email/verify",
                     "/api-docs",
                     "/swagger-custom-ui.html",
                     "/v3/api-docs",
