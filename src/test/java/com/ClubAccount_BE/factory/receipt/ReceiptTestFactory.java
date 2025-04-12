@@ -2,12 +2,16 @@ package com.ClubAccount_BE.factory.receipt;
 
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
+import com.ClubAccount_BE.user.domain.User;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import jdk.jfr.Description;
+import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 
 public class ReceiptTestFactory {
+
+    private static final User mockUser = Mockito.mock(User.class);
 
 //    @Description("영수증 등록 Request DTO 생성")
 //    public static CreateReceiptRequestDto createReceiptRequestDto() {
@@ -35,7 +39,7 @@ public class ReceiptTestFactory {
     public static Receipt createReceipt() {
         return Receipt.builder()
                 .id(1L)
-                .user(null)
+                .user(mockUser)
                 .category(ReceiptCategory.SUBSCRIPTION)
                 .businessName("김밥천국")
                 .date(LocalDate.of(2025, 3, 28))
