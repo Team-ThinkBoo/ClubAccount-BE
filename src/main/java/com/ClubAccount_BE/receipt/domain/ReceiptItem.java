@@ -31,7 +31,7 @@ public class ReceiptItem {
         this.quantity = quantity;
     }
 
-    public static ReceiptItem create(
+    public static ReceiptItem of(
             Receipt receipt,
             String name,
             BigDecimal price,

@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.domain;
 
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
-import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
+import com.ClubAccount_BE.user.domain.User;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +12,7 @@ import lombok.Getter;
 public class Receipt {
 
     private final Long id;
-    private final UserEntity user;
+    private final User user;
     private final ReceiptCategory category;
     private final String categoryName;
     private final String businessName;
@@ -25,7 +25,7 @@ public class Receipt {
     @Builder
     private Receipt(
             Long id,
-            UserEntity user,
+            User user,
             ReceiptCategory category,
             String categoryName,
             String businessName,
@@ -48,7 +48,7 @@ public class Receipt {
     }
 
     public static Receipt create(
-            UserEntity user,
+            User user,
             ReceiptCategory category,
             String categoryName,
             String businessName,
@@ -66,6 +66,28 @@ public class Receipt {
                 .date(date)
                 .etc(etc)
                 .receiptImageUrl(receiptImageUrl)
+                .build();
+    }
+
+    public static Receipt update(
+            Long receiptId,
+            User user,
+            ReceiptCategory category,
+            String categoryName,
+            String businessName,
+            LocalDate date,
+            BigDecimal amount,
+            String etc
+    ) {
+        return Receipt.builder()
+                .id(receiptId)
+                .user(user)
+                .category(category)
+                .categoryName(categoryName)
+                .businessName(businessName)
+                .amount(amount)
+                .date(date)
+                .etc(etc)
                 .build();
     }
 }

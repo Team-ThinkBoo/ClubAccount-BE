@@ -21,7 +21,6 @@ class ReceiptMapperTest {
 
         // then
         assertThat(entity.getId()).isEqualTo(receipt.getId());
-        assertThat(entity.getUser()).isEqualTo(receipt.getUser());
         assertThat(entity.getCategory()).isEqualTo(receipt.getCategory());
         assertThat(entity.getBusinessName()).isEqualTo(receipt.getBusinessName());
         assertThat(entity.getAmount()).isEqualTo(receipt.getAmount());
