@@ -3,9 +3,7 @@ package com.ClubAccount_BE.receipt.mapper;
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.user.mapper.UserMapper;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ReceiptMapper {
 
     public static ReceiptEntity toEntity(Receipt receipt) {
