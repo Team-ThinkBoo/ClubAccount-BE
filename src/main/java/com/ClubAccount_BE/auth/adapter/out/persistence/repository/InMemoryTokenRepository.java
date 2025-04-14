@@ -27,4 +27,8 @@ public class InMemoryTokenRepository implements FindRefreshTokenPort, SaveRefres
     public Optional<Long> getByRefreshToken(String refreshToken) {
         return Optional.ofNullable(TOKEN_REPOSITORY.getIfPresent(refreshToken));
     }
+
+    public void deleteRefreshToken(String refreshToken) {
+        TOKEN_REPOSITORY.invalidate(refreshToken);
+    }
 }
