@@ -31,7 +31,6 @@ public class UpdateReceiptService implements UpdateReceiptUseCase {
                 receiptId,
                 user,
                 receiptRequest.category(),
-                receiptRequest.categoryName(),
                 receiptRequest.businessName(),
                 receiptRequest.date(),
                 receiptRequest.amount(),

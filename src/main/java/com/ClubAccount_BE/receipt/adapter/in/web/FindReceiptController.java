@@ -22,7 +22,7 @@ public class FindReceiptController implements FindReceiptApi {
 
     private final FindReceiptUseCase findReceiptUseCase;
 
-    @GetMapping("/")
+    @GetMapping
     public PagingResponse<FindReceiptResponseDto> getReceipts(
             @LoginUser User user,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable

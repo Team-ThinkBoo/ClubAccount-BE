@@ -49,9 +49,6 @@ public class ReceiptEntity extends TimeBaseEntity {
     private ReceiptCategory category;
 
     @Column(nullable = false)
-    private String categoryName;
-
-    @Column(nullable = false)
     private String businessName;
 
     @Column(nullable = false)
@@ -70,7 +67,6 @@ public class ReceiptEntity extends TimeBaseEntity {
 
     public void updateReceipt(Receipt receipt) {
         this.category = receipt.getCategory();
-        this.categoryName = receipt.getCategoryName();
         this.businessName = receipt.getBusinessName();
         this.amount = receipt.getAmount();
         this.date = receipt.getDate();

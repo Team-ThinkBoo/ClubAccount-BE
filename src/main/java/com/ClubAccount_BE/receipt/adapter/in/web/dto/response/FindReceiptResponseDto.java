@@ -10,7 +10,6 @@ import lombok.Builder;
 public record FindReceiptResponseDto(
         Long id,
         ReceiptCategory category,
-        String categoryName,
         String businessName,
         LocalDate date,
         BigDecimal amount,
@@ -22,7 +21,6 @@ public record FindReceiptResponseDto(
         return FindReceiptResponseDto.builder()
                 .id(receipt.getId())
                 .category(receipt.getCategory())
-                .categoryName(receipt.getCategoryName())
                 .businessName(receipt.getBusinessName())
                 .date(receipt.getDate())
                 .amount(receipt.getAmount())

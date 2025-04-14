@@ -33,12 +33,11 @@ public class CreateReceiptService implements CreateReceiptUseCase {
         Receipt receipt = Receipt.create(
                 user,
                 receiptRequest.category(),
-                receiptRequest.categoryName(),
                 receiptRequest.businessName(),
                 receiptRequest.date(),
                 receiptRequest.amount(),
                 receiptRequest.etc(),
-                image == null ? "" : uploadReceiptPort.uploadReceipt(image)
+                image == null ? "default" : uploadReceiptPort.uploadReceipt(image)
         );
 
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);

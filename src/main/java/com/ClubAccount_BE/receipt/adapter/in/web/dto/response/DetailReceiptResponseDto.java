@@ -11,7 +11,6 @@ import lombok.Builder;
 public record DetailReceiptResponseDto(
         Long id,
         ReceiptCategory category,
-        String categoryName,
         String businessName,
         LocalDate date,
         BigDecimal amount,
@@ -24,7 +23,6 @@ public record DetailReceiptResponseDto(
         return DetailReceiptResponseDto.builder()
                 .id(receipt.getId())
                 .category(receipt.getCategory())
-                .categoryName(receipt.getCategoryName())
                 .businessName(receipt.getBusinessName())
                 .date(receipt.getDate())
                 .amount(receipt.getAmount())
