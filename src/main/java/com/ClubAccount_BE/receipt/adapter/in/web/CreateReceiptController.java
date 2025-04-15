@@ -5,6 +5,7 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.user.domain.User;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class CreateReceiptController implements CreateReceiptApi {
     public CreateReceiptResponseDto createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image", required = false) MultipartFile image,
-            @RequestPart(value = "request") ReceiptRequest receiptRequest
+            @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest
     ) {
         return createReceiptUseCase.createReceipt(user, image, receiptRequest);
     }

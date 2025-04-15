@@ -5,6 +5,7 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,7 +16,7 @@ public interface UpdateReceiptApi {
     Long updateReceipt(
             @LoginUser User user,
             @PathVariable("receiptId") Long receiptId,
-            @RequestBody ReceiptRequest receiptRequest
+            @Valid @RequestBody ReceiptRequest receiptRequest
     );
 
 }

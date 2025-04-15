@@ -6,6 +6,7 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptRespo
 import com.ClubAccount_BE.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,6 @@ public interface CreateReceiptApi {
     CreateReceiptResponseDto createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image") MultipartFile image,
-            @RequestPart(value = "request") ReceiptRequest receiptRequest
+            @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest
     );
 }
