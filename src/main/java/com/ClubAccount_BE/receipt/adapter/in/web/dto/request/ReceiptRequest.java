@@ -4,7 +4,6 @@ import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
@@ -39,7 +38,6 @@ public record ReceiptRequest(
         String etc,
 
         @Schema(description = "영수증 내 아이템 리스트")
-        @NotEmpty(message = "아이템 리스트는 최소 1개 이상이어야 합니다.")
         List<ReceiptItemRequest> receiptItems
 ) {
 
