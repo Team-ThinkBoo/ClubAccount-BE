@@ -21,7 +21,7 @@ public record ReceiptRequest(
 
         @Schema(description = "영수증 승인 일자", example = "2023-10-01")
         @NotNull(message = "일자는 필수 입력 항목입니다.")
-        @PastOrPresent(message = "일자는 오늘 이전이어야 합니다.")
+        @PastOrPresent(message = "과거와 오늘만 입력이 가능합니다.")
         LocalDate date,
 
         @Schema(description = "영수증 가게 이름", example = "홍길동 식당")

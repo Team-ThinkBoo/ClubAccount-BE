@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CommonConstant {
 
-    public static final String UNDER_SCORE = "_";
+    public static final String IMAGE_KEY_DELIMITER = "_";
     public static final String DEFAULT_IMAGE = "기본 이미지";
     public static final int ONE_BASED_INDEX_PAGE = 1;
 
