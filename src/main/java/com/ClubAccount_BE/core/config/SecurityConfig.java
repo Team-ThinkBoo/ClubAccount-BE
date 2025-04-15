@@ -41,6 +41,7 @@ public class SecurityConfig {
                     API_V1_PREFIX + "/users/sign-up/check-duplicate-auth-id",
                     API_V1_PREFIX + "/email/send",
                     API_V1_PREFIX + "/email/verify",
+                    API_V1_PREFIX + "/auth/reset-password",
                     "/api-docs",
                     "/swagger-custom-ui.html",
                     "/v3/api-docs",
