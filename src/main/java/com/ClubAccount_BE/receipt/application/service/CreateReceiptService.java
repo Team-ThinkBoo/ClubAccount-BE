@@ -1,5 +1,7 @@
 package com.ClubAccount_BE.receipt.application.service;
 
+import static com.ClubAccount_BE.core.constant.CommonConstant.DEFAULT_IMAGE;
+
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCreateResponse;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
@@ -30,6 +32,7 @@ public class CreateReceiptService implements CreateReceiptUseCase {
             MultipartFile image,
             ReceiptRequest receiptRequest
     ) {
+
         Receipt receipt = Receipt.create(
                 user,
                 receiptRequest.category(),
@@ -37,7 +40,7 @@ public class CreateReceiptService implements CreateReceiptUseCase {
                 receiptRequest.date(),
                 receiptRequest.amount(),
                 receiptRequest.etc(),
-                image == null ? "default" : uploadReceiptPort.uploadReceipt(image)
+                image == null ? DEFAULT_IMAGE : uploadReceiptPort.uploadReceipt(image)
         );
 
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);

@@ -16,7 +16,7 @@ public interface CreateReceiptApi {
     @Operation(summary = "영수증 등록", description = "파싱된 영수증 정보를 등록한다.")
     ReceiptCreateResponse createReceipt(
             @LoginUser User user,
-            @RequestPart(value = "image") MultipartFile image,
+            @RequestPart(value = "image", required = false) MultipartFile image,
             @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest
     );
 }

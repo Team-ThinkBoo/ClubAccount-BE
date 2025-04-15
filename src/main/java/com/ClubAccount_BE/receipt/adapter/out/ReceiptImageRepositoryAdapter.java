@@ -1,6 +1,8 @@
 package com.ClubAccount_BE.receipt.adapter.out;
 
 
+import static com.ClubAccount_BE.core.constant.CommonConstant.UNDER_SCORE;
+
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import java.io.IOException;
 import java.util.UUID;
@@ -45,7 +47,7 @@ public class ReceiptImageRepositoryAdapter implements UploadReceiptPort {
     }
 
     private String createImageName(String originalFilename) {
-        return UUID.randomUUID() + "_" + originalFilename;
+        return UUID.randomUUID() + UNDER_SCORE + originalFilename;
     }
 
     private String getImageUrl(String fileName) {
