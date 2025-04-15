@@ -1,28 +1,27 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.dto.response;
 
 import com.ClubAccount_BE.receipt.domain.Receipt;
-import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Builder;
 
 @Builder
-public record FindReceiptResponseDto(
-        Long id,
-        ReceiptCategory category,
-        String businessName,
+public record ReceiptCreateResponse(
+        Long receiptId,
+        String category,
         LocalDate date,
+        String businessName,
         BigDecimal amount,
         String etc,
         String receiptImageUrl
 ) {
 
-    public static FindReceiptResponseDto of(Receipt receipt) {
-        return FindReceiptResponseDto.builder()
-                .id(receipt.getId())
-                .category(receipt.getCategory())
-                .businessName(receipt.getBusinessName())
+    public static ReceiptCreateResponse of(Long receiptId, Receipt receipt) {
+        return ReceiptCreateResponse.builder()
+                .receiptId(receiptId)
+                .category(receipt.getCategory().getDisplayName())
                 .date(receipt.getDate())
+                .businessName(receipt.getBusinessName())
                 .amount(receipt.getAmount())
                 .etc(receipt.getEtc())
                 .receiptImageUrl(receipt.getReceiptImageUrl())

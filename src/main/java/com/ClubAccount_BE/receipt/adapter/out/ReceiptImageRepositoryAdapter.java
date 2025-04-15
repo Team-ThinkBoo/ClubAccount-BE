@@ -14,7 +14,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Component
 @RequiredArgsConstructor
-public class S3Adapter implements UploadReceiptPort {
+public class ReceiptImageRepositoryAdapter implements UploadReceiptPort {
 
     private final S3Client amazonS3;
 
