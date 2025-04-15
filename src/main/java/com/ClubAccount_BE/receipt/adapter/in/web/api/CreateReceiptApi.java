@@ -1,8 +1,8 @@
-package com.ClubAccount_BE.receipt.adapter.in.web;
+package com.ClubAccount_BE.receipt.adapter.in.web.api;
 
 import com.ClubAccount_BE.core.meta.LoginUser;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCreateResponse;
 import com.ClubAccount_BE.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface CreateReceiptApi {
 
     @Operation(summary = "영수증 등록", description = "파싱된 영수증 정보를 등록한다.")
-    CreateReceiptResponseDto createReceipt(
+    ReceiptCreateResponse createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image") MultipartFile image,
             @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest

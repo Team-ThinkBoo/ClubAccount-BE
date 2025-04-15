@@ -1,4 +1,4 @@
-package com.ClubAccount_BE.receipt.adapter.in.web;
+package com.ClubAccount_BE.receipt.adapter.in.web.api;
 
 import com.ClubAccount_BE.core.meta.LoginUser;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
