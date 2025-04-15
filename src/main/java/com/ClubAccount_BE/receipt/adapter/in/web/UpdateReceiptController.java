@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.receipt.adapter.in.web;
 
 import com.ClubAccount_BE.core.meta.LoginUser;
+import com.ClubAccount_BE.receipt.adapter.in.web.api.UpdateReceiptApi;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.application.port.in.UpdateReceiptUseCase;
 import com.ClubAccount_BE.user.domain.User;

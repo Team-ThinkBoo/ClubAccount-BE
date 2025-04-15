@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.application.service;
 
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.CreateReceiptResponseDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCreateResponse;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
@@ -25,7 +25,7 @@ public class CreateReceiptService implements CreateReceiptUseCase {
     private final ReceiptItemEditor receiptItemEditor;
 
     @Override
-    public CreateReceiptResponseDto createReceipt(
+    public ReceiptCreateResponse createReceipt(
             User user,
             MultipartFile image,
             ReceiptRequest receiptRequest
@@ -42,6 +42,6 @@ public class CreateReceiptService implements CreateReceiptUseCase {
 
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);
         Long receiptId = createReceiptPort.createReceipt(receipt, receiptItems);
-        return CreateReceiptResponseDto.of(receiptId, receipt);
+        return ReceiptCreateResponse.of(receiptId, receipt);
     }
 }
