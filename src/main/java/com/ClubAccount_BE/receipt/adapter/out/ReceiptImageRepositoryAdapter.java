@@ -1,6 +1,8 @@
 package com.ClubAccount_BE.receipt.adapter.out;
 
 
+import static com.ClubAccount_BE.core.constant.CommonConstant.IMAGE_KEY_DELIMITER;
+
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import java.io.IOException;
 import java.util.UUID;
@@ -14,7 +16,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Component
 @RequiredArgsConstructor
-public class S3Adapter implements UploadReceiptPort {
+public class ReceiptImageRepositoryAdapter implements UploadReceiptPort {
 
     private final S3Client amazonS3;
 
@@ -45,7 +47,7 @@ public class S3Adapter implements UploadReceiptPort {
     }
 
     private String createImageName(String originalFilename) {
-        return UUID.randomUUID() + "_" + originalFilename;
+        return UUID.randomUUID() + IMAGE_KEY_DELIMITER + originalFilename;
     }
 
     private String getImageUrl(String fileName) {

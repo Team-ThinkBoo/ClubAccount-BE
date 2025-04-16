@@ -1,5 +1,7 @@
 package com.ClubAccount_BE.core.response;
 
+import static com.ClubAccount_BE.core.constant.CommonConstant.ONE_BASED_INDEX_PAGE;
+
 import java.util.List;
 import lombok.Builder;
 import org.springframework.data.domain.Page;
@@ -22,7 +24,7 @@ public record PagingResponse<T>(
                 .content(page.getContent())
                 .totalElements(page.getTotalElements())
                 .totalPages(page.getTotalPages())
-                .pageNumber(page.getNumber() + 1) // 0-based index
+                .pageNumber(page.getNumber() + ONE_BASED_INDEX_PAGE)
                 .pageSize(page.getSize())
                 .hasNext(page.hasNext())
                 .hasPrevious(page.hasPrevious())

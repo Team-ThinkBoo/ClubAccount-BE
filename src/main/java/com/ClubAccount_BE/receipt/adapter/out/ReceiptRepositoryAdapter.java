@@ -24,7 +24,6 @@ public class ReceiptRepositoryAdapter
 
     @Override
     public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
-
         ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
         receiptEntity.replaceReceiptItem(receiptItems);
         return receiptRepository

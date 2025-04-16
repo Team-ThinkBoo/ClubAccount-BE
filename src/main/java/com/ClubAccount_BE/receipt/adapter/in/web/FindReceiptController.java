@@ -2,8 +2,9 @@ package com.ClubAccount_BE.receipt.adapter.in.web;
 
 import com.ClubAccount_BE.core.meta.LoginUser;
 import com.ClubAccount_BE.core.response.PagingResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.DetailReceiptResponseDto;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.FindReceiptResponseDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.api.FindReceiptApi;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class FindReceiptController implements FindReceiptApi {
 
     private final FindReceiptUseCase findReceiptUseCase;
 
-    @GetMapping("/")
-    public PagingResponse<FindReceiptResponseDto> getReceipts(
+    @GetMapping
+    public PagingResponse<ReceiptResponse> getReceipts(
             @LoginUser User user,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
     ) {
@@ -31,7 +32,7 @@ public class FindReceiptController implements FindReceiptApi {
     }
 
     @GetMapping("/{receiptId}")
-    public DetailReceiptResponseDto getReceipt(
+    public ReceiptDetailResponse getReceipt(
             @LoginUser User user,
             @PathVariable("receiptId") Long receiptId
     ) {

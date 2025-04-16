@@ -1,8 +1,8 @@
 package com.ClubAccount_BE.receipt.application.service;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.DetailReceiptResponseDto;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.FindReceiptResponseDto;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
@@ -21,17 +21,17 @@ public class FindReceiptService implements FindReceiptUseCase {
     private final FindReceiptPort findReceiptPort;
 
     @Override
-    public PagingResponse<FindReceiptResponseDto> getReceipts(User user, Pageable pageable) {
-        Page<FindReceiptResponseDto> page = findReceiptPort
+    public PagingResponse<ReceiptResponse> getReceipts(User user, Pageable pageable) {
+        Page<ReceiptResponse> page = findReceiptPort
                 .getReceipts(user, pageable)
-                .map(FindReceiptResponseDto::of);
+                .map(ReceiptResponse::of);
 
         return PagingResponse.of(page);
     }
 
     @Override
-    public DetailReceiptResponseDto getReceipt(User user, Long receiptId) {
+    public ReceiptDetailResponse getReceipt(User user, Long receiptId) {
         Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
-        return DetailReceiptResponseDto.of(receipt);
+        return ReceiptDetailResponse.of(receipt);
     }
 }
