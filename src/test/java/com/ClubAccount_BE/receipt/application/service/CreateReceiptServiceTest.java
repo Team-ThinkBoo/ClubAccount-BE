@@ -32,16 +32,16 @@ class CreateReceiptServiceTest {
         expectedUrl = "https://s3.amazon.com/bucket/test.png";
         expectedId = 1L;
 
-        user = User.builder()
-                .id(expectedId)
-                .authId("test")
-                .password("testPassword")
-                .department("testDepartment")
-                .profileUrl("testProfileUrl")
-                .rink("testRink")
-                .createdAt(null)
-                .updatedAt(null)
-                .build();
+//        user = User.builder()
+//                .id(expectedId)
+//                .authId("test")
+//                .password("testPassword")
+//                .department("testDepartment")
+//                .profileUrl("testProfileUrl")
+//                .rink("testRink")
+//                .createdAt(null)
+//                .updatedAt(null)
+//                .build();
     }
 
 //    @Test
