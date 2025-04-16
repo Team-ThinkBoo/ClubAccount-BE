@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -20,10 +23,8 @@ public class LogoutController implements LogoutApiPresentation{
 
     @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        String refreshToken = extractRefreshToken(request);
-        if (refreshToken != null && !refreshToken.isBlank()) {
-            signOutUseCase.logout(refreshToken);
-        }
+        extractRefreshToken(request)
+                .ifPresent(signOutUseCase::logout);
 
         ResponseCookie deleteCookie = ResponseCookie.from("refreshToken", "")
                 .httpOnly(true)
@@ -36,14 +37,13 @@ public class LogoutController implements LogoutApiPresentation{
         response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
     }
 
-    private String extractRefreshToken(HttpServletRequest request) {
-        if (request.getCookies() == null) return null;
-
-        for (Cookie cookie : request.getCookies()) {
-            if ("refreshToken".equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
+    private Optional<String> extractRefreshToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getCookies())
+                .flatMap(cookies -> Arrays.stream(cookies)
+                        .filter(cookie -> "refreshToken".equals(cookie.getName()))
+                        .map(Cookie::getValue)
+                        .filter(value -> !value.isBlank())
+                        .findFirst()
+                );
     }
 }
