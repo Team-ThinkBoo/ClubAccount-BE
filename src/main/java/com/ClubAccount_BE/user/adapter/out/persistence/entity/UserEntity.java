@@ -6,7 +6,11 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.UUID;
 
 
 @Table(name = "user")
@@ -29,10 +33,9 @@ public class UserEntity extends TimeBaseEntity {
 
     private String department;
 
-//    @Column(nullable = false)
-//    private String role;
-
     private String profileUrl;
 
-    private String rink;
+    @Column(length = 36, nullable = false, unique = true, updatable = false)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    private UUID rink;
 }

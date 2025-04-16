@@ -5,6 +5,8 @@ import com.ClubAccount_BE.user.adapter.out.persistence.repository.UserRepository
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.application.port.out.SaveUserPort;
+import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
+import com.ClubAccount_BE.user.application.service.update.UpdatePasswordPort;
 import com.ClubAccount_BE.user.domain.User;
 import com.ClubAccount_BE.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort {
+public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort, FindUserByEmailPort, UpdatePasswordPort {
 
     private final UserRepository userRepository;
 
@@ -41,5 +43,19 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, Check
     @Override
     public boolean checkDuplicateAuthId(String authId) {
         return userRepository.existsByAuthId(authId);
+    }
+
+    @Override
+    public User findByAuthId(String email) {
+        return userRepository.findByAuthId(email)
+                .map(UserMapper::toDomain)
+                .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 가진 사용자가 존재하지 않습니다."));
+    }
+
+    @Override
+    public void updatePassword(User user, String newPassword) {
+        user.updatePassword(newPassword);
+        UserEntity entity = UserMapper.toEntity(user);
+        userRepository.save(entity);
     }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(of = "id")
@@ -16,12 +17,12 @@ public class User {
     private String password;
     private final String department;
     private String profileUrl;
-    private String rink;
+    private UUID rink;
     private final Instant createdAt;
     private final Instant updatedAt;
 
     @Builder
-    public User(Long id, String authId, String password, String department, String profileUrl, String rink, Instant createdAt, Instant updatedAt) {
+    public User(Long id, String authId, String password, String department, String profileUrl, UUID rink, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.authId = authId;
         this.password = password;
@@ -37,8 +38,8 @@ public class User {
                 .authId(authId)
                 .password(encodedPassword)
                 .department(department)
-                .rink("none") // 기본값 설정
-                .profileUrl(null) // 프로필 URL은 일단 null
+                .rink(UUID.randomUUID())
+                .profileUrl("") // 프로필 URL은 일단 빈 문자열
                 .build();
     }
 
@@ -49,7 +50,7 @@ public class User {
         this.password = encodedPassword;
     }
 
-    public void updateRink(String rink) {
+    public void updateRink(UUID rink) {
         this.rink = rink;
     }
 
