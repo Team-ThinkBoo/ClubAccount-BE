@@ -18,7 +18,7 @@ public class PasswordResetController implements PasswordResetApi {
 
     @PostMapping("/reset-password")
     public void resetPassword(@Valid @RequestBody PasswordResetRequest request) {
-        passwordResetUseCase.resetPassword(request.authId(), request.newPassword(), request.confirmPassword());
+        passwordResetUseCase.resetPassword(request.authId(), request.newPassword());
     }
 
 }

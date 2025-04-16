@@ -1,9 +1,11 @@
 package com.ClubAccount_BE.user.adapter.in.update.dto.request;
 
+import com.ClubAccount_BE.core.meta.PasswordMatch;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+@PasswordMatch
 public record PasswordResetRequest(
         @NotBlank @Email
         @Schema(name = "authId", example = "thinkboo@example.com")

@@ -17,11 +17,7 @@ public class PasswordResetService implements PasswordResetUseCase {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void resetPassword(String email, String newPassword, String confirmPassword) {
-        if (!newPassword.equals(confirmPassword)) {
-            throw new IllegalArgumentException("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-        }
-
+    public void resetPassword(String email, String newPassword) {
         var user = findUserByEmailPort.findByAuthId(email);
         var encodedPassword = passwordEncoder.encode(newPassword);
         updatePasswordPort.updatePassword(user, encodedPassword);
