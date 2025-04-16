@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Password Reset", description = "비밀번호 재설정 API")
-public interface PasswordResetApiPresentation {
+public interface PasswordResetApi {
     @Operation(summary = "비밀번호 재설정", description = "비밀번호를 재설정합니다.")
     void resetPassword(PasswordResetRequest request);
 }

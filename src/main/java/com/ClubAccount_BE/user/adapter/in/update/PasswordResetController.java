@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class PasswordResetController implements PasswordResetApiPresentation {
+public class PasswordResetController implements PasswordResetApi {
 
     private final PasswordResetUseCase passwordResetUseCase;
 
