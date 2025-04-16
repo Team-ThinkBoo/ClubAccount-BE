@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "SignUp", description = "회원가입을 진행하는 API")
-public interface SignUpApiPresentation {
+public interface SignUpApi {
     @Operation(description = "회원가입을 진행한다.")
     void signUp(@Valid @RequestBody SignUpRequest signUpRequest);
 
     @Operation(description = "로그인 아이디 중복 여부를 체크한다.")
     @Parameter(name = "auth-id", description = "아이디")
     AuthIdDuplicationResponse checkAuthIdDuplication(
-            @RequestParam("auth-id") @Size(min = 6, max = 20, message = "INVALIDATED_AUTHID_TYPE") String authId);
+            @RequestParam("auth-id") @Size(min = 6, message = "INVALIDATED_AUTHID_TYPE") String authId);
 }
