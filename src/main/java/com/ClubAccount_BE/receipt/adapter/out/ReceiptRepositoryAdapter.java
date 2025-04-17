@@ -32,7 +32,7 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public Page<Receipt> getReceipts(User user, Pageable pageable) {
+    public Page<Receipt> getReceiptList(User user, Pageable pageable) {
         return receiptRepository
                 .findAllByUserId(user.getId(), pageable)
                 .map(ReceiptMapper::toDomain);
