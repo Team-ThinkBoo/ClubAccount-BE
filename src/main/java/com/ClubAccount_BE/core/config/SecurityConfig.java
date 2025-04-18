@@ -1,6 +1,10 @@
 package com.ClubAccount_BE.core.config;
 
-import com.ClubAccount_BE.auth.security.*;
+import com.ClubAccount_BE.auth.security.JwtAccessDeniedHandler;
+import com.ClubAccount_BE.auth.security.JwtAuthenticationEntryPoint;
+import com.ClubAccount_BE.auth.security.JwtAuthenticationProvider;
+import com.ClubAccount_BE.auth.security.TokenAuthenticationFilter;
+import com.ClubAccount_BE.auth.security.TokenProvider;
 import com.ClubAccount_BE.user.application.port.in.FindUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
+
     public static final String API_V1_PREFIX = "/api/v1";
 
     private final TokenProvider tokenProvider;
@@ -30,43 +35,46 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    API_V1_PREFIX + "/users/sign-up/**",
-                    API_V1_PREFIX + "/auth/sign-in",
-                    API_V1_PREFIX + "/auth/token",
-                    API_V1_PREFIX + "/users/{student-number}/validate",
-                    API_V1_PREFIX + "/users/password",
-                    API_V1_PREFIX + "/health",
-                    API_V1_PREFIX + "/users/sign-up/check-duplicate-auth-id",
-                    API_V1_PREFIX + "/email/send",
-                    API_V1_PREFIX + "/email/verify",
-                    API_V1_PREFIX + "/auth/reset-password",
-                    "/api-docs",
-                    "/swagger-custom-ui.html",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**",
-                    "/swagger-ui/**",
-                    "/api-docs/**",
-                    "/swagger-ui.html"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .csrf(AbstractHttpConfigurer::disable)
-            .headers(AbstractHttpConfigurer::disable)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .rememberMe(AbstractHttpConfigurer::disable)
-            .logout(AbstractHttpConfigurer::disable)
-            .exceptionHandling(ex -> ex
-                .accessDeniedHandler(jwtAccessDeniedHandler)
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            )
-            .sessionManagement(sess -> sess
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .cors(Customizer.withDefaults())
-            .addFilterBefore(tokenAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                API_V1_PREFIX + "/users/sign-up/**",
+                                API_V1_PREFIX + "/auth/sign-in",
+                                API_V1_PREFIX + "/auth/token",
+                                API_V1_PREFIX + "/users/{student-number}/validate",
+                                API_V1_PREFIX + "/users/password",
+                                API_V1_PREFIX + "/health",
+                                API_V1_PREFIX + "/users/sign-up/check-duplicate-auth-id",
+                                API_V1_PREFIX + "/email/send",
+                                API_V1_PREFIX + "/email/verify",
+                                API_V1_PREFIX + "/auth/reset-password",
+                                API_V1_PREFIX + "{link}/receipts",
+                                API_V1_PREFIX + "{link}/receipts/{receiptId}",
+                                "/api-docs",
+                                "/swagger-custom-ui.html",
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .rememberMe(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                )
+                .sessionManagement(sess -> sess
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .cors(Customizer.withDefaults())
+                .addFilterBefore(tokenAuthenticationFilter(tokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -78,7 +86,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(JwtAuthenticationProvider jwtAuthenticationProvider) {
+    public AuthenticationManager authenticationManager(
+            JwtAuthenticationProvider jwtAuthenticationProvider) {
         return new ProviderManager(jwtAuthenticationProvider);
     }
 
