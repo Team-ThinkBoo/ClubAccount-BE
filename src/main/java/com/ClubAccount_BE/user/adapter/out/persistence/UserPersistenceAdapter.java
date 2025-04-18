@@ -9,12 +9,14 @@ import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
 import com.ClubAccount_BE.user.application.service.update.UpdatePasswordPort;
 import com.ClubAccount_BE.user.domain.User;
 import com.ClubAccount_BE.user.mapper.UserMapper;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort, FindUserByEmailPort, UpdatePasswordPort {
+public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort,
+        FindUserByEmailPort, UpdatePasswordPort {
 
     private final UserRepository userRepository;
 
@@ -39,6 +41,12 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, Check
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 사용자를 찾을 수 없습니다."));
     }
 
+    @Override
+    public User getUserByLink(UUID link) {
+        return userRepository.findByRink(link)
+                .map(UserMapper::toDomain)
+                .orElseThrow(() -> new IllegalArgumentException("해당 링크의 사용자를 찾을 수 없습니다."));
+    }
 
     @Override
     public boolean checkDuplicateAuthId(String authId) {

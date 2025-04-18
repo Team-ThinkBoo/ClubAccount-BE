@@ -6,7 +6,9 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,18 +21,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class FindReceiptService implements FindReceiptUseCase {
 
     private final FindReceiptPort findReceiptPort;
+    private final FindUserPort findUserPort;
 
     @Override
-    public PagingResponse<ReceiptResponse> getReceipts(User user, Pageable pageable) {
+    public PagingResponse<ReceiptResponse> getReceiptList(UUID link, Pageable pageable) {
+
+        User user = findUserPort.getUserByLink(link);
         Page<ReceiptResponse> page = findReceiptPort
-                .getReceipts(user, pageable)
+                .getReceiptList(user, pageable)
                 .map(ReceiptResponse::of);
 
         return PagingResponse.of(page);
     }
 
     @Override
-    public ReceiptDetailResponse getReceipt(User user, Long receiptId) {
+    public ReceiptDetailResponse getReceipt(UUID link, Long receiptId) {
+
+        User user = findUserPort.getUserByLink(link);
         Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
         return ReceiptDetailResponse.of(receipt);
     }
