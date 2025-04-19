@@ -22,7 +22,7 @@ public class FindReceiptController implements FindReceiptApi {
 
     private final FindReceiptUseCase findReceiptUseCase;
 
-    @GetMapping("{link}/receipts")
+    @GetMapping("/{link}/receipts")
     public PagingResponse<ReceiptResponse> getReceiptList(
             @PathVariable(value = "link") UUID link,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
@@ -30,7 +30,7 @@ public class FindReceiptController implements FindReceiptApi {
         return findReceiptUseCase.getReceiptList(link, pageable);
     }
 
-    @GetMapping("{link}/receipts/{receiptId}")
+    @GetMapping("/{link}/receipts/{receiptId}")
     public ReceiptDetailResponse getReceipt(
             @PathVariable(value = "link") UUID link,
             @PathVariable("receiptId") Long receiptId
