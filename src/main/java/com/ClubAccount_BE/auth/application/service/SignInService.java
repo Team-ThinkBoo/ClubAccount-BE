@@ -1,5 +1,6 @@
 package com.ClubAccount_BE.auth.application.service;
 
+import com.ClubAccount_BE.user.application.port.out.FindUserLinkPort;
 import com.ClubAccount_BE.auth.application.port.out.SaveRefreshTokenPort;
 import com.ClubAccount_BE.auth.security.JwtAuthenticationToken;
 import com.ClubAccount_BE.auth.security.TokenProvider;
@@ -19,6 +20,7 @@ public class SignInService implements SignInUseCase {
     private final TokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
     private final SaveRefreshTokenPort saveRefreshTokenPort;
+    private final FindUserLinkPort findUserLinkPort;
 
     @Override
     public TokenResponse signIn(String authId, String password) {
@@ -27,7 +29,8 @@ public class SignInService implements SignInUseCase {
         String accessToken = tokenProvider.generateToken(userId);
         String refreshToken = tokenProvider.generateRefreshToken();
         saveRefreshTokenPort.saveRefreshToken(refreshToken, userId);
-        return TokenResponse.from(accessToken, refreshToken);
+        String link = findUserLinkPort.findLinkByUserId(userId);
+        return TokenResponse.from(accessToken, link);
     }
 
     private Authentication authenticateCommand(String authId, String password) {

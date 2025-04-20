@@ -33,6 +33,6 @@ public class SignInController implements SignInApiPresentation{
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return TokenResponse.from(tokenResponse.getAccessToken());
+        return TokenResponse.from(tokenResponse.getAccessToken(), tokenResponse.getLink());
     }
 }
