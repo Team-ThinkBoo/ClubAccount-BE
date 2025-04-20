@@ -20,7 +20,7 @@ public class TokenResponse {
         this.link = link;
     }
 
-    public static TokenResponse from(String accessToken, String link) {
+    public static TokenResponse of(String accessToken, String link) {
         return TokenResponse.builder()
                 .accessToken(accessToken)
                 .link(link)
