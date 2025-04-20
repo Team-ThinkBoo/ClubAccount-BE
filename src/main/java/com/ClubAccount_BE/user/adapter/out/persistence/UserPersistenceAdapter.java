@@ -1,5 +1,6 @@
 package com.ClubAccount_BE.user.adapter.out.persistence;
 
+import com.ClubAccount_BE.user.application.port.out.FindUserLinkPort;
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import com.ClubAccount_BE.user.adapter.out.persistence.repository.UserRepository;
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort,
-        FindUserByEmailPort, UpdatePasswordPort {
+        FindUserByEmailPort, UpdatePasswordPort, FindUserLinkPort {
 
     private final UserRepository userRepository;
 
@@ -43,7 +44,7 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, Check
 
     @Override
     public User getUserByLink(UUID link) {
-        return userRepository.findByRink(link)
+        return userRepository.findByLink(link)
                 .map(UserMapper::toDomain)
                 .orElseThrow(() -> new IllegalArgumentException("해당 링크의 사용자를 찾을 수 없습니다."));
     }
@@ -65,5 +66,13 @@ public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, Check
         user.updatePassword(newPassword);
         UserEntity entity = UserMapper.toEntity(user);
         userRepository.save(entity);
+    }
+
+    @Override
+    public String findLinkByUserId(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"))
+                .getLink()
+                .toString();
     }
 }

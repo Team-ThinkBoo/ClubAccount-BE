@@ -11,28 +11,19 @@ public class TokenResponse {
     @Schema(name = "accessToken", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c")
     private String accessToken;
 
-    @Schema(hidden = true)
-    private String refreshToken;
+    @Schema(name = "link", example = "1ecabfde-8574-4c98-a35a-4919c23e1c9f")
+    private String link;
 
     @Builder
-    public TokenResponse(String accessToken, String refreshToken) {
+    public TokenResponse(String accessToken, String link) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
+        this.link = link;
     }
 
-    public static TokenResponse from(String accessToken) {
-        return TokenResponse
-                .builder()
+    public static TokenResponse of(String accessToken, String link) {
+        return TokenResponse.builder()
                 .accessToken(accessToken)
-                .refreshToken("")
-                .build();
-    }
-
-    public static TokenResponse from(String accessToken, String refreshToken) {
-        return TokenResponse
-                .builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
+                .link(link)
                 .build();
     }
 }

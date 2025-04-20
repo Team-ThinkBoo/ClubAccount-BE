@@ -17,5 +17,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByAuthId(String email);
 
-    Optional<UserEntity> findByRink(UUID rink);
+    Optional<UserEntity> findByLink(UUID link);
 }

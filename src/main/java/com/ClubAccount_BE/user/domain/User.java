@@ -17,18 +17,18 @@ public class User {
     private String password;
     private final String department;
     private String profileUrl;
-    private UUID rink;
+    private UUID link;
     private final Instant createdAt;
     private final Instant updatedAt;
 
     @Builder
-    public User(Long id, String authId, String password, String department, String profileUrl, UUID rink, Instant createdAt, Instant updatedAt) {
+    public User(Long id, String authId, String password, String department, String profileUrl, UUID link, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.authId = authId;
         this.password = password;
         this.department = department;
         this.profileUrl = profileUrl;
-        this.rink = rink;
+        this.link = link;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -38,7 +38,7 @@ public class User {
                 .authId(authId)
                 .password(encodedPassword)
                 .department(department)
-                .rink(UUID.randomUUID())
+                .link(UUID.randomUUID())
                 .profileUrl("") // 프로필 URL은 일단 빈 문자열
                 .build();
     }
@@ -51,7 +51,7 @@ public class User {
     }
 
     public void updateRink(UUID rink) {
-        this.rink = rink;
+        this.link = rink;
     }
 
     public void updateProfileUrl(String profileUrl) {

@@ -37,5 +37,5 @@ public class UserEntity extends TimeBaseEntity {
 
     @Column(length = 36, nullable = false, unique = true, updatable = false)
     @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID rink;
+    private UUID link;
 }

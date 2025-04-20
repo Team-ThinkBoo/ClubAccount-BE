@@ -13,7 +13,7 @@ public class UserMapper {
                 .password(userEntity.getPassword())
                 .department(userEntity.getDepartment())
                 .profileUrl(userEntity.getProfileUrl())
-                .rink(userEntity.getRink())
+                .link(userEntity.getLink())
                 .createdAt(userEntity.getCreatedAt())
                 .updatedAt(userEntity.getUpdatedAt())
                 .build();
@@ -26,7 +26,7 @@ public class UserMapper {
                 .password(user.getPassword())
                 .department(user.getDepartment())
                 .profileUrl(user.getProfileUrl())
-                .rink(user.getRink())
+                .link(user.getLink())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
