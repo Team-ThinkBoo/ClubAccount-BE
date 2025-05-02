@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface FindReceiptPort {
 
-    List<Receipt> getReceiptList(User user);
-
     Page<Receipt> getReceiptList(User user, Pageable pageable);
+
+    List<Receipt> getReceiptCategoryList(User user);
 
     Receipt getReceipt(User user, Long receiptId);
 }

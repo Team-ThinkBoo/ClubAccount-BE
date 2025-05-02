@@ -47,7 +47,7 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public List<Receipt> getReceiptList(User user) {
+    public List<Receipt> getReceiptCategoryList(User user) {
         return receiptRepository
                 .findAllByUserId(user.getId())
                 .stream()

@@ -29,14 +29,14 @@ public class FindReceiptService implements FindReceiptUseCase {
     private final ReceiptEditor receiptEditor;
 
     @Override
-    public ReceiptCategoryResponse getReceiptCategoryRatio(UUID link) {
+    public ReceiptDetailResponse getReceipt(UUID link, Long receiptId) {
 
         User user = findUserPort.getUserByLink(link);
-        List<Receipt> receiptList = findReceiptPort.getReceiptList(user);
-        DetailCategoryResult result = receiptEditor.calculateCategoryRatio(receiptList);
-        return ReceiptCategoryResponse.of(result);
+        Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
+        return ReceiptDetailResponse.of(receipt);
     }
 
+    
     @Override
     public PagingResponse<ReceiptResponse> getReceiptList(UUID link, Pageable pageable) {
 
@@ -49,10 +49,11 @@ public class FindReceiptService implements FindReceiptUseCase {
     }
 
     @Override
-    public ReceiptDetailResponse getReceipt(UUID link, Long receiptId) {
+    public ReceiptCategoryResponse getReceiptCategoryRatio(UUID link) {
 
         User user = findUserPort.getUserByLink(link);
-        Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
-        return ReceiptDetailResponse.of(receipt);
+        List<Receipt> receiptList = findReceiptPort.getReceiptCategoryList(user);
+        DetailCategoryResult result = receiptEditor.calculateCategoryRatio(receiptList);
+        return ReceiptCategoryResponse.of(result);
     }
 }
