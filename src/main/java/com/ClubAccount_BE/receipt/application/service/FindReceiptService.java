@@ -1,13 +1,17 @@
 package com.ClubAccount_BE.receipt.application.service;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
+import com.ClubAccount_BE.receipt.domain.DetailCategoryResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,16 @@ public class FindReceiptService implements FindReceiptUseCase {
 
     private final FindReceiptPort findReceiptPort;
     private final FindUserPort findUserPort;
+    private final ReceiptEditor receiptEditor;
+
+    @Override
+    public ReceiptCategoryResponse getReceiptCategoryRatio(UUID link) {
+
+        User user = findUserPort.getUserByLink(link);
+        List<Receipt> receiptList = findReceiptPort.getReceiptList(user);
+        DetailCategoryResult result = receiptEditor.calculateCategoryRatio(receiptList);
+        return ReceiptCategoryResponse.of(result);
+    }
 
     @Override
     public PagingResponse<ReceiptResponse> getReceiptList(UUID link, Pageable pageable) {

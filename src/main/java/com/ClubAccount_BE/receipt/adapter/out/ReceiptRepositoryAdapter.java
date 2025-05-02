@@ -47,6 +47,15 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
+    public List<Receipt> getReceiptList(User user) {
+        return receiptRepository
+                .findAllByUserId(user.getId())
+                .stream()
+                .map(ReceiptMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public Long updateReceipt(
             Long receiptId,
             Receipt receipt,
