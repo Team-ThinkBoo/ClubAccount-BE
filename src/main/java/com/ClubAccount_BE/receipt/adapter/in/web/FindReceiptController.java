@@ -2,6 +2,7 @@ package com.ClubAccount_BE.receipt.adapter.in.web;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.api.FindReceiptApi;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
@@ -36,5 +37,12 @@ public class FindReceiptController implements FindReceiptApi {
             @PathVariable("receiptId") Long receiptId
     ) {
         return findReceiptUseCase.getReceipt(link, receiptId);
+    }
+
+    @GetMapping("/{link}/receipts/category")
+    public ReceiptCategoryResponse getReceiptCategoryRatio(
+            @PathVariable(value = "link") UUID link
+    ) {
+        return findReceiptUseCase.getReceiptCategoryRatio(link);
     }
 }
