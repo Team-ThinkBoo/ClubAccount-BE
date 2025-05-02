@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReceiptEditor {
 
+    /**
+     * 영수증 카테고리 비율 계산
+     */
     public DetailCategoryResult calculateCategoryRatio(List<Receipt> receipts) {
         int total = receipts.size();
 
