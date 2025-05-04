@@ -9,6 +9,7 @@ import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.mapper.ReceiptMapper;
 import com.ClubAccount_BE.user.domain.User;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,9 +33,14 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public Page<Receipt> getReceiptList(User user, Pageable pageable) {
+    public Page<Receipt> getReceiptList(
+            User user,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable
+    ) {
         return receiptRepository
-                .findAllByUserId(user.getId(), pageable)
+                .findAllByDate(user.getId(), startDate, endDate, pageable)
                 .map(ReceiptMapper::toDomain);
     }
 

@@ -11,6 +11,7 @@ import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +37,18 @@ public class FindReceiptService implements FindReceiptUseCase {
         return ReceiptDetailResponse.of(receipt);
     }
 
-    
+
     @Override
-    public PagingResponse<ReceiptResponse> getReceiptList(UUID link, Pageable pageable) {
+    public PagingResponse<ReceiptResponse> getReceiptList(
+            UUID link,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable
+    ) {
 
         User user = findUserPort.getUserByLink(link);
         Page<ReceiptResponse> page = findReceiptPort
-                .getReceiptList(user, pageable)
+                .getReceiptList(user, startDate, endDate, pageable)
                 .map(ReceiptResponse::of);
 
         return PagingResponse.of(page);

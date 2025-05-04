@@ -6,14 +6,17 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryRes
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,9 +29,11 @@ public class FindReceiptController implements FindReceiptApi {
     @GetMapping("/{link}/receipts")
     public PagingResponse<ReceiptResponse> getReceiptList(
             @PathVariable(value = "link") UUID link,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return findReceiptUseCase.getReceiptList(link, pageable);
+        return findReceiptUseCase.getReceiptList(link, startDate, endDate, pageable);
     }
 
     @GetMapping("/{link}/receipts/{receiptId}")
