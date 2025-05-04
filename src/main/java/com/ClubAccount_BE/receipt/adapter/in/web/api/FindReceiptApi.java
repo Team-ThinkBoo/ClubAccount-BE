@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Tag(name = "Find Receipt", description = "영수증 조회 API")
 public interface FindReceiptApi {
 
-    @Operation(summary = "영수증 목록 조회", description = "파싱된 영수증 정보를 조회한다.")
+    @Operation(
+            summary = "영수증 목록 조회",
+            description = "시작일과 종료일을 기준으로 파싱된 영수증을 조회한다. "
+                    + "시작일과 종료일에 정보가 없을 경우 모든 영수증을 조회한다.")
     PagingResponse<ReceiptResponse> getReceiptList(
             @PathVariable(value = "link") UUID link,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
