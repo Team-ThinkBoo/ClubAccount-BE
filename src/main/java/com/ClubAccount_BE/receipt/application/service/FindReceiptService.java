@@ -1,5 +1,7 @@
 package com.ClubAccount_BE.receipt.application.service;
 
+import static com.ClubAccount_BE.core.exception.ErrorCode.INVALID_START_DATE_AFTER_END_DATE;
+
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
@@ -11,6 +13,7 @@ import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +39,21 @@ public class FindReceiptService implements FindReceiptUseCase {
         return ReceiptDetailResponse.of(receipt);
     }
 
-    
+
     @Override
-    public PagingResponse<ReceiptResponse> getReceiptList(UUID link, Pageable pageable) {
+    public PagingResponse<ReceiptResponse> getReceiptList(
+            UUID link,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable
+    ) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException(INVALID_START_DATE_AFTER_END_DATE.getMessage());
+        }
 
         User user = findUserPort.getUserByLink(link);
         Page<ReceiptResponse> page = findReceiptPort
-                .getReceiptList(user, pageable)
+                .getReceiptList(user, startDate, endDate, pageable)
                 .map(ReceiptResponse::of);
 
         return PagingResponse.of(page);

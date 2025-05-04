@@ -6,18 +6,26 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailRespo
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDate;
 import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Find Receipt", description = "영수증 조회 API")
 public interface FindReceiptApi {
 
-    @Operation(summary = "영수증 목록 조회", description = "파싱된 영수증 정보를 조회한다.")
+    @Operation(
+            summary = "영수증 목록 조회",
+            description = "시작일과 종료일을 기준으로 파싱된 영수증을 조회한다. "
+                    + "시작일과 종료일에 정보가 없을 경우 모든 영수증을 조회한다.")
     PagingResponse<ReceiptResponse> getReceiptList(
             @PathVariable(value = "link") UUID link,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
     );
 
