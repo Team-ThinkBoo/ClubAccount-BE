@@ -2,6 +2,7 @@ package com.ClubAccount_BE.user.application.service.update;
 
 import com.ClubAccount_BE.user.application.port.in.update.PasswordResetUseCase;
 import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
+import com.ClubAccount_BE.user.application.port.out.update.UpdatePasswordPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

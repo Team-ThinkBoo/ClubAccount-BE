@@ -1,4 +1,4 @@
-package com.ClubAccount_BE.user.application.service.update;
+package com.ClubAccount_BE.user.application.port.out.update;
 
 import com.ClubAccount_BE.user.domain.User;
 

@@ -7,7 +7,7 @@ import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
-import com.ClubAccount_BE.user.application.service.update.UpdatePasswordPort;
+import com.ClubAccount_BE.user.application.port.out.update.UpdatePasswordPort;
 import com.ClubAccount_BE.user.domain.User;
 import com.ClubAccount_BE.user.mapper.UserMapper;
 import java.util.UUID;
