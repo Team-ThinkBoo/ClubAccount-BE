@@ -13,9 +13,9 @@ import java.util.UUID;
 public class User {
 
     private final Long id;
-    private final String authId;
+    private String authId;
     private String password;
-    private final String department;
+    private String department;
     private String profileUrl;
     private UUID link;
     private final Instant createdAt;
@@ -57,4 +57,13 @@ public class User {
     public void updateProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
     }
+
+    public void updateDepartment(String department) {
+        this.department = department;
+    }
+
+    public void updateAuthId(String authId) {
+        this.authId = authId;
+    }
+
 }
