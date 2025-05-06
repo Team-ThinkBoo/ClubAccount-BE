@@ -8,5 +8,6 @@ public interface ProfileUseCase {
     void updateProfile(User user, MultipartFile profileImage , ProfileUpdateRequest dto);
 
     void updateLink(User user);
-    //void changePassword(User user, PasswordChangeRequest dto);
+
+    void changePassword(User user, String currentPassword, String newPassword);
 }

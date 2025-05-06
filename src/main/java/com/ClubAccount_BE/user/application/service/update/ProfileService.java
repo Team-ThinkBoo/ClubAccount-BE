@@ -6,6 +6,7 @@ import com.ClubAccount_BE.user.application.port.out.UploadProfileImagePort;
 import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ public class ProfileService implements ProfileUseCase {
 
     private final UploadProfileImagePort uploadProfileImagePort;
     private final UserPort userPort;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void updateProfile(User user, MultipartFile profileImage, ProfileUpdateRequest dto) {
@@ -38,6 +40,15 @@ public class ProfileService implements ProfileUseCase {
     @Override
     public void updateLink(User user) {
         user.updateLink();
+        userPort.save(user);
+    }
+
+    @Override
+    public void changePassword(User user, String currentPassword, String newPassword) {
+        if (!user.matchPassword(passwordEncoder, currentPassword)) {
+            throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
+        }
+        user.updatePassword(passwordEncoder.encode(newPassword));
         userPort.save(user);
     }
 }
