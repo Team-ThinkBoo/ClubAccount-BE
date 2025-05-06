@@ -2,11 +2,13 @@ package com.ClubAccount_BE.user.adapter.in.update;
 
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.ProfileUpdateRequest;
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.LoginUserUpdatePassword;
+import com.ClubAccount_BE.user.adapter.in.update.dto.response.UserProfileResponse;
 import com.ClubAccount_BE.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,5 +32,11 @@ public interface ProfileApi {
     void changePassword(
             @Parameter(hidden = true) User user,
             @RequestBody @Valid LoginUserUpdatePassword request
+    );
+
+    @Operation(summary = "프로필 조회", description = "현재 로그인된 사용자의 프로필 정보를 조회합니다.")
+    @GetMapping
+    UserProfileResponse getProfile(
+            @Parameter(hidden = true) User user
     );
 }

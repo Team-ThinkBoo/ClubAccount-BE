@@ -3,6 +3,7 @@ package com.ClubAccount_BE.user.adapter.in.update;
 import com.ClubAccount_BE.core.meta.LoginUser;
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.LoginUserUpdatePassword;
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.ProfileUpdateRequest;
+import com.ClubAccount_BE.user.adapter.in.update.dto.response.UserProfileResponse;
 import com.ClubAccount_BE.user.application.port.in.update.ProfileUseCase;
 import com.ClubAccount_BE.user.domain.User;
 import jakarta.validation.Valid;
@@ -34,5 +35,10 @@ public class ProfileController implements ProfileApi {
     public void changePassword(@LoginUser User user,
                                @RequestBody @Valid LoginUserUpdatePassword request) {
         profileUseCase.changePassword(user, request.currentPassword(), request.newPassword());
+    }
+
+    @GetMapping
+    public UserProfileResponse getProfile(@LoginUser User user) {
+        return profileUseCase.getProfile(user);
     }
 }

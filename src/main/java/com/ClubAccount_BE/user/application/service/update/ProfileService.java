@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.user.application.service.update;
 
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.ProfileUpdateRequest;
+import com.ClubAccount_BE.user.adapter.in.update.dto.response.UserProfileResponse;
 import com.ClubAccount_BE.user.application.port.in.update.ProfileUseCase;
 import com.ClubAccount_BE.user.application.port.out.UploadProfileImagePort;
 import com.ClubAccount_BE.user.application.port.out.UserPort;
@@ -17,6 +18,7 @@ public class ProfileService implements ProfileUseCase {
     private final UploadProfileImagePort uploadProfileImagePort;
     private final UserPort userPort;
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public void updateProfile(User user, MultipartFile profileImage, ProfileUpdateRequest dto) {
@@ -50,5 +52,10 @@ public class ProfileService implements ProfileUseCase {
         }
         user.updatePassword(passwordEncoder.encode(newPassword));
         userPort.save(user);
+    }
+
+    @Override
+    public UserProfileResponse getProfile(User user) {
+        return UserProfileResponse.from(user);
     }
 }
