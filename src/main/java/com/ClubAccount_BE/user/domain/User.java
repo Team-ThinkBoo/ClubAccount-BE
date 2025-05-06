@@ -50,8 +50,8 @@ public class User {
         this.password = encodedPassword;
     }
 
-    public void updateRink(UUID rink) {
-        this.link = rink;
+    public void updateLink() {
+        this.link = UUID.randomUUID();
     }
 
     public void updateProfileUrl(String profileUrl) {

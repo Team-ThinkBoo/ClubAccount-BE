@@ -5,7 +5,8 @@ import com.ClubAccount_BE.user.domain.User;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ProfileUseCase {
-    //ProfileResponse getProfile(User user);
     void updateProfile(User user, MultipartFile profileImage , ProfileUpdateRequest dto);
+
+    void updateLink(User user);
     //void changePassword(User user, PasswordChangeRequest dto);
 }

@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/profile")
 @RequiredArgsConstructor
-public class ProfileController {
+public class ProfileController implements ProfileApi {
 
     private final ProfileUseCase profileUseCase;
 
@@ -20,5 +20,11 @@ public class ProfileController {
                               @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
                               @RequestPart(value = "profile", required = false) ProfileUpdateRequest profileDto) {
         profileUseCase.updateProfile(user, profileImage, profileDto);
+
+    }
+
+    @PatchMapping("/regenerate-link")
+    public void updateLink(@LoginUser User user) {
+        profileUseCase.updateLink(user);
     }
 }

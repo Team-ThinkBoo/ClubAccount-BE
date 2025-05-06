@@ -6,9 +6,21 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Profile", description = "프로필 관련 API")
 public interface ProfileApi {
+
     @Operation(summary = "프로필 수정", description = "조직명, 이메일, 프로필 이미지를 선택적으로 수정합니다.")
-    void updateProfile(@Valid ProfileUpdateRequest dto, @Parameter(hidden = true)User user);
+    void updateProfile(
+            @Parameter(hidden = true) User user,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+            @RequestPart(value = "profile", required = false) @Valid ProfileUpdateRequest dto
+    );
+
+    @Operation(summary = "사용자 링크 재생성", description = "회원 UUID 기반 사용자 링크를 새로 발급합니다.")
+    void updateLink(
+            @Parameter(hidden = true) User user
+    );
 }

@@ -34,4 +34,10 @@ public class ProfileService implements ProfileUseCase {
 
         userPort.save(user);
     }
+
+    @Override
+    public void updateLink(User user) {
+        user.updateLink();
+        userPort.save(user);
+    }
 }

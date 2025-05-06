@@ -35,7 +35,7 @@ public class UserEntity extends TimeBaseEntity {
 
     private String profileUrl;
 
-    @Column(length = 36, nullable = false, unique = true, updatable = false)
+    @Column(length = 36, nullable = false, unique = true)
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID link;
 }
