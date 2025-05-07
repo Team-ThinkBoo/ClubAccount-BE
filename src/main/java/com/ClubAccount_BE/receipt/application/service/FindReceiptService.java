@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.receipt.application.service;
 
-import static com.ClubAccount_BE.core.exception.ErrorCode.INVALID_START_DATE_AFTER_END_DATE;
+import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_INVALID_START_DATE;
 
 import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.core.response.PagingResponse;
@@ -49,7 +49,7 @@ public class FindReceiptService implements FindReceiptUseCase {
             Pageable pageable
     ) {
         if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
-            throw new ApiException(INVALID_START_DATE_AFTER_END_DATE);
+            throw new ApiException(RECEIPT_INVALID_START_DATE);
         }
 
         User user = findUserPort.getUserByLink(link);
