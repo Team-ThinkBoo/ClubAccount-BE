@@ -3,7 +3,7 @@ package com.ClubAccount_BE.user.application.service.signup;
 import com.ClubAccount_BE.user.application.port.in.signup.SignUpCommand;
 import com.ClubAccount_BE.user.application.port.in.signup.SignUpUseCase;
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
-import com.ClubAccount_BE.user.application.port.out.SaveUserPort;
+import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +16,7 @@ import static com.ClubAccount_BE.core.exception.ErrorCode.DUPLICATED_AUTHID;
 @Transactional
 @RequiredArgsConstructor
 public class SignUpService implements SignUpUseCase {
-    private final SaveUserPort saveUserPort;
+    private final UserPort userPort;
     private final CheckUserPort checkUserPort;
     private final PasswordEncoder passwordEncoder;
 
@@ -29,7 +29,7 @@ public class SignUpService implements SignUpUseCase {
                 encodedPassword,
                 signUpCommand.getOrganization()
         );
-        saveUserPort.saveUser(newUser);
+        userPort.save(newUser);
     }
     private void checkDuplicateUser(SignUpCommand signUpCommand) {
         if (checkUserPort.checkDuplicateAuthId(signUpCommand.getAuthId())) {

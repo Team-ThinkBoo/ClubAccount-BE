@@ -5,9 +5,9 @@ import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import com.ClubAccount_BE.user.adapter.out.persistence.repository.UserRepository;
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
-import com.ClubAccount_BE.user.application.port.out.SaveUserPort;
+import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
-import com.ClubAccount_BE.user.application.service.update.UpdatePasswordPort;
+import com.ClubAccount_BE.user.application.port.out.update.UpdatePasswordPort;
 import com.ClubAccount_BE.user.domain.User;
 import com.ClubAccount_BE.user.mapper.UserMapper;
 import java.util.UUID;
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements FindUserPort, SaveUserPort, CheckUserPort,
+public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUserPort,
         FindUserByEmailPort, UpdatePasswordPort, FindUserLinkPort {
 
     private final UserRepository userRepository;
 
     @Override
-    public User saveUser(User user) {
+    public void save(User user) {
         UserEntity entity = UserMapper.toEntity(user);
         UserEntity saved = userRepository.save(entity);
-        return UserMapper.toDomain(saved);
+        UserMapper.toDomain(saved);
     }
 
     @Override
