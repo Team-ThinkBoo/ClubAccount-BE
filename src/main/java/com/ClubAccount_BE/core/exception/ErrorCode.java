@@ -5,6 +5,15 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
+    ACCESS_DENIED_EXCEPTION("0001", "권한이 없습니다.", HttpStatus.UNAUTHORIZED),
+    INTERNAL_SERVER_ERROR("0002", "서버 에러 입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    NOT_FOUND("0003", "요청하신 페이지를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    METHOD_ARGUMENT_NOT_VALID("0004", "잘못된 파라미터 요청입니다.", HttpStatus.BAD_REQUEST),
+    METHOD_NOT_ALLOWED("0006", "허용되지 않는 메소드입니다.", HttpStatus.METHOD_NOT_ALLOWED),
+    NOT_READABLE("0007", "JSON 형식에 오류가 있습니다.", HttpStatus.BAD_REQUEST),
+    MISSING_REQUEST_PARAMETER("0008", "필수 파라미터가 누락되었습니다.", HttpStatus.BAD_REQUEST),
+    DATABASE_EXCEPTION("0009", "데이터베이스 에러 입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
     AUTHENTICATION_FAIL_FORBIDDEN("1001", "접근 권한이 없습니다.", HttpStatus.FORBIDDEN),
     AUTHENTICATION_FAIL_UNAUTHORIZED("1002", "인증되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED),
     INCORRECT_PASSWORD("1003", "비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
