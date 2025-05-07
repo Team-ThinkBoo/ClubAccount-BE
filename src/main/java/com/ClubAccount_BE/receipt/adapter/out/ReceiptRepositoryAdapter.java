@@ -1,5 +1,8 @@
 package com.ClubAccount_BE.receipt.adapter.out;
 
+import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_NOT_FOUND;
+
+import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
 import com.ClubAccount_BE.receipt.adapter.out.persistence.repository.ReceiptRepository;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
@@ -49,7 +52,7 @@ public class ReceiptRepositoryAdapter
         return receiptRepository
                 .findById(receiptId)
                 .map(ReceiptMapper::toDomain)
-                .orElseThrow(() -> new IllegalArgumentException("Receipt not found"));
+                .orElseThrow(() -> new ApiException(RECEIPT_NOT_FOUND));
     }
 
     @Override
@@ -68,7 +71,7 @@ public class ReceiptRepositoryAdapter
             List<ReceiptItem> receiptItems
     ) {
         ReceiptEntity receiptEntity = receiptRepository.findReceiptById(receiptId)
-                .orElseThrow(() -> new IllegalArgumentException("Receipt not found"));
+                .orElseThrow(() -> new ApiException(RECEIPT_NOT_FOUND));
 
         receiptEntity.updateReceipt(receipt);
         receiptEntity.replaceReceiptItem(receiptItems);

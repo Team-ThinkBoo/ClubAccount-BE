@@ -2,7 +2,9 @@ package com.ClubAccount_BE.receipt.adapter.out;
 
 
 import static com.ClubAccount_BE.core.constant.CommonConstant.IMAGE_KEY_DELIMITER;
+import static com.ClubAccount_BE.core.exception.ErrorCode.S3_UPLOAD_FAIL;
 
+import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import java.io.IOException;
 import java.util.UUID;
@@ -40,7 +42,7 @@ public class ReceiptImageRepositoryAdapter implements UploadReceiptPort {
             );
 
         } catch (IOException e) {
-            throw new RuntimeException("S3 업로드 실패", e);
+            throw new ApiException(S3_UPLOAD_FAIL);
         }
 
         return getImageUrl(imageName);

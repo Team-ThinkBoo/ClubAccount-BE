@@ -14,13 +14,19 @@ public enum ErrorCode {
     MISSING_REQUEST_PARAMETER("0008", "필수 파라미터가 누락되었습니다.", HttpStatus.BAD_REQUEST),
     DATABASE_EXCEPTION("0009", "데이터베이스 에러 입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
+    // 인증 관련 에러 코드
     AUTHENTICATION_FAIL_FORBIDDEN("1001", "접근 권한이 없습니다.", HttpStatus.FORBIDDEN),
     AUTHENTICATION_FAIL_UNAUTHORIZED("1002", "인증되지 않은 사용자입니다.", HttpStatus.UNAUTHORIZED),
     INCORRECT_PASSWORD("1003", "비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
     DUPLICATED_AUTHID("1004", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED("1005", "인증이 필요합니다.", HttpStatus.UNAUTHORIZED),
 
-    INVALID_START_DATE_AFTER_END_DATE("2001", "시작일은 종료일보다 빠르거나 같아야 합니다.", HttpStatus.BAD_REQUEST);
+    // 영수증 관련 에러 코드
+    INVALID_START_DATE_AFTER_END_DATE("2001", "시작일은 종료일보다 빠르거나 같아야 합니다.", HttpStatus.BAD_REQUEST),
+    RECEIPT_NOT_FOUND("2002", "해당 영수증을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+
+    // S3 관련 에러 코드
+    S3_UPLOAD_FAIL("3001", "S3에 이미지 업로드 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;
     private final String message;
