@@ -16,7 +16,7 @@ public class ReceiptMapper {
                 .date(receipt.getDate())
                 .etc(receipt.getEtc())
                 .receiptImageUrl(receipt.getReceiptImageUrl())
-                .isAmountMatched(receipt.isAmountMatched())
+                .amountMatched(receipt.isAmountMatched())
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class ReceiptMapper {
                         .map(ReceiptItemMapper::toDomain)
                         .toList()
                 )
-                .isAmountMatched(receiptEntity.isAmountMatched())
+                .amountMatched(receiptEntity.isAmountMatched())
                 .build();
     }
 }

@@ -60,7 +60,7 @@ public class ReceiptEntity extends TimeBaseEntity {
     private String receiptImageUrl;
 
     @Column(nullable = false)
-    private boolean isAmountMatched;
+    private boolean amountMatched;
 
     @Builder.Default
     @OneToMany(mappedBy = "receipt", cascade = CascadeType.ALL, orphanRemoval = true)
