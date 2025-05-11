@@ -20,6 +20,7 @@ public class Receipt {
     private final String etc;
     private final String receiptImageUrl;
     private final List<ReceiptItem> receiptItems;
+    private boolean amountMatched;
 
     @Builder
     private Receipt(
@@ -31,7 +32,8 @@ public class Receipt {
             BigDecimal amount,
             String etc,
             String receiptImageUrl,
-            List<ReceiptItem> receiptItems
+            List<ReceiptItem> receiptItems,
+            boolean amountMatched
     ) {
         this.id = id;
         this.user = user;
@@ -42,6 +44,7 @@ public class Receipt {
         this.etc = etc;
         this.receiptImageUrl = receiptImageUrl;
         this.receiptItems = receiptItems;
+        this.amountMatched = amountMatched;
     }
 
     public static Receipt create(
@@ -82,5 +85,9 @@ public class Receipt {
                 .date(date)
                 .etc(etc)
                 .build();
+    }
+
+    public void updateAmountMatched(boolean amountMatched) {
+        this.amountMatched = amountMatched;
     }
 }

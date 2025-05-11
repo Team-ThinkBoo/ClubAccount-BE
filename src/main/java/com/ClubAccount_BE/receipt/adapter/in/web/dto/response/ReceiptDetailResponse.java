@@ -16,7 +16,8 @@ public record ReceiptDetailResponse(
         BigDecimal amount,
         String etc,
         String receiptImageUrl,
-        List<ReceiptItemResponse> receiptItems
+        List<ReceiptItemResponse> receiptItems,
+        boolean amountMatched
 ) {
 
     public static ReceiptDetailResponse of(Receipt receipt) {
@@ -29,6 +30,7 @@ public record ReceiptDetailResponse(
                 .etc(receipt.getEtc())
                 .receiptImageUrl(receipt.getReceiptImageUrl())
                 .receiptItems(ReceiptItemResponse.of(receipt.getReceiptItems()))
+                .amountMatched(receipt.isAmountMatched())
                 .build();
     }
 }

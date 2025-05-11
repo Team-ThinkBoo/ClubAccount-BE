@@ -2,7 +2,9 @@ package com.ClubAccount_BE.receipt.domain.service;
 
 import com.ClubAccount_BE.receipt.domain.DetailCategoryResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,6 +12,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReceiptEditor {
+
+    /**
+     * 영수증 금액과 영수증 아이템 금액 비교
+     */
+    public boolean checkAmountMatch(Receipt receipt, List<ReceiptItem> items) {
+        BigDecimal total = items.stream()
+                .map(ReceiptItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return total.compareTo(receipt.getAmount()) == 0;
+    }
 
     /**
      * 영수증 카테고리 비율 계산
