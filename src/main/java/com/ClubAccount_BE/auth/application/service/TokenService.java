@@ -1,9 +1,12 @@
 package com.ClubAccount_BE.auth.application.service;
 
+import com.ClubAccount_BE.core.exception.ApiException;
+
 import com.ClubAccount_BE.auth.adapter.in.web.token.dto.response.AccessTokenResponse;
 import com.ClubAccount_BE.auth.application.port.in.TokenUseCase;
 import com.ClubAccount_BE.auth.application.port.out.FindRefreshTokenPort;
 import com.ClubAccount_BE.auth.security.TokenProvider;
+import com.ClubAccount_BE.core.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,6 @@ public class TokenService implements TokenUseCase {
 
     private Long findByRefreshToken(String refreshToken) {
         return findRefreshTokenPort.getByRefreshToken(refreshToken)
-                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 토큰입니다."));
+                .orElseThrow(() -> new ApiException(ErrorCode.INVALID_REFRESH_TOKEN));
     }
 }

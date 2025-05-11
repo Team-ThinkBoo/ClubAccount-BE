@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.auth.security;
 
-import static com.ClubAccount_BE.core.exception.ErrorCode.AUTHENTICATION_FAIL_FORBIDDEN;
+import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_FAIL_FORBIDDEN;
 
 import com.ClubAccount_BE.core.exception.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
-    private static final ErrorResponse E403 = new ErrorResponse(AUTHENTICATION_FAIL_FORBIDDEN);
+    private static final ErrorResponse E403 = new ErrorResponse(AUTH_FAIL_FORBIDDEN);
 
     private final ObjectMapper om;
 

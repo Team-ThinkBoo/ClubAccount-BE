@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.core.config.auth;
 
-import com.ClubAccount_BE.core.exception.ErrorCode;
+import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_UNAUTHORIZED;
+
 import com.ClubAccount_BE.core.exception.UnAuthorizedException;
 import com.ClubAccount_BE.core.meta.LoginUser;
 import com.ClubAccount_BE.user.application.port.in.FindUserUseCase;
@@ -41,7 +42,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED);
+            throw new UnAuthorizedException(AUTH_UNAUTHORIZED);
         }
 
         Long userId = Long.valueOf(authentication.getName());

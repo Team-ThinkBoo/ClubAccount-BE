@@ -1,5 +1,7 @@
 package com.ClubAccount_BE.user.application.service.signup;
 
+import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_INCORRECT_PASSWORD;
+
 import com.ClubAccount_BE.user.application.port.in.signup.SignUpCommand;
 import com.ClubAccount_BE.user.application.port.in.signup.SignUpUseCase;
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
@@ -10,12 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.ClubAccount_BE.core.exception.ErrorCode.DUPLICATED_AUTHID;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SignUpService implements SignUpUseCase {
+
     private final UserPort userPort;
     private final CheckUserPort checkUserPort;
     private final PasswordEncoder passwordEncoder;
@@ -31,9 +32,10 @@ public class SignUpService implements SignUpUseCase {
         );
         userPort.save(newUser);
     }
+
     private void checkDuplicateUser(SignUpCommand signUpCommand) {
         if (checkUserPort.checkDuplicateAuthId(signUpCommand.getAuthId())) {
-            throw new IllegalArgumentException(DUPLICATED_AUTHID.toString());
+            throw new IllegalArgumentException(AUTH_INCORRECT_PASSWORD.toString());
         }
     }
 }

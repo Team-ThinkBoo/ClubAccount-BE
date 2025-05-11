@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.auth.security;
 
-import static com.ClubAccount_BE.core.exception.ErrorCode.AUTHENTICATION_FAIL_UNAUTHORIZED;
+import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_FAIL_UNAUTHORIZED;
 
 import com.ClubAccount_BE.core.exception.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private static final ErrorResponse E401 = new ErrorResponse(AUTHENTICATION_FAIL_UNAUTHORIZED);
+    private static final ErrorResponse E401 = new ErrorResponse(AUTH_FAIL_UNAUTHORIZED);
 
     private final ObjectMapper om;
 

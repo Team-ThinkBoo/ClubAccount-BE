@@ -1,5 +1,6 @@
 package com.ClubAccount_BE.user.application.service.update;
 
+import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.user.adapter.in.update.dto.request.ProfileUpdateRequest;
 import com.ClubAccount_BE.user.adapter.in.update.dto.response.UserProfileResponse;
 import com.ClubAccount_BE.user.application.port.in.update.ProfileUseCase;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_PASSWORD_CONFIRM_MISMATCH;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +51,7 @@ public class ProfileService implements ProfileUseCase {
     @Override
     public void changePassword(User user, String currentPassword, String newPassword) {
         if (!user.matchPassword(passwordEncoder, currentPassword)) {
-            throw new IllegalArgumentException("기존 비밀번호가 일치하지 않습니다.");
+            throw new ApiException(AUTH_PASSWORD_CONFIRM_MISMATCH);
         }
         user.updatePassword(passwordEncoder.encode(newPassword));
         userPort.save(user);
