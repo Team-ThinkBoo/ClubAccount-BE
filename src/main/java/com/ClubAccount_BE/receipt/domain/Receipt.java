@@ -87,7 +87,7 @@ public class Receipt {
                 .build();
     }
 
-    public void checkAmountMatched(boolean isAmountMatched) {
+    public void updateAmountMatched(boolean isAmountMatched) {
         this.isAmountMatched = isAmountMatched;
     }
 }

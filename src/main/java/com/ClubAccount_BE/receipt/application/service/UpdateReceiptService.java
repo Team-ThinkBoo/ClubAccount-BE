@@ -40,7 +40,7 @@ public class UpdateReceiptService implements UpdateReceiptUseCase {
 
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);
         boolean isAmountMatched = receiptEditor.checkAmountMatch(receipt, receiptItems);
-        receipt.checkAmountMatched(isAmountMatched);
+        receipt.updateAmountMatched(isAmountMatched);
         return updateReceiptPort.updateReceipt(receiptId, receipt, receiptItems);
     }
 }
