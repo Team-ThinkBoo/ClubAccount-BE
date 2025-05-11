@@ -8,6 +8,7 @@ import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptItemEditor;
 import com.ClubAccount_BE.user.domain.User;
 import java.util.List;
@@ -22,9 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class CreateReceiptService implements CreateReceiptUseCase {
 
     private final CreateReceiptPort createReceiptPort;
-
     private final UploadReceiptPort uploadReceiptPort;
-
+    private final ReceiptEditor receiptEditor;
     private final ReceiptItemEditor receiptItemEditor;
 
     @Override
@@ -33,7 +33,6 @@ public class CreateReceiptService implements CreateReceiptUseCase {
             MultipartFile image,
             ReceiptRequest receiptRequest
     ) {
-
         Receipt receipt = Receipt.create(
                 user,
                 receiptRequest.category(),
@@ -43,8 +42,9 @@ public class CreateReceiptService implements CreateReceiptUseCase {
                 receiptRequest.etc(),
                 image == null ? DEFAULT_IMAGE : uploadReceiptPort.uploadReceipt(image)
         );
-
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);
+        boolean isAmountMatched = receiptEditor.checkAmountMatch(receipt, receiptItems);
+        receipt.checkAmountMatched(isAmountMatched);
         return createReceiptPort.createReceipt(receipt, receiptItems);
     }
 }
