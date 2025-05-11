@@ -2,9 +2,7 @@ package com.ClubAccount_BE.receipt.adapter.out.persistence.entity;
 
 import com.ClubAccount_BE.core.entity.TimeBaseEntity;
 import com.ClubAccount_BE.receipt.domain.Receipt;
-import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
-import com.ClubAccount_BE.receipt.mapper.ReceiptItemMapper;
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -74,6 +72,7 @@ public class ReceiptEntity extends TimeBaseEntity {
         this.amount = receipt.getAmount();
         this.date = receipt.getDate();
         this.etc = receipt.getEtc();
+        this.receiptItems.clear();
     }
 
     public void addReceiptItem(ReceiptItemEntity receiptItem) {
@@ -81,12 +80,5 @@ public class ReceiptEntity extends TimeBaseEntity {
         if (receiptItem.getReceipt() != this) {
             receiptItem.addReceipt(this);
         }
-    }
-
-    public void replaceReceiptItem(List<ReceiptItem> receiptItems) {
-        this.receiptItems.clear();
-        receiptItems.stream()
-                .map(ReceiptItemMapper::toEntity)
-                .forEach(this::addReceiptItem);
     }
 }

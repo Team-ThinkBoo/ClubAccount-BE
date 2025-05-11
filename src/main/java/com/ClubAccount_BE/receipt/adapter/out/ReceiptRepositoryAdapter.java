@@ -10,6 +10,7 @@ import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UpdateReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.mapper.ReceiptItemMapper;
 import com.ClubAccount_BE.receipt.mapper.ReceiptMapper;
 import com.ClubAccount_BE.user.domain.User;
 import java.time.LocalDate;
@@ -29,7 +30,9 @@ public class ReceiptRepositoryAdapter
     @Override
     public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
         ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
-        receiptEntity.replaceReceiptItem(receiptItems);
+        receiptItems.stream()
+                .map(ReceiptItemMapper::toEntity)
+                .forEach(receiptEntity::addReceiptItem);
         return receiptRepository
                 .save(receiptEntity)
                 .getId();
@@ -74,7 +77,9 @@ public class ReceiptRepositoryAdapter
                 .orElseThrow(() -> new ApiException(RECEIPT_NOT_FOUND));
 
         receiptEntity.updateReceipt(receipt);
-        receiptEntity.replaceReceiptItem(receiptItems);
+        receiptItems.stream()
+                .map(ReceiptItemMapper::toEntity)
+                .forEach(receiptEntity::addReceiptItem);
         return receiptEntity.getId();
     }
 }
