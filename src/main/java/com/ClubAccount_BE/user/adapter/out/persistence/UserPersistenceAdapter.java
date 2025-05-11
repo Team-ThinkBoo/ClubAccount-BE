@@ -1,5 +1,8 @@
 package com.ClubAccount_BE.user.adapter.out.persistence;
 
+import com.ClubAccount_BE.core.exception.ApiException;
+import com.ClubAccount_BE.core.exception.ErrorCode;
+
 import com.ClubAccount_BE.user.application.port.out.FindUserLinkPort;
 import com.ClubAccount_BE.user.adapter.out.persistence.entity.UserEntity;
 import com.ClubAccount_BE.user.adapter.out.persistence.repository.UserRepository;
@@ -32,21 +35,21 @@ public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUser
     public User getUserByAuthId(String authId) {
         return userRepository.getByAuthId(authId)
                 .map(UserMapper::toDomain)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일의 사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_USER_NOT_FOUND));
     }
 
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .map(UserMapper::toDomain)
-                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_USER_NOT_FOUND));
     }
 
     @Override
     public User getUserByLink(UUID link) {
         return userRepository.findByLink(link)
                 .map(UserMapper::toDomain)
-                .orElseThrow(() -> new IllegalArgumentException("해당 링크의 사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_USER_NOT_FOUND));
     }
 
     @Override
@@ -58,7 +61,7 @@ public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUser
     public User findByAuthId(String email) {
         return userRepository.findByAuthId(email)
                 .map(UserMapper::toDomain)
-                .orElseThrow(() -> new IllegalArgumentException("해당 이메일을 가진 사용자가 존재하지 않습니다."));
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_USER_NOT_FOUND));
     }
 
     @Override
@@ -71,7 +74,7 @@ public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUser
     @Override
     public String findLinkByUserId(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"))
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_USER_NOT_FOUND))
                 .getLink()
                 .toString();
     }

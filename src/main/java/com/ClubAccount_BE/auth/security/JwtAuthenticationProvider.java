@@ -1,9 +1,7 @@
 package com.ClubAccount_BE.auth.security;
 
-
-import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_INCORRECT_PASSWORD;
-
-import com.ClubAccount_BE.core.exception.UnAuthorizedException;
+import com.ClubAccount_BE.core.exception.ApiException;
+import com.ClubAccount_BE.core.exception.ErrorCode;
 import com.ClubAccount_BE.user.application.port.in.FindUserUseCase;
 import com.ClubAccount_BE.user.domain.User;
 import java.util.Collections;
@@ -37,8 +35,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         User user = findUserUseCase.getUserByAuthId(
                 String.valueOf(authenticationToken.getPrincipal()));
         String userPassword = String.valueOf(authenticationToken.getCredentials());
+        if (user == null) {
+            throw new ApiException(ErrorCode.AUTH_USER_NOT_FOUND);
+        }
         if (!user.matchPassword(passwordEncoder, userPassword)) {
-            throw new UnAuthorizedException(AUTH_INCORRECT_PASSWORD);
+            throw new ApiException(ErrorCode.AUTH_INCORRECT_PASSWORD);
         }
         return new JwtAuthenticationToken(
                 user.getId(), null, Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))

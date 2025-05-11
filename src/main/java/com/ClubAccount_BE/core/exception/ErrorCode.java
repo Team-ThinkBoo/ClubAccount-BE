@@ -20,6 +20,9 @@ public enum ErrorCode {
     AUTH_INCORRECT_PASSWORD("1003", "비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED),
     AUTH_DUPLICATED_AUTHID("1004", "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST),
     AUTH_UNAUTHORIZED("1005", "인증이 필요합니다.", HttpStatus.UNAUTHORIZED),
+    AUTH_USER_NOT_FOUND("1006", "존재하지 않는 아이디입니다.", HttpStatus.UNAUTHORIZED),
+    AUTH_PASSWORD_CONFIRM_MISMATCH("1007", "비밀번호 확인이 일치하지 않습니다.", HttpStatus.BAD_REQUEST),
+    INVALID_REFRESH_TOKEN("1008", "유효하지 않은 리프레시 토큰입니다.", HttpStatus.UNAUTHORIZED),
 
     // 영수증 관련 에러 코드
     RECEIPT_INVALID_START_DATE("2001", "시작일은 종료일보다 빠르거나 같아야 합니다.", HttpStatus.BAD_REQUEST),

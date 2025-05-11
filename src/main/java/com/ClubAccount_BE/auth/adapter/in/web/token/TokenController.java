@@ -1,5 +1,8 @@
 package com.ClubAccount_BE.auth.adapter.in.web.token;
 
+import com.ClubAccount_BE.core.exception.ApiException;
+import com.ClubAccount_BE.core.exception.ErrorCode;
+
 import com.ClubAccount_BE.auth.adapter.in.web.token.dto.response.AccessTokenResponse;
 import com.ClubAccount_BE.auth.application.port.in.TokenUseCase;
 
@@ -49,6 +52,6 @@ public class TokenController implements TokenApiPresentation{
                 }
             }
         }
-        throw new IllegalArgumentException("Refresh token not found in cookies");
+        throw new ApiException(ErrorCode.INVALID_REFRESH_TOKEN);
     }
 }
