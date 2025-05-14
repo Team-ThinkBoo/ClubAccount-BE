@@ -5,8 +5,8 @@ import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_INVALID_START_
 import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
@@ -35,11 +35,14 @@ public class FindReceiptService implements FindReceiptUseCase {
     private final ReceiptEditor receiptEditor;
 
     @Override
-    public ReceiptDetailResponse getReceipt(UUID link, Long receiptId) {
+    public List<ReceiptItemResponse> getReceiptItem(UUID link, Long receiptId) {
 
         User user = findUserPort.getUserByLink(link);
         Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
-        return ReceiptDetailResponse.of(receipt);
+        return receipt.getReceiptItems()
+                .stream()
+                .map(ReceiptItemResponse::of)
+                .toList();
     }
 
     @Override

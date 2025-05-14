@@ -3,8 +3,8 @@ package com.ClubAccount_BE.receipt.adapter.in.web;
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.api.FindReceiptApi;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import jakarta.validation.constraints.Positive;
@@ -40,11 +40,11 @@ public class FindReceiptController implements FindReceiptApi {
     }
 
     @GetMapping("/{link}/receipts/{receiptId}")
-    public ReceiptDetailResponse getReceipt(
+    public List<ReceiptItemResponse> getReceiptItem(
             @PathVariable(value = "link") UUID link,
             @PathVariable("receiptId") Long receiptId
     ) {
-        return findReceiptUseCase.getReceipt(link, receiptId);
+        return findReceiptUseCase.getReceiptItem(link, receiptId);
     }
 
     @GetMapping("/{link}/receipts/category")
