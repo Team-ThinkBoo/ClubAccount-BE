@@ -3,10 +3,13 @@ package com.ClubAccount_BE.receipt.adapter.in.web.api;
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,5 +41,11 @@ public interface FindReceiptApi {
     @Operation(summary = "영수증 카테고리 비율 조회", description = "등록된 영수증의 카테고리 비율을 조회한다.")
     ReceiptCategoryResponse getReceiptCategoryRatio(
             @PathVariable(value = "link") UUID link
+    );
+
+    @Operation(summary = "영수증 월별 지출 목록 조회", description = "등록된 영수증의 월별 지출을 조회한다.")
+    List<ReceiptExpenseResponse> getReceiptExpenseList(
+            @PathVariable(value = "link") UUID link,
+            @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
     );
 }

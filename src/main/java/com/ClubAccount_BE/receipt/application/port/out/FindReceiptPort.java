@@ -19,4 +19,6 @@ public interface FindReceiptPort {
     List<Receipt> getReceiptCategoryList(User user);
 
     Receipt getReceipt(User user, Long receiptId);
+
+    List<Receipt> getReceiptExpenseList(User user, int year);
 }

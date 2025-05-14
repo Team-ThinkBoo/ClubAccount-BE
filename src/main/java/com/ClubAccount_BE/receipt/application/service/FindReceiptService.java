@@ -6,10 +6,12 @@ import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.domain.DetailCategoryResult;
+import com.ClubAccount_BE.receipt.domain.DetailExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
@@ -38,6 +40,17 @@ public class FindReceiptService implements FindReceiptUseCase {
         User user = findUserPort.getUserByLink(link);
         Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
         return ReceiptDetailResponse.of(receipt);
+    }
+
+    @Override
+    public List<ReceiptExpenseResponse> getReceiptExpenseList(UUID link, int year) {
+
+        User user = findUserPort.getUserByLink(link);
+        List<Receipt> receiptList = findReceiptPort.getReceiptExpenseList(user, year);
+        List<DetailExpenseResult> results = receiptEditor.calculateExpense(receiptList, year);
+        return results.stream()
+                .map(ReceiptExpenseResponse::of)
+                .toList();
     }
 
 
