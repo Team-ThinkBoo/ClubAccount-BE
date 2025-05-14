@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.receipt.domain.service;
 
 import com.ClubAccount_BE.receipt.domain.DetailCategoryResult;
+import com.ClubAccount_BE.receipt.domain.DetailExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +46,24 @@ public class ReceiptEditor {
                 ratio(counts.get(ReceiptCategory.VENUE_RENTAL), total),
                 ratio(counts.get(ReceiptCategory.OTHER), total)
         );
+    }
+
+    /**
+     * 영수증 월별 지출 계산
+     */
+    public List<DetailExpenseResult> calculateExpense(List<Receipt> receiptList, int year) {
+        Map<Integer, BigDecimal> monthlyExpense = receiptList.stream()
+                .collect(Collectors.groupingBy(
+                        receipt -> receipt.getDate().getMonthValue(),
+                        Collectors.reducing(BigDecimal.ZERO, Receipt::getAmount, BigDecimal::add)
+                ));
+
+        return IntStream.rangeClosed(1, 12)
+                .mapToObj(month -> DetailExpenseResult.of(
+                        year,
+                        month,
+                        monthlyExpense.getOrDefault(month, BigDecimal.ZERO)))
+                .collect(Collectors.toList());
     }
 
     private float ratio(Long count, int total) {

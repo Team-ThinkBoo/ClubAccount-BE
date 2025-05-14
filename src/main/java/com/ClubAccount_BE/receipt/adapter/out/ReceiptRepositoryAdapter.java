@@ -59,6 +59,15 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
+    public List<Receipt> getReceiptExpenseList(User user, int year) {
+        return receiptRepository
+                .findByUserIdAndYear(user.getId(), year)
+                .stream()
+                .map(ReceiptMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public List<Receipt> getReceiptCategoryList(User user) {
         return receiptRepository
                 .findAllByUserId(user.getId())

@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.receipt.adapter.out.persistence.repository;
 
-import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.QReceiptEntity;
+import static com.ClubAccount_BE.receipt.adapter.out.persistence.entity.QReceiptEntity.receiptEntity;
+
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -24,28 +25,38 @@ public class ReceiptCustomRepositoryImpl implements ReceiptCustomRepository {
             LocalDate endDate,
             Pageable pageable
     ) {
-        QReceiptEntity receipt = QReceiptEntity.receiptEntity;
 
         BooleanBuilder where = new BooleanBuilder();
-        where.and(receipt.user.id.eq(userId));
+        where.and(receiptEntity.user.id.eq(userId));
 
         if (startDate != null && endDate != null) {
-            where.and(receipt.date.between(startDate, endDate));
+            where.and(receiptEntity.date.between(startDate, endDate));
         }
 
         List<ReceiptEntity> content = queryFactory
-                .selectFrom(receipt)
+                .selectFrom(receiptEntity)
                 .where(where)
-                .orderBy(receipt.date.desc())
+                .orderBy(receiptEntity.date.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> count = queryFactory
-                .select(receipt.count())
-                .from(receipt)
+                .select(receiptEntity.count())
+                .from(receiptEntity)
                 .where(where);
 
         return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
+    }
+
+    @Override
+    public List<ReceiptEntity> findByUserIdAndYear(Long userId, int year) {
+        return queryFactory
+                .selectFrom(receiptEntity)
+                .where(
+                        receiptEntity.user.id.eq(userId),
+                        receiptEntity.date.year().eq(year)
+                )
+                .fetch();
     }
 }

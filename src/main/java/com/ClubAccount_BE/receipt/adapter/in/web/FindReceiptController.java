@@ -4,9 +4,12 @@ import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.api.FindReceiptApi;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptDetailResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -49,5 +52,13 @@ public class FindReceiptController implements FindReceiptApi {
             @PathVariable(value = "link") UUID link
     ) {
         return findReceiptUseCase.getReceiptCategoryRatio(link);
+    }
+
+    @GetMapping("/{link}/receipts/expense")
+    public List<ReceiptExpenseResponse> getReceiptExpenseList(
+            @PathVariable(value = "link") UUID link,
+            @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
+    ) {
+        return findReceiptUseCase.getReceiptExpenseList(link, year);
     }
 }
