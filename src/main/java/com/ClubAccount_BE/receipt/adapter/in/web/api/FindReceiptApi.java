@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.api;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
@@ -38,8 +38,8 @@ public interface FindReceiptApi {
             @PathVariable("receiptId") Long receiptId
     );
 
-    @Operation(summary = "영수증 카테고리 비율 조회", description = "등록된 영수증의 카테고리 비율을 조회한다.")
-    ReceiptCategoryResponse getReceiptCategoryRatio(
+    @Operation(summary = "영수증 카테고리별 지출 조회", description = "등록된 영수증의 카테고리별 지출을 조회한다.")
+    ReceiptCategoryExpenseResponse getReceiptCategoryExpense(
             @PathVariable(value = "link") UUID link
     );
 
