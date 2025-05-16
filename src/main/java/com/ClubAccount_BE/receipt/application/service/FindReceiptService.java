@@ -5,14 +5,14 @@ import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_INVALID_START_
 import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryExpenseResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptMonthlyExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
-import com.ClubAccount_BE.receipt.domain.DetailExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptCategoryExpenseResult;
+import com.ClubAccount_BE.receipt.domain.ReceiptMonthlyExpenseResult;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
@@ -46,13 +46,17 @@ public class FindReceiptService implements FindReceiptUseCase {
     }
 
     @Override
-    public List<ReceiptExpenseResponse> getReceiptExpenseList(UUID link, int year) {
+    public List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(UUID link, int year) {
 
         User user = findUserPort.getUserByLink(link);
-        List<Receipt> receiptList = findReceiptPort.getReceiptExpenseList(user, year);
-        List<DetailExpenseResult> results = receiptEditor.calculateExpense(receiptList, year);
+        List<Receipt> receiptList = findReceiptPort.getReceiptMonthlyExpenseList(user, year);
+        List<ReceiptMonthlyExpenseResult> results = receiptEditor.calculateMonthlyExpense(
+                receiptList,
+                year
+        );
+
         return results.stream()
-                .map(ReceiptExpenseResponse::of)
+                .map(ReceiptMonthlyExpenseResponse::of)
                 .toList();
     }
 

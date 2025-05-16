@@ -20,5 +20,5 @@ public interface FindReceiptPort {
 
     Receipt getReceipt(User user, Long receiptId);
 
-    List<Receipt> getReceiptExpenseList(User user, int year);
+    List<Receipt> getReceiptMonthlyExpenseList(User user, int year);
 }

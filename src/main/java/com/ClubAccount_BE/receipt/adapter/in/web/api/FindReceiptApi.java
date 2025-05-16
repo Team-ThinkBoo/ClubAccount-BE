@@ -2,8 +2,8 @@ package com.ClubAccount_BE.receipt.adapter.in.web.api;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryExpenseResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptMonthlyExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,7 +44,7 @@ public interface FindReceiptApi {
     );
 
     @Operation(summary = "영수증 월별 지출 목록 조회", description = "등록된 영수증의 월별 지출을 조회한다.")
-    List<ReceiptExpenseResponse> getReceiptExpenseList(
+    List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(
             @PathVariable(value = "link") UUID link,
             @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
     );

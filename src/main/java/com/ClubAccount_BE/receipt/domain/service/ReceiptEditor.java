@@ -6,10 +6,10 @@ import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.SUBSCRIPTIO
 import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.SUPPLY_PURCHASE;
 import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.VENUE_RENTAL;
 
-import com.ClubAccount_BE.receipt.domain.DetailExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptCategoryExpenseResult;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.domain.ReceiptMonthlyExpenseResult;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import java.math.BigDecimal;
 import java.util.List;
@@ -55,7 +55,10 @@ public class ReceiptEditor {
     /**
      * 영수증 월별 지출 계산
      */
-    public List<DetailExpenseResult> calculateExpense(List<Receipt> receiptList, int year) {
+    public List<ReceiptMonthlyExpenseResult> calculateMonthlyExpense(
+            List<Receipt> receiptList,
+            int year
+    ) {
         Map<Integer, BigDecimal> monthlyExpense = receiptList.stream()
                 .collect(Collectors.groupingBy(
                         receipt -> receipt.getDate().getMonthValue(),
@@ -63,7 +66,7 @@ public class ReceiptEditor {
                 ));
 
         return IntStream.rangeClosed(1, 12)
-                .mapToObj(month -> DetailExpenseResult.of(
+                .mapToObj(month -> ReceiptMonthlyExpenseResult.of(
                         year,
                         month,
                         monthlyExpense.getOrDefault(month, BigDecimal.ZERO)))

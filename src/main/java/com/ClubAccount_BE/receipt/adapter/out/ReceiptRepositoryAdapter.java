@@ -59,7 +59,7 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public List<Receipt> getReceiptExpenseList(User user, int year) {
+    public List<Receipt> getReceiptMonthlyExpenseList(User user, int year) {
         return receiptRepository
                 .findByUserIdAndYear(user.getId(), year)
                 .stream()
