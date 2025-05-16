@@ -54,7 +54,7 @@ public class FindReceiptController implements FindReceiptApi {
         return findReceiptUseCase.getReceiptCategoryExpense(link);
     }
 
-    @GetMapping("/{link}/receipts/expense")
+    @GetMapping("/{link}/receipts/monthly")
     public List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(
             @PathVariable(value = "link") UUID link,
             @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
