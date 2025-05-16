@@ -50,6 +50,7 @@ public class SecurityConfig {
                                 API_V1_PREFIX + "/{link}/receipts",
                                 API_V1_PREFIX + "/{link}/receipts/{receiptId}",
                                 API_V1_PREFIX + "/{link}/receipts/category",
+                                API_V1_PREFIX + "/{link}/receipts/expense",
                                 "/api-docs",
                                 "/swagger-custom-ui.html",
                                 "/v3/api-docs",
