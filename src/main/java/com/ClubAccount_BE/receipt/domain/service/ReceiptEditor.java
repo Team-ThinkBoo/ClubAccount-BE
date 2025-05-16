@@ -1,8 +1,14 @@
 package com.ClubAccount_BE.receipt.domain.service;
 
-import com.ClubAccount_BE.receipt.domain.DetailCategoryResult;
+import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.GROUP_DINING;
+import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.OTHER;
+import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.SUBSCRIPTION;
+import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.SUPPLY_PURCHASE;
+import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.VENUE_RENTAL;
+
 import com.ClubAccount_BE.receipt.domain.DetailExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.receipt.domain.ReceiptCategoryExpenseResult;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import java.math.BigDecimal;
@@ -27,24 +33,22 @@ public class ReceiptEditor {
     }
 
     /**
-     * 영수증 카테고리 비율 계산
+     * 영수증 카테고리별 지출 계산
      */
-    public DetailCategoryResult calculateCategoryRatio(List<Receipt> receipts) {
-        int total = receipts.size();
+    public ReceiptCategoryExpenseResult calculateCategoryExpense(List<Receipt> receipts) {
 
-        if (total == 0) {
-            return DetailCategoryResult.of(0f, 0f, 0f, 0f, 0f);
-        }
+        Map<ReceiptCategory, BigDecimal> categoryExpense = receipts.stream()
+                .collect(Collectors.groupingBy(
+                        Receipt::getCategory,
+                        Collectors.reducing(BigDecimal.ZERO, Receipt::getAmount, BigDecimal::add)
+                ));
 
-        Map<ReceiptCategory, Long> counts = receipts.stream()
-                .collect(Collectors.groupingBy(Receipt::getCategory, Collectors.counting()));
-
-        return DetailCategoryResult.of(
-                ratio(counts.get(ReceiptCategory.GROUP_DINING), total),
-                ratio(counts.get(ReceiptCategory.SUPPLY_PURCHASE), total),
-                ratio(counts.get(ReceiptCategory.SUBSCRIPTION), total),
-                ratio(counts.get(ReceiptCategory.VENUE_RENTAL), total),
-                ratio(counts.get(ReceiptCategory.OTHER), total)
+        return ReceiptCategoryExpenseResult.of(
+                categoryExpense.getOrDefault(GROUP_DINING, BigDecimal.ZERO),
+                categoryExpense.getOrDefault(SUPPLY_PURCHASE, BigDecimal.ZERO),
+                categoryExpense.getOrDefault(SUBSCRIPTION, BigDecimal.ZERO),
+                categoryExpense.getOrDefault(VENUE_RENTAL, BigDecimal.ZERO),
+                categoryExpense.getOrDefault(OTHER, BigDecimal.ZERO)
         );
     }
 
@@ -64,9 +68,5 @@ public class ReceiptEditor {
                         month,
                         monthlyExpense.getOrDefault(month, BigDecimal.ZERO)))
                 .collect(Collectors.toList());
-    }
-
-    private float ratio(Long count, int total) {
-        return count == null ? 0f : (count * 100f / total);
     }
 }
