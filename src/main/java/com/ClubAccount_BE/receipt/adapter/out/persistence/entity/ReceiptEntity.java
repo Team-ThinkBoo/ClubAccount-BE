@@ -72,6 +72,7 @@ public class ReceiptEntity extends TimeBaseEntity {
         this.amount = receipt.getAmount();
         this.date = receipt.getDate();
         this.etc = receipt.getEtc();
+        this.amountMatched = receipt.isAmountMatched();
         this.receiptItems.clear();
     }
 

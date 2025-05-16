@@ -2,9 +2,9 @@ package com.ClubAccount_BE.receipt.adapter.in.web;
 
 import com.ClubAccount_BE.core.response.PagingResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.api.FindReceiptApi;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryResponse;
-import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptExpenseResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptCategoryExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptItemResponse;
+import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptMonthlyExpenseResponse;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import jakarta.validation.constraints.Positive;
@@ -47,18 +47,18 @@ public class FindReceiptController implements FindReceiptApi {
         return findReceiptUseCase.getReceiptItem(link, receiptId);
     }
 
-    @GetMapping("/{link}/receipts/category")
-    public ReceiptCategoryResponse getReceiptCategoryRatio(
+    @GetMapping("/{link}/receipts/category-expense")
+    public ReceiptCategoryExpenseResponse getReceiptCategoryExpense(
             @PathVariable(value = "link") UUID link
     ) {
-        return findReceiptUseCase.getReceiptCategoryRatio(link);
+        return findReceiptUseCase.getReceiptCategoryExpense(link);
     }
 
-    @GetMapping("/{link}/receipts/expense")
-    public List<ReceiptExpenseResponse> getReceiptExpenseList(
+    @GetMapping("/{link}/receipts/monthly-expense")
+    public List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(
             @PathVariable(value = "link") UUID link,
             @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
     ) {
-        return findReceiptUseCase.getReceiptExpenseList(link, year);
+        return findReceiptUseCase.getReceiptMonthlyExpenseList(link, year);
     }
 }

@@ -36,7 +36,7 @@ public class ReceiptCustomRepositoryImpl implements ReceiptCustomRepository {
         List<ReceiptEntity> content = queryFactory
                 .selectFrom(receiptEntity)
                 .where(where)
-                .orderBy(receiptEntity.date.desc())
+                .orderBy(receiptEntity.date.desc(), receiptEntity.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
