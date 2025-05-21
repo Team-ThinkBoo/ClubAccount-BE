@@ -20,7 +20,7 @@ public class DeleteReceiptController implements DeleteReceiptApi {
 
     private final DeleteReceiptUseCase deleteReceiptUseCase;
 
-    @DeleteMapping("/receipts")
+    @DeleteMapping
     public ResponseEntity<Void> deleteReceiptList(
             @LoginUser User user,
             @RequestParam @NotEmpty List<Long> receiptIds

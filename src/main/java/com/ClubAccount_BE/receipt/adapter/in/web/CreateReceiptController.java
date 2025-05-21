@@ -20,7 +20,7 @@ public class CreateReceiptController implements CreateReceiptApi {
 
     private final CreateReceiptUseCase createReceiptUseCase;
 
-    @PostMapping("/create")
+    @PostMapping
     public Long createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image", required = false) MultipartFile image,
