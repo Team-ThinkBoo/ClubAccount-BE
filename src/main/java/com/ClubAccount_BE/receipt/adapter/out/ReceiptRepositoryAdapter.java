@@ -1,11 +1,13 @@
 package com.ClubAccount_BE.receipt.adapter.out;
 
+import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_NOT_DELETE;
 import static com.ClubAccount_BE.core.exception.ErrorCode.RECEIPT_NOT_FOUND;
 
 import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
 import com.ClubAccount_BE.receipt.adapter.out.persistence.repository.ReceiptRepository;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
+import com.ClubAccount_BE.receipt.application.port.out.DeleteReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UpdateReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
@@ -23,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ReceiptRepositoryAdapter
-        implements CreateReceiptPort, FindReceiptPort, UpdateReceiptPort {
+        implements CreateReceiptPort, FindReceiptPort, UpdateReceiptPort, DeleteReceiptPort {
 
     private final ReceiptRepository receiptRepository;
 
@@ -90,5 +92,19 @@ public class ReceiptRepositoryAdapter
                 .map(ReceiptItemMapper::toEntity)
                 .forEach(receiptEntity::addReceiptItem);
         return receiptEntity.getId();
+    }
+
+    @Override
+    public void deleteReceiptList(User user, List<Long> receiptIds) {
+        List<ReceiptEntity> receipts = receiptRepository.findAllById(receiptIds);
+
+        boolean hasInvalidOwner = receipts.stream()
+                .anyMatch(receipt -> !receipt.getUser().getId().equals(user.getId()));
+
+        if (hasInvalidOwner || receipts.size() != receiptIds.size()) {
+            throw new ApiException(RECEIPT_NOT_DELETE);
+        }
+
+        receiptRepository.deleteAll(receipts);
     }
 }
