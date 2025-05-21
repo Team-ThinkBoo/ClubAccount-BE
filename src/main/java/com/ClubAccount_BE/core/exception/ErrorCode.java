@@ -27,6 +27,7 @@ public enum ErrorCode {
     // 영수증 관련 에러 코드
     RECEIPT_INVALID_START_DATE("2001", "시작일은 종료일보다 빠르거나 같아야 합니다.", HttpStatus.BAD_REQUEST),
     RECEIPT_NOT_FOUND("2002", "해당 영수증을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    RECEIPT_NOT_DELETE("2003", "요청한 영수증을 삭제할 수 없습니다.", HttpStatus.FORBIDDEN),
 
     // S3 관련 에러 코드
     S3_UPLOAD_FAIL("3001", "S3에 이미지 업로드 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -5,7 +5,7 @@ import static com.ClubAccount_BE.core.constant.CommonConstant.DEFAULT_IMAGE;
 import com.ClubAccount_BE.receipt.adapter.in.web.dto.request.ReceiptRequest;
 import com.ClubAccount_BE.receipt.application.port.in.CreateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
-import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
+import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptImagePort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
 import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CreateReceiptService implements CreateReceiptUseCase {
 
     private final CreateReceiptPort createReceiptPort;
-    private final UploadReceiptPort uploadReceiptPort;
+    private final UploadReceiptImagePort uploadReceiptImagePort;
     private final ReceiptEditor receiptEditor;
     private final ReceiptItemEditor receiptItemEditor;
 
@@ -40,7 +40,7 @@ public class CreateReceiptService implements CreateReceiptUseCase {
                 receiptRequest.date(),
                 receiptRequest.amount(),
                 receiptRequest.etc(),
-                image == null ? DEFAULT_IMAGE : uploadReceiptPort.uploadReceipt(image)
+                image == null ? DEFAULT_IMAGE : uploadReceiptImagePort.uploadReceipt(image)
         );
         List<ReceiptItem> receiptItems = receiptItemEditor.toReceiptItems(receiptRequest, receipt);
         boolean isAmountMatched = receiptEditor.checkAmountMatch(receipt, receiptItems);
