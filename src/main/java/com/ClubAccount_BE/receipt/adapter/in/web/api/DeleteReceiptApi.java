@@ -15,6 +15,6 @@ public interface DeleteReceiptApi {
     @Operation(summary = "영수증 삭제", description = "등록된 영수증 정보를 삭제한다.")
     ResponseEntity<Void> deleteReceiptList(
             @LoginUser User user,
-            @NotEmpty @RequestParam List<Long> receiptIds
+            @RequestParam @NotEmpty List<Long> receiptIds
     );
 }

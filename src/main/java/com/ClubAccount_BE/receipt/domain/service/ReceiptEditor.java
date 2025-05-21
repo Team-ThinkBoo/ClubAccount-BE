@@ -1,5 +1,6 @@
 package com.ClubAccount_BE.receipt.domain.service;
 
+import static com.ClubAccount_BE.core.constant.CommonConstant.DEFAULT_IMAGE;
 import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.GROUP_DINING;
 import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.OTHER;
 import static com.ClubAccount_BE.receipt.domain.type.ReceiptCategory.SUBSCRIPTION;
@@ -71,5 +72,15 @@ public class ReceiptEditor {
                         month,
                         monthlyExpense.getOrDefault(month, BigDecimal.ZERO)))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 영수증 이미지 삭제 시 필요한 URL 리스트 생성
+     */
+    public List<String> deleteReceiptImage(List<Receipt> receiptList) {
+        return receiptList.stream()
+                .map(Receipt::getReceiptImageUrl)
+                .filter(url -> url != null && !url.equals(DEFAULT_IMAGE))
+                .toList();
     }
 }

@@ -95,7 +95,7 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public void deleteReceiptList(User user, List<Long> receiptIds) {
+    public List<Receipt> deleteReceiptList(User user, List<Long> receiptIds) {
         List<ReceiptEntity> receipts = receiptRepository.findAllById(receiptIds);
 
         boolean hasInvalidOwner = receipts.stream()
@@ -106,5 +106,6 @@ public class ReceiptRepositoryAdapter
         }
 
         receiptRepository.deleteAll(receipts);
+        return receipts.stream().map(ReceiptMapper::toDomain).toList();
     }
 }
