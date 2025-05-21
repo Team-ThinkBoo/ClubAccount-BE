@@ -5,7 +5,7 @@ import static com.ClubAccount_BE.core.exception.ErrorCode.S3_UPLOAD_FAIL;
 
 import com.ClubAccount_BE.core.exception.ApiException;
 import com.ClubAccount_BE.receipt.application.port.out.DeleteReceiptImagePort;
-import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
+import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptImagePort;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
@@ -21,7 +21,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Component
 @RequiredArgsConstructor
-public class ReceiptImageRepositoryAdapter implements UploadReceiptPort, DeleteReceiptImagePort {
+public class ReceiptImageRepositoryAdapter implements UploadReceiptImagePort, DeleteReceiptImagePort {
 
     private final S3Client amazonS3;
 

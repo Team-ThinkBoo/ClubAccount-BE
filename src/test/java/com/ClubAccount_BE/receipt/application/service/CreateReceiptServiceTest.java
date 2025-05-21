@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.application.service;
 
 import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
-import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptPort;
+import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptImagePort;
 import com.ClubAccount_BE.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ class CreateReceiptServiceTest {
     private CreateReceiptPort createReceiptPort;
 
     @Mock
-    private UploadReceiptPort uploadReceiptPort;
+    private UploadReceiptImagePort uploadReceiptImagePort;
 
     @InjectMocks
     private CreateReceiptService createReceiptService;
