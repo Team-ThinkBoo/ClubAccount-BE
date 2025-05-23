@@ -1,7 +1,6 @@
 package com.ClubAccount_BE.user.application.service.delete;
 
 import com.ClubAccount_BE.user.application.port.in.delete.DeleteUserUseCase;
-import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
