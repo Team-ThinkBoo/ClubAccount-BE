@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class DeleteUserController {
+public class DeleteUserController implements DeleteUserApi {
+
     private final DeleteUserUseCase deleteUserUseCase;
 
     @DeleteMapping("/delete")
+    @Override
     public void deleteMyAccount(@LoginUser User user) {
         deleteUserUseCase.deleteUser(user);
     }
