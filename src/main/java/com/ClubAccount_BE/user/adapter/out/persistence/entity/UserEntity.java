@@ -1,6 +1,7 @@
 package com.ClubAccount_BE.user.adapter.out.persistence.entity;
 
 import com.ClubAccount_BE.core.entity.TimeBaseEntity;
+import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -38,4 +41,7 @@ public class UserEntity extends TimeBaseEntity {
     @Column(length = 36, nullable = false, unique = true)
     @JdbcTypeCode(SqlTypes.CHAR)
     private UUID link;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReceiptEntity> receipts = new ArrayList<>();
 }
