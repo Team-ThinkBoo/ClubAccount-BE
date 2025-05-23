@@ -15,7 +15,7 @@ public class DeleteUserController implements DeleteUserApi {
 
     private final DeleteUserUseCase deleteUserUseCase;
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     @Override
     public void deleteMyAccount(@LoginUser User user) {
         deleteUserUseCase.deleteUser(user);
