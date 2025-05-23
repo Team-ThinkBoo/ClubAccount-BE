@@ -10,11 +10,13 @@ import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_PASSWORD_CONFIRM_MISMATCH;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProfileService implements ProfileUseCase {
 
