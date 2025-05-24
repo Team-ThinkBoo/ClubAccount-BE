@@ -1,5 +1,7 @@
-package com.ClubAccount_BE.user.adapter.out;
+package com.ClubAccount_BE.user.adapter.out.persistence;
 
+import com.ClubAccount_BE.core.exception.ApiException;
+import com.ClubAccount_BE.core.exception.ErrorCode;
 import com.ClubAccount_BE.user.application.port.out.UploadProfileImagePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +42,7 @@ public class ProfileImageRepositoryAdapter implements UploadProfileImagePort {
             );
 
         } catch (IOException e) {
-            throw new RuntimeException("S3 업로드 실패", e);
+            throw new ApiException(ErrorCode.S3_UPLOAD_FAIL, e.getMessage());
         }
 
         return amazonS3.utilities()
