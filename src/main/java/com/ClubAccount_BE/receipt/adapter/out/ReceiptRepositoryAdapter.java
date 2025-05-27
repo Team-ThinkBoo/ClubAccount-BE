@@ -70,6 +70,14 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
+    public List<Receipt> getAllReceipts(User user) {
+        return receiptRepository.findAllByUserId(user.getId())
+                .stream()
+                .map(ReceiptMapper::toDomain)
+                .toList();
+    }
+
+    @Override
     public List<Receipt> getReceiptCategoryList(User user) {
         return receiptRepository
                 .findAllByUserId(user.getId())
