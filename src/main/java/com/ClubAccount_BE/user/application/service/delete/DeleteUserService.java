@@ -9,7 +9,6 @@ import com.ClubAccount_BE.user.application.port.out.UserPort;
 import com.ClubAccount_BE.user.application.port.out.delete.DeleteProfileImagePort;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +24,6 @@ public class DeleteUserService implements DeleteUserUseCase {
     private final FindReceiptPort findReceiptPort;
     private final DeleteReceiptImagePort deleteReceiptImagePort;
     private final DeleteProfileImagePort deleteProfileImagePort;
-
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucketName;
 
     @Override
     public void deleteUser(User user) {
