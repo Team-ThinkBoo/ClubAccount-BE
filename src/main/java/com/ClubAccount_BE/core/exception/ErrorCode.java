@@ -30,7 +30,8 @@ public enum ErrorCode {
     RECEIPT_NOT_DELETE("2003", "요청한 영수증을 삭제할 수 없습니다.", HttpStatus.FORBIDDEN),
 
     // S3 관련 에러 코드
-    S3_UPLOAD_FAIL("3001", "S3에 이미지 업로드 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    S3_UPLOAD_FAIL("3001", "S3에 이미지 업로드 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    S3_DELETE_FAIL("3002", "S3에 이미지 삭제 에러입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;
     private final String message;
