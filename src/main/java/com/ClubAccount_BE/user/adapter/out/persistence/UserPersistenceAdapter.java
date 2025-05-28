@@ -32,6 +32,12 @@ public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUser
     }
 
     @Override
+    public void delete(User user) {
+        UserEntity entity = UserMapper.toEntity(user);
+        userRepository.delete(entity);
+    }
+
+    @Override
     public User getUserByAuthId(String authId) {
         return userRepository.getByAuthId(authId)
                 .map(UserMapper::toDomain)
