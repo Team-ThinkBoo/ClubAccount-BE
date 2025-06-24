@@ -2,9 +2,6 @@ package com.ClubAccount_BE.auth.adapter.in.web.signin.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 public record SignInRequest (
     @NotBlank(message = "아이디를 입력해주세요.")
