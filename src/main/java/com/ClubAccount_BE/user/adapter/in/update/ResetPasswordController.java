@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.user.adapter.in.update;
 
-import com.ClubAccount_BE.user.adapter.in.update.dto.request.PasswordResetRequest;
-import com.ClubAccount_BE.user.application.port.in.update.PasswordResetUseCase;
+import com.ClubAccount_BE.user.adapter.in.update.dto.request.ResetPasswordRequest;
+import com.ClubAccount_BE.user.application.port.in.update.ResetPasswordUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class PasswordResetController implements PasswordResetApi {
+public class ResetPasswordController implements ResetPasswordApi {
 
-    private final PasswordResetUseCase passwordResetUseCase;
+    private final ResetPasswordUseCase resetPasswordUseCase;
 
     @PostMapping("/reset-password")
-    public void resetPassword(@Valid @RequestBody PasswordResetRequest request) {
-        passwordResetUseCase.resetPassword(request.authId(), request.newPassword());
+    public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        resetPasswordUseCase.resetPassword(request.authId(), request.newPassword());
     }
 
 }

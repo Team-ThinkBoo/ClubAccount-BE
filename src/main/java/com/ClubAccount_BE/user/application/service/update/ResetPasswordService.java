@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.user.application.service.update;
 
-import com.ClubAccount_BE.user.application.port.in.update.PasswordResetUseCase;
+import com.ClubAccount_BE.user.application.port.in.update.ResetPasswordUseCase;
 import com.ClubAccount_BE.user.application.port.out.update.FindUserByEmailPort;
 import com.ClubAccount_BE.user.application.port.out.update.UpdatePasswordPort;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class PasswordResetService implements PasswordResetUseCase {
+public class ResetPasswordService implements ResetPasswordUseCase {
 
     private final FindUserByEmailPort findUserByEmailPort;
     private final UpdatePasswordPort updatePasswordPort;

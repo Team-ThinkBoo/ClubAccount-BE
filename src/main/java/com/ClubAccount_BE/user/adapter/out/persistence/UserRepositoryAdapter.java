@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements FindUserPort, UserPort, CheckUserPort,
+public class UserRepositoryAdapter implements FindUserPort, UserPort, CheckUserPort,
         FindUserByEmailPort, UpdatePasswordPort, FindUserLinkPort {
 
     private final UserRepository userRepository;

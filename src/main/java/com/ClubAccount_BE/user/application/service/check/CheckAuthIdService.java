@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.user.application.service.check;
 
 import com.ClubAccount_BE.user.adapter.in.signup.dto.response.AuthIdDuplicationResponse;
-import com.ClubAccount_BE.user.application.port.in.check.CheckAuthIdDuplicationUseCase;
+import com.ClubAccount_BE.user.application.port.in.check.CheckAuthIdUseCase;
 import com.ClubAccount_BE.user.application.port.out.CheckUserPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-class CheckAuthIdDuplicationService implements CheckAuthIdDuplicationUseCase {
+class CheckAuthIdService implements CheckAuthIdUseCase {
 
     private final CheckUserPort checkUserPort;
 
