@@ -6,6 +6,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "Token", description = "토큰 발급 API")
-public interface TokenApiPresentation {
+public interface TokenApi {
     AccessTokenResponse createNewToken(HttpServletRequest request, HttpServletResponse response);
 }

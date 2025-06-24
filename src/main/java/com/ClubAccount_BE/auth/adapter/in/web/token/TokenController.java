@@ -17,7 +17,7 @@ import java.time.Duration;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
-public class TokenController implements TokenApiPresentation{
+public class TokenController implements TokenApi {
 
     private final TokenUseCase tokenUseCase;
 

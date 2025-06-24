@@ -17,7 +17,7 @@ import java.time.Duration;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
-public class SignInController implements SignInApiPresentation{
+public class SignInController implements SignInApi {
 
     private final SignInUseCase signInUseCase;
 

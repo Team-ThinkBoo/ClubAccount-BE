@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
     @Tag(name = "Email", description = "이메일 인증 관련 API")
-    public interface EmailApiPresentation {
+    public interface EmailApi {
 
         @Operation(summary = "이메일 인증 코드 전송")
         ResponseEntity<Void> sendVerificationEmail(@Valid @RequestBody EmailSendRequest request);
