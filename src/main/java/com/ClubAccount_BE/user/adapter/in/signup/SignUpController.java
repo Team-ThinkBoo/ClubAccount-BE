@@ -18,8 +18,8 @@ public class SignUpController implements SignUpApi {
     private final CheckAuthIdDuplicationUseCase checkAuthIdDuplicationUseCase;
 
     @PostMapping("/sign-up")
-    public void signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
-        signUpUseCase.signUp(signUpRequest.toCommand());
+    public void signUp(@Valid @RequestBody SignUpRequest request) {
+        signUpUseCase.signUp(request.toCommand());
     }
 
     @GetMapping(value = "/sign-up/check-duplicate-auth-id", produces = "application/json")

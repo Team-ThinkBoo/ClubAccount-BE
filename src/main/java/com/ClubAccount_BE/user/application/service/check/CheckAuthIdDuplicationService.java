@@ -17,9 +17,6 @@ class CheckAuthIdDuplicationService implements CheckAuthIdDuplicationUseCase {
     @Override
     public AuthIdDuplicationResponse checkAuthIdDuplication(String authId) {
         boolean authIdDuplication = !checkUserPort.checkDuplicateAuthId(authId);
-        return AuthIdDuplicationResponse.builder()
-                .authId(authId)
-                .notDuplicated(authIdDuplication)
-                .build();
+        return new AuthIdDuplicationResponse(authId, authIdDuplication);
     }
 }

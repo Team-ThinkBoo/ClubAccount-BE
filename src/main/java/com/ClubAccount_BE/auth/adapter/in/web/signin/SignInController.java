@@ -22,8 +22,8 @@ public class SignInController implements SignInApi {
     private final SignInUseCase signInUseCase;
 
     @PostMapping("/sign-in")
-    public TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest, HttpServletResponse response) {
-        var signInResult = signInUseCase.signIn(signInRequest.getAuthId(), signInRequest.getPassword());
+    public TokenResponse signIn(@Valid @RequestBody SignInRequest request, HttpServletResponse response) {
+        var signInResult = signInUseCase.signIn(request.authId(), request.password());
 
         ResponseCookie cookie = ResponseCookie.from("refreshToken", signInResult.refreshToken())
                 .httpOnly(true)

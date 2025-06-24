@@ -5,19 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
-public class UserAuthIdResponse {
-
-    @Schema(name = "authId", example = "thinkboo@example.com")
-    private String authId;
-
-
-    @Builder
-    private UserAuthIdResponse(String authId) {
-        this.authId = authId;
-
-    }
+@Builder
+public record UserAuthIdResponse(
+        @Schema(name = "authId", example = "thinkboo@example.com")
+        String authId
+) {
 
     public static UserAuthIdResponse of(String encryptedAutId) {
         return UserAuthIdResponse.builder()

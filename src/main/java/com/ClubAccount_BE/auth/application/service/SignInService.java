@@ -34,11 +34,9 @@ public class SignInService implements SignInUseCase {
     }
 
     private Authentication authenticateCommand(String authId, String password) {
-        JwtAuthenticationToken authenticationToken =
-                new JwtAuthenticationToken(authId, password);
+        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(authId, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext()
-                .setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return authentication;
     }
 }

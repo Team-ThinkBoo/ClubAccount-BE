@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 
+//TODO 도메인 로직 변경 예정에 따른 수정 계획 중..
 @Getter
 public class ReceiptCategoryExpenseResult {
 

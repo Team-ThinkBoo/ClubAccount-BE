@@ -18,4 +18,6 @@ public record PasswordResetRequest(
         @NotBlank(message = "비밀번호 확인은 필수입니다.")
         @Schema(name = "confirmPassword", example = "thinkboo1343!")
         String confirmPassword
-) {}
+) {
+        
+}

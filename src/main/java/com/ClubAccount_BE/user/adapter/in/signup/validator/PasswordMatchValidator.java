@@ -13,9 +13,9 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         return switch (value) {
             case null -> true;
-            case SignUpRequest request -> request.getPassword() != null
-                    && request.getPasswordCheck() != null
-                    && request.getPassword().equals(request.getPasswordCheck());
+            case SignUpRequest request -> request.password() != null
+                    && request.passwordCheck() != null
+                    && request.password().equals(request.passwordCheck());
             case PasswordResetRequest request -> request.newPassword() != null
                     && request.confirmPassword() != null
                     && request.newPassword().equals(request.confirmPassword());
