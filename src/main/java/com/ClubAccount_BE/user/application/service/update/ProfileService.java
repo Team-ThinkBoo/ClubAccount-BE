@@ -6,19 +6,23 @@ import com.ClubAccount_BE.user.adapter.in.update.dto.response.UserProfileRespons
 import com.ClubAccount_BE.user.application.port.in.update.ProfileUseCase;
 import com.ClubAccount_BE.user.application.port.out.UploadProfileImagePort;
 import com.ClubAccount_BE.user.application.port.out.UserPort;
+import com.ClubAccount_BE.user.application.port.out.delete.DeleteProfileImagePort;
 import com.ClubAccount_BE.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.ClubAccount_BE.core.exception.ErrorCode.AUTH_PASSWORD_CONFIRM_MISMATCH;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ProfileService implements ProfileUseCase {
 
     private final UploadProfileImagePort uploadProfileImagePort;
+    private final DeleteProfileImagePort deleteProfileImagePort;
     private final UserPort userPort;
     private final PasswordEncoder passwordEncoder;
 
@@ -35,6 +39,11 @@ public class ProfileService implements ProfileUseCase {
         }
 
         if (profileImage != null && !profileImage.isEmpty()) {
+            String existingUrl = user.getProfileUrl();
+            if (existingUrl != null && !existingUrl.isBlank()) {
+                deleteProfileImagePort.deleteImages(existingUrl);
+            }
+
             String url = uploadProfileImagePort.uploadProfileImage(user.getId(), profileImage);
             user.updateProfileUrl(url);
         }
