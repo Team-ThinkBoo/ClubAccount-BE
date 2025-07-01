@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/email")
 @RequiredArgsConstructor
-public class EmailController implements EmailApiPresentation {
+public class EmailController implements EmailApi {
 
     private final EmailService emailService;
 
     @PostMapping("/send")
     @Override
     public ResponseEntity<Void> sendVerificationEmail(@RequestBody @Valid EmailSendRequest request) {
-        emailService.sendVerificationEmail(request.getEmail());
+        emailService.sendVerificationEmail(request.email());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping(value = "/verify", produces = "application/json")
     @Override
     public ResponseEntity<EmailVerifyResponse> verifyCode(@RequestBody @Valid EmailVerifyRequest request) {
-            boolean verified = emailService.verifyCode(request.getEmail(), request.getCode());
-            return ResponseEntity.ok(new EmailVerifyResponse(verified, verified ? "✅ 인증 성공" : "❌ 인증 실패"));
+            boolean verified = emailService.verifyCode(request.email(), request.code());
+            return ResponseEntity.ok(new EmailVerifyResponse(verified, verified ? "인증 성공" : "인증 실패"));
     }
 }

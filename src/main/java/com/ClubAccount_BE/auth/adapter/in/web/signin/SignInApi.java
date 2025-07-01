@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Tag(name = "SignIn", description = "로그인 API")
-public interface SignInApiPresentation {
+public interface SignInApi {
 
     @Operation(summary = "로그인")
     TokenResponse signIn(@Valid @RequestBody SignInRequest signInRequest, HttpServletResponse response);

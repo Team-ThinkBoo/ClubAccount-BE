@@ -16,7 +16,7 @@ public interface UpdateReceiptApi {
     Long updateReceipt(
             @LoginUser User user,
             @PathVariable("receiptId") Long receiptId,
-            @Valid @RequestBody ReceiptRequest receiptRequest
+            @Valid @RequestBody ReceiptRequest request
     );
 
 }

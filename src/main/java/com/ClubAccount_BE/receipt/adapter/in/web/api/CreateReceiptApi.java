@@ -16,6 +16,6 @@ public interface CreateReceiptApi {
     Long createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image", required = false) MultipartFile image,
-            @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest
+            @Valid @RequestPart(value = "request") ReceiptRequest request
     );
 }

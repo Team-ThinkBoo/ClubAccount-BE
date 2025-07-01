@@ -24,8 +24,8 @@ public class CreateReceiptController implements CreateReceiptApi {
     public Long createReceipt(
             @LoginUser User user,
             @RequestPart(value = "image", required = false) MultipartFile image,
-            @Valid @RequestPart(value = "request") ReceiptRequest receiptRequest
+            @Valid @RequestPart(value = "request") ReceiptRequest request
     ) {
-        return createReceiptUseCase.createReceipt(user, image, receiptRequest);
+        return createReceiptUseCase.createReceipt(user, image, request);
     }
 }

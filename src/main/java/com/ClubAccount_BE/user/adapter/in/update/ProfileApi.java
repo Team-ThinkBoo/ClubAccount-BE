@@ -20,7 +20,7 @@ public interface ProfileApi {
     void updateProfile(
             @Parameter(hidden = true) User user,
             @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
-            @RequestPart(value = "profile", required = false) @Valid ProfileUpdateRequest dto
+            @RequestPart(value = "profile", required = false) @Valid ProfileUpdateRequest request
     );
 
     @Operation(summary = "사용자 링크 재생성", description = "회원 UUID 기반 사용자 링크를 새로 발급합니다.")

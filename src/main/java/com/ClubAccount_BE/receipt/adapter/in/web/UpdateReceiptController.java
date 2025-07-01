@@ -24,8 +24,8 @@ public class UpdateReceiptController implements UpdateReceiptApi {
     public Long updateReceipt(
             @LoginUser User user,
             @PathVariable("receiptId") Long receiptId,
-            @Valid @RequestBody ReceiptRequest receiptRequest
+            @Valid @RequestBody ReceiptRequest request
     ) {
-        return updateReceiptUseCase.updateReceipt(user, receiptId, receiptRequest);
+        return updateReceiptUseCase.updateReceipt(user, receiptId, request);
     }
 }

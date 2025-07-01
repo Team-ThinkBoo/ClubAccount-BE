@@ -17,7 +17,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class LogoutController implements LogoutApiPresentation{
+public class LogoutController implements LogoutApi {
 
     private final SignOutUseCase signOutUseCase;
 

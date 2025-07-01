@@ -21,7 +21,7 @@ import static com.ClubAccount_BE.core.constant.CommonConstant.IMAGE_KEY_DELIMITE
 
 @Component
 @RequiredArgsConstructor
-public class ProfileImageRepositoryAdapter implements UploadProfileImagePort, DeleteProfileImagePort {
+public class ProfileImageAdapter implements UploadProfileImagePort, DeleteProfileImagePort {
 
     private final S3Client amazonS3;
     private final S3KeyExtractor keyExtractor;

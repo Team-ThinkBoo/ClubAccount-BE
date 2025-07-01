@@ -19,11 +19,12 @@ public class ProfileController implements ProfileApi {
     private final ProfileUseCase profileUseCase;
 
     @PatchMapping("/update")
-    public void updateProfile(@LoginUser User user,
-                              @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
-                              @RequestPart(value = "profile", required = false) ProfileUpdateRequest profileDto) {
-        profileUseCase.updateProfile(user, profileImage, profileDto);
-
+    public void updateProfile(
+            @LoginUser User user,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+            @RequestPart(value = "profile", required = false) ProfileUpdateRequest request
+    ) {
+        profileUseCase.updateProfile(user, profileImage, request);
     }
 
     @PatchMapping("/regenerate-link")
@@ -32,8 +33,10 @@ public class ProfileController implements ProfileApi {
     }
 
     @PatchMapping("/password")
-    public void changePassword(@LoginUser User user,
-                               @RequestBody @Valid LoginUserUpdatePassword request) {
+    public void changePassword(
+            @LoginUser User user,
+            @RequestBody @Valid LoginUserUpdatePassword request
+    ) {
         profileUseCase.changePassword(user, request.currentPassword(), request.newPassword());
     }
 

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 @PasswordMatch
-public record PasswordResetRequest(
+public record ResetPasswordRequest(
         @NotBlank @Email
         @Schema(name = "authId", example = "thinkboo@example.com")
         String authId,
@@ -18,4 +18,6 @@ public record PasswordResetRequest(
         @NotBlank(message = "비밀번호 확인은 필수입니다.")
         @Schema(name = "confirmPassword", example = "thinkboo1343!")
         String confirmPassword
-) {}
+) {
+        
+}
