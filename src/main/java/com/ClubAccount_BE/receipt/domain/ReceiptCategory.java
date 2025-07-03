@@ -1,4 +1,4 @@
-package com.ClubAccount_BE.receipt.domain.type;
+package com.ClubAccount_BE.receipt.domain;
 
 import lombok.Getter;
 

@@ -30,13 +30,13 @@ public class FindReceiptController implements FindReceiptApi {
     private final FindReceiptUseCase findReceiptUseCase;
 
     @GetMapping("/{link}/receipts")
-    public PagingResponse<ReceiptResponse> getReceiptList(
+    public PagingResponse<ReceiptResponse> getReceiptsByDate(
             @PathVariable(value = "link") UUID link,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return findReceiptUseCase.getReceiptList(link, startDate, endDate, pageable);
+        return findReceiptUseCase.getReceiptsByDate(link, startDate, endDate, pageable);
     }
 
     @GetMapping("/{link}/receipts/{receiptId}")
@@ -47,18 +47,18 @@ public class FindReceiptController implements FindReceiptApi {
         return findReceiptUseCase.getReceiptItem(link, receiptId);
     }
 
-    @GetMapping("/{link}/receipts/category-expense")
-    public ReceiptCategoryExpenseResponse getReceiptCategoryExpense(
-            @PathVariable(value = "link") UUID link
-    ) {
-        return findReceiptUseCase.getReceiptCategoryExpense(link);
-    }
-
     @GetMapping("/{link}/receipts/monthly-expense")
-    public List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(
+    public List<ReceiptMonthlyExpenseResponse> getReceiptExpenseByMonth(
             @PathVariable(value = "link") UUID link,
             @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
     ) {
-        return findReceiptUseCase.getReceiptMonthlyExpenseList(link, year);
+        return findReceiptUseCase.getReceiptExpenseByMonth(link, year);
+    }
+
+    @GetMapping("/{link}/receipts/category-expense")
+    public List<ReceiptCategoryExpenseResponse> getReceiptExpenseByCategory(
+            @PathVariable(value = "link") UUID link
+    ) {
+        return findReceiptUseCase.getReceiptExpenseByCategory(link);
     }
 }

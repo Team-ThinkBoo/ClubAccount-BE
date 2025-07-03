@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.factory.receipt;
 
 import com.ClubAccount_BE.receipt.domain.Receipt;
-import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
+import com.ClubAccount_BE.receipt.domain.ReceiptCategory;
 import com.ClubAccount_BE.user.domain.User;
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.dto.response;
 
-import com.ClubAccount_BE.receipt.domain.ReceiptMonthlyExpenseResult;
+import com.ClubAccount_BE.receipt.domain.MonthlyExpenseResult;
 import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Builder;
@@ -13,12 +13,12 @@ public record ReceiptMonthlyExpenseResponse(
         BigDecimal totalExpense
 ) {
 
-    public static ReceiptMonthlyExpenseResponse of(ReceiptMonthlyExpenseResult result) {
+    public static ReceiptMonthlyExpenseResponse of(MonthlyExpenseResult result) {
         return ReceiptMonthlyExpenseResponse.builder()
-                .id(UUID.nameUUIDFromBytes((result.getYear() + "-" + result.getMonth()).getBytes()))
-                .year(result.getYear())
-                .month(result.getMonth())
-                .totalExpense(result.getTotalExpense())
+                .id(UUID.nameUUIDFromBytes((result.year() + "-" + result.month()).getBytes()))
+                .year(result.year())
+                .month(result.month())
+                .totalExpense(result.totalExpense())
                 .build();
     }
 }

@@ -6,8 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReceiptRepository extends JpaRepository<ReceiptEntity, Long>,
-        ReceiptCustomRepository {
+public interface ReceiptRepository extends JpaRepository<ReceiptEntity, Long>, ReceiptCustomRepository {
 
     List<ReceiptEntity> findAllByUserId(Long id);
 

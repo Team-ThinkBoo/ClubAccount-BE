@@ -12,9 +12,8 @@ import org.springframework.data.domain.Pageable;
 
 public interface FindReceiptUseCase {
 
-    ReceiptCategoryExpenseResponse getReceiptCategoryExpense(UUID link);
 
-    PagingResponse<ReceiptResponse> getReceiptList(
+    PagingResponse<ReceiptResponse> getReceiptsByDate(
             UUID link,
             LocalDate startDate,
             LocalDate endDate,
@@ -23,5 +22,7 @@ public interface FindReceiptUseCase {
 
     List<ReceiptItemResponse> getReceiptItem(UUID link, Long receiptId);
 
-    List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(UUID link, int year);
+    List<ReceiptMonthlyExpenseResponse> getReceiptExpenseByMonth(UUID link, int year);
+
+    List<ReceiptCategoryExpenseResponse> getReceiptExpenseByCategory(UUID link);
 }

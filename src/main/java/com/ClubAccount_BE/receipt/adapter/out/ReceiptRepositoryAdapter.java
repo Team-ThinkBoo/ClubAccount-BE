@@ -10,8 +10,10 @@ import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.DeleteReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UpdateReceiptPort;
+import com.ClubAccount_BE.receipt.domain.CategoryExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.domain.MonthlyExpenseResult;
 import com.ClubAccount_BE.receipt.mapper.ReceiptItemMapper;
 import com.ClubAccount_BE.receipt.mapper.ReceiptMapper;
 import com.ClubAccount_BE.user.domain.User;
@@ -24,32 +26,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ReceiptRepositoryAdapter
-        implements CreateReceiptPort, FindReceiptPort, UpdateReceiptPort, DeleteReceiptPort {
+public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptPort, UpdateReceiptPort, DeleteReceiptPort {
 
     private final ReceiptRepository receiptRepository;
 
     @Override
-    public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
-        ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
-        receiptItems.stream()
-                .map(ReceiptItemMapper::toEntity)
-                .forEach(receiptEntity::addReceiptItem);
-        return receiptRepository
-                .save(receiptEntity)
-                .getId();
-    }
-
-    @Override
-    public Page<Receipt> getReceiptList(
-            User user,
-            LocalDate startDate,
-            LocalDate endDate,
-            Pageable pageable
-    ) {
-        return receiptRepository
-                .findAllByDate(user.getId(), startDate, endDate, pageable)
-                .map(ReceiptMapper::toDomain);
+    public List<Receipt> getAllReceipts(User user) {
+        return receiptRepository.findAllByUserId(user.getId())
+                .stream()
+                .map(ReceiptMapper::toDomain)
+                .toList();
     }
 
     @Override
@@ -61,29 +47,26 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public List<Receipt> getReceiptMonthlyExpenseList(User user, int year) {
+    public Page<Receipt> getReceiptsByDate(
+            User user,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable
+    ) {
         return receiptRepository
-                .findByUserIdAndYear(user.getId(), year)
-                .stream()
-                .map(ReceiptMapper::toDomain)
-                .toList();
+                .findByDate(user.getId(), startDate, endDate, pageable)
+                .map(ReceiptMapper::toDomain);
     }
 
     @Override
-    public List<Receipt> getAllReceipts(User user) {
-        return receiptRepository.findAllByUserId(user.getId())
-                .stream()
-                .map(ReceiptMapper::toDomain)
-                .toList();
-    }
-
-    @Override
-    public List<Receipt> getReceiptCategoryList(User user) {
+    public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
+        ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
+        receiptItems.stream()
+                .map(ReceiptItemMapper::toEntity)
+                .forEach(receiptEntity::addReceiptItem);
         return receiptRepository
-                .findAllByUserId(user.getId())
-                .stream()
-                .map(ReceiptMapper::toDomain)
-                .toList();
+                .save(receiptEntity)
+                .getId();
     }
 
     @Override
@@ -103,7 +86,7 @@ public class ReceiptRepositoryAdapter
     }
 
     @Override
-    public List<Receipt> deleteReceiptList(User user, List<Long> receiptIds) {
+    public List<Receipt> deleteReceipts(User user, List<Long> receiptIds) {
         List<ReceiptEntity> receipts = receiptRepository.findAllById(receiptIds);
 
         boolean hasInvalidOwner = receipts.stream()
@@ -115,5 +98,16 @@ public class ReceiptRepositoryAdapter
 
         receiptRepository.deleteAll(receipts);
         return receipts.stream().map(ReceiptMapper::toDomain).toList();
+    }
+
+    @Override
+    public List<MonthlyExpenseResult> getReceiptExpenseByMonth(User user, int year) {
+        return receiptRepository.calculateExpensesByMonth(user.getId(), year);
+    }
+
+
+    @Override
+    public List<CategoryExpenseResult> getReceiptExpenseByCategory(User user) {
+        return receiptRepository.calculateExpensesByCategory(user.getId());
     }
 }

@@ -1,6 +1,6 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.dto.request;
 
-import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
+import com.ClubAccount_BE.receipt.domain.ReceiptCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;

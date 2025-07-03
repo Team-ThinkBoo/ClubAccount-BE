@@ -1,0 +1,11 @@
+package com.ClubAccount_BE.receipt.domain;
+
+import java.math.BigDecimal;
+import lombok.Getter;
+
+public record CategoryExpenseResult(
+        ReceiptCategory category,
+        BigDecimal totalExpense
+) {
+
+}

@@ -1,35 +1,24 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.dto.response;
 
-import com.ClubAccount_BE.receipt.domain.ReceiptCategoryExpenseResult;
+import com.ClubAccount_BE.receipt.domain.CategoryExpenseResult;
+import com.ClubAccount_BE.receipt.domain.ReceiptCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import lombok.Builder;
 
 @Builder
 public record ReceiptCategoryExpenseResponse(
-        @Schema(description = "회식비 카테고리 총 지출")
-        BigDecimal groupDiningExpense,
+        @Schema(description = "영수증 카테고리 종류")
+        ReceiptCategory category,
 
-        @Schema(description = "물품 구매비 카테고리 총 지출")
-        BigDecimal supplyPurchaseExpense,
-
-        @Schema(description = "정기 구독비 카테고리 총 지출")
-        BigDecimal subscriptionExpense,
-
-        @Schema(description = "대관비 카테고리 총 지출")
-        BigDecimal venueRentalExpense,
-
-        @Schema(description = "기타 카테고리 총 지출")
-        BigDecimal otherExpense
+        @Schema(description = "해당 카테고리 총 지출 금액")
+        BigDecimal totalExpense
 ) {
 
-    public static ReceiptCategoryExpenseResponse of(ReceiptCategoryExpenseResult result) {
+    public static ReceiptCategoryExpenseResponse of(CategoryExpenseResult result) {
         return ReceiptCategoryExpenseResponse.builder()
-                .groupDiningExpense(result.getGroupDiningExpense())
-                .supplyPurchaseExpense(result.getSupplyPurchaseExpense())
-                .subscriptionExpense(result.getSubscriptionExpense())
-                .venueRentalExpense(result.getVenueRentalExpense())
-                .otherExpense(result.getOtherExpense())
+                .category(result.category())
+                .totalExpense(result.totalExpense())
                 .build();
     }
 
