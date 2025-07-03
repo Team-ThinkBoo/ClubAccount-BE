@@ -31,26 +31,11 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
     private final ReceiptRepository receiptRepository;
 
     @Override
-    public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
-        ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
-        receiptItems.stream()
-                .map(ReceiptItemMapper::toEntity)
-                .forEach(receiptEntity::addReceiptItem);
-        return receiptRepository
-                .save(receiptEntity)
-                .getId();
-    }
-
-    @Override
-    public Page<Receipt> getReceiptList(
-            User user,
-            LocalDate startDate,
-            LocalDate endDate,
-            Pageable pageable
-    ) {
-        return receiptRepository
-                .findByDate(user.getId(), startDate, endDate, pageable)
-                .map(ReceiptMapper::toDomain);
+    public List<Receipt> getAllReceipts(User user) {
+        return receiptRepository.findAllByUserId(user.getId())
+                .stream()
+                .map(ReceiptMapper::toDomain)
+                .toList();
     }
 
     @Override
@@ -62,11 +47,26 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
     }
 
     @Override
-    public List<Receipt> getAllReceipts(User user) {
-        return receiptRepository.findAllByUserId(user.getId())
-                .stream()
-                .map(ReceiptMapper::toDomain)
-                .toList();
+    public Page<Receipt> getReceiptsByDate(
+            User user,
+            LocalDate startDate,
+            LocalDate endDate,
+            Pageable pageable
+    ) {
+        return receiptRepository
+                .findByDate(user.getId(), startDate, endDate, pageable)
+                .map(ReceiptMapper::toDomain);
+    }
+
+    @Override
+    public Long createReceipt(Receipt receipt, List<ReceiptItem> receiptItems) {
+        ReceiptEntity receiptEntity = ReceiptMapper.toEntity(receipt);
+        receiptItems.stream()
+                .map(ReceiptItemMapper::toEntity)
+                .forEach(receiptEntity::addReceiptItem);
+        return receiptRepository
+                .save(receiptEntity)
+                .getId();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ReceiptRepositoryAdapter implements CreateReceiptPort, FindReceiptP
     }
 
     @Override
-    public List<Receipt> deleteReceiptList(User user, List<Long> receiptIds) {
+    public List<Receipt> deleteReceipts(User user, List<Long> receiptIds) {
         List<ReceiptEntity> receipts = receiptRepository.findAllById(receiptIds);
 
         boolean hasInvalidOwner = receipts.stream()

@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 public interface FindReceiptUseCase {
 
 
-    PagingResponse<ReceiptResponse> getReceiptList(
+    PagingResponse<ReceiptResponse> getReceiptsByDate(
             UUID link,
             LocalDate startDate,
             LocalDate endDate,

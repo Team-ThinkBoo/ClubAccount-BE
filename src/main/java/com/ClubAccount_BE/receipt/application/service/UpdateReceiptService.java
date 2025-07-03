@@ -43,6 +43,7 @@ public class UpdateReceiptService implements UpdateReceiptUseCase {
                         receiptItem.quantity()
                 ))
                 .toList();
+
         receipt.updateAmountMatched(receiptItems);
         return updateReceiptPort.updateReceipt(receiptId, receipt, receiptItems);
     }

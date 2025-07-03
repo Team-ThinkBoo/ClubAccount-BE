@@ -33,7 +33,7 @@ public class FindReceiptService implements FindReceiptUseCase {
     private final FindUserPort findUserPort;
 
     @Override
-    public PagingResponse<ReceiptResponse> getReceiptList(
+    public PagingResponse<ReceiptResponse> getReceiptsByDate(
             UUID link,
             LocalDate startDate,
             LocalDate endDate,
@@ -45,7 +45,7 @@ public class FindReceiptService implements FindReceiptUseCase {
 
         User user = findUserPort.getUserByLink(link);
         Page<ReceiptResponse> page = findReceiptPort
-                .getReceiptList(user, startDate, endDate, pageable)
+                .getReceiptsByDate(user, startDate, endDate, pageable)
                 .map(ReceiptResponse::of);
 
         return PagingResponse.of(page);

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DeleteReceiptPort {
 
-    List<Receipt> deleteReceiptList(User user, List<Long> receiptIds);
+    List<Receipt> deleteReceipts(User user, List<Long> receiptIds);
 }

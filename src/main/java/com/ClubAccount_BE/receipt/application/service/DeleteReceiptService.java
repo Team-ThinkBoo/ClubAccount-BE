@@ -22,7 +22,7 @@ public class DeleteReceiptService implements DeleteReceiptUseCase {
 
     @Override
     public void deleteReceiptList(User user, List<Long> receiptIds) {
-        List<Receipt> receiptList = deleteReceiptPort.deleteReceiptList(user, receiptIds);
+        List<Receipt> receiptList = deleteReceiptPort.deleteReceipts(user, receiptIds);
         List<String> receiptImage = receiptList.stream()
                 .filter(receipt -> receipt.isDefaultImage(DEFAULT_IMAGE))
                 .map(Receipt::getReceiptImageUrl)

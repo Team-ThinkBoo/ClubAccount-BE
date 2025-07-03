@@ -11,16 +11,16 @@ import org.springframework.data.domain.Pageable;
 
 public interface FindReceiptPort {
 
-    Page<Receipt> getReceiptList(
+    List<Receipt> getAllReceipts(User user);
+
+    Receipt getReceipt(User user, Long receiptId);
+
+    Page<Receipt> getReceiptsByDate(
             User user,
             LocalDate startDate,
             LocalDate endDate,
             Pageable pageable
     );
-
-    List<Receipt> getAllReceipts(User user);
-
-    Receipt getReceipt(User user, Long receiptId);
 
     List<MonthlyExpenseResult> getReceiptExpenseByMonth(User user, int year);
 

@@ -30,13 +30,13 @@ public class FindReceiptController implements FindReceiptApi {
     private final FindReceiptUseCase findReceiptUseCase;
 
     @GetMapping("/{link}/receipts")
-    public PagingResponse<ReceiptResponse> getReceiptList(
+    public PagingResponse<ReceiptResponse> getReceiptsByDate(
             @PathVariable(value = "link") UUID link,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @PageableDefault(page = 1, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable
     ) {
-        return findReceiptUseCase.getReceiptList(link, startDate, endDate, pageable);
+        return findReceiptUseCase.getReceiptsByDate(link, startDate, endDate, pageable);
     }
 
     @GetMapping("/{link}/receipts/{receiptId}")
