@@ -8,6 +8,7 @@ import com.ClubAccount_BE.receipt.application.port.out.CreateReceiptPort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptImagePort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.mapper.ReceiptItemMapper;
 import com.ClubAccount_BE.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +40,7 @@ public class CreateReceiptService implements CreateReceiptUseCase {
                 image == null ? DEFAULT_IMAGE : uploadReceiptImagePort.uploadReceipt(image)
         );
 
-        List<ReceiptItem> receiptItems = receiptRequest.receiptItems().stream()
-                .map(receiptItem -> ReceiptItem.of(
-                        receipt,
-                        receiptItem.name(),
-                        receiptItem.price(),
-                        receiptItem.totalPrice(),
-                        receiptItem.quantity()
-                ))
-                .toList();
-
+        List<ReceiptItem> receiptItems = ReceiptItemMapper.toReceiptItems(receipt, receiptRequest.receiptItems());
         receipt.updateAmountMatched(receiptItems);
         return createReceiptPort.createReceipt(receipt, receiptItems);
     }

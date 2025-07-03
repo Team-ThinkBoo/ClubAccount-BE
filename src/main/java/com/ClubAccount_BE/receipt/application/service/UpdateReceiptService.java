@@ -5,6 +5,7 @@ import com.ClubAccount_BE.receipt.application.port.in.UpdateReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.UpdateReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
 import com.ClubAccount_BE.receipt.domain.ReceiptItem;
+import com.ClubAccount_BE.receipt.mapper.ReceiptItemMapper;
 import com.ClubAccount_BE.user.domain.User;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +35,7 @@ public class UpdateReceiptService implements UpdateReceiptUseCase {
                 receiptRequest.etc()
         );
 
-        List<ReceiptItem> receiptItems = receiptRequest.receiptItems().stream()
-                .map(receiptItem -> ReceiptItem.of(
-                        receipt,
-                        receiptItem.name(),
-                        receiptItem.price(),
-                        receiptItem.totalPrice(),
-                        receiptItem.quantity()
-                ))
-                .toList();
-
+        List<ReceiptItem> receiptItems = ReceiptItemMapper.toReceiptItems(receipt, receiptRequest.receiptItems());
         receipt.updateAmountMatched(receiptItems);
         return updateReceiptPort.updateReceipt(receiptId, receipt, receiptItems);
     }
