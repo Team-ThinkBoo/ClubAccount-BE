@@ -37,14 +37,14 @@ public interface FindReceiptApi {
             @PathVariable("receiptId") Long receiptId
     );
 
-    @Operation(summary = "영수증 카테고리별 지출 조회", description = "등록된 영수증의 카테고리별 지출을 조회한다.")
-    ReceiptCategoryExpenseResponse getReceiptCategoryExpense(
-            @PathVariable(value = "link") UUID link
-    );
-
     @Operation(summary = "영수증 월별 지출 목록 조회", description = "등록된 영수증의 월별 지출을 조회한다.")
-    List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(
+    List<ReceiptMonthlyExpenseResponse> getReceiptExpenseByMonth(
             @PathVariable(value = "link") UUID link,
             @Positive(message = "유효하지 않은 연도입니다.") @RequestParam int year
+    );
+
+    @Operation(summary = "영수증 카테고리별 지출 조회", description = "등록된 영수증의 카테고리별 지출을 조회한다.")
+    List<ReceiptCategoryExpenseResponse> getReceiptExpenseByCategory(
+            @PathVariable(value = "link") UUID link
     );
 }

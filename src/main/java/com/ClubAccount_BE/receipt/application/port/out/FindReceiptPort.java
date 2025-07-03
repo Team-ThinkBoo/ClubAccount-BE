@@ -1,6 +1,8 @@
 package com.ClubAccount_BE.receipt.application.port.out;
 
+import com.ClubAccount_BE.receipt.domain.CategoryExpenseResult;
 import com.ClubAccount_BE.receipt.domain.Receipt;
+import com.ClubAccount_BE.receipt.domain.MonthlyExpenseResult;
 import com.ClubAccount_BE.user.domain.User;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,11 +18,11 @@ public interface FindReceiptPort {
             Pageable pageable
     );
 
-    List<Receipt> getReceiptCategoryList(User user);
+    List<Receipt> getAllReceipts(User user);
 
     Receipt getReceipt(User user, Long receiptId);
 
-    List<Receipt> getReceiptMonthlyExpenseList(User user, int year);
+    List<MonthlyExpenseResult> getReceiptExpenseByMonth(User user, int year);
 
-    List<Receipt> getAllReceipts(User user);
+    List<CategoryExpenseResult> getReceiptExpenseByCategory(User user);
 }

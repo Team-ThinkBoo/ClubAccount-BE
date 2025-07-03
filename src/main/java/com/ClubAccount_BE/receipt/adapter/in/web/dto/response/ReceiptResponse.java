@@ -1,7 +1,7 @@
 package com.ClubAccount_BE.receipt.adapter.in.web.dto.response;
 
 import com.ClubAccount_BE.receipt.domain.Receipt;
-import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
+import com.ClubAccount_BE.receipt.domain.ReceiptCategory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.Builder;

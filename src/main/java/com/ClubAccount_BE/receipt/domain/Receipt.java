@@ -1,6 +1,5 @@
 package com.ClubAccount_BE.receipt.domain;
 
-import com.ClubAccount_BE.receipt.domain.type.ReceiptCategory;
 import com.ClubAccount_BE.user.domain.User;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -87,7 +86,15 @@ public class Receipt {
                 .build();
     }
 
-    public void updateAmountMatched(boolean amountMatched) {
-        this.amountMatched = amountMatched;
+    public void updateAmountMatched(List<ReceiptItem> items) {
+        BigDecimal total = items.stream()
+                .map(ReceiptItem::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        this.amountMatched =  total.compareTo(this.getAmount()) == 0;
+    }
+
+    public boolean isDefaultImage(String defaultImage) {
+        return this.receiptImageUrl != null && !this.receiptImageUrl.equals(defaultImage);
     }
 }

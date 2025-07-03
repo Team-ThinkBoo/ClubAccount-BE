@@ -11,9 +11,8 @@ import com.ClubAccount_BE.receipt.adapter.in.web.dto.response.ReceiptResponse;
 import com.ClubAccount_BE.receipt.application.port.in.FindReceiptUseCase;
 import com.ClubAccount_BE.receipt.application.port.out.FindReceiptPort;
 import com.ClubAccount_BE.receipt.domain.Receipt;
-import com.ClubAccount_BE.receipt.domain.ReceiptCategoryExpenseResult;
-import com.ClubAccount_BE.receipt.domain.ReceiptMonthlyExpenseResult;
-import com.ClubAccount_BE.receipt.domain.service.ReceiptEditor;
+import com.ClubAccount_BE.receipt.domain.CategoryExpenseResult;
+import com.ClubAccount_BE.receipt.domain.MonthlyExpenseResult;
 import com.ClubAccount_BE.user.application.port.out.FindUserPort;
 import com.ClubAccount_BE.user.domain.User;
 import java.time.LocalDate;
@@ -32,34 +31,6 @@ public class FindReceiptService implements FindReceiptUseCase {
 
     private final FindReceiptPort findReceiptPort;
     private final FindUserPort findUserPort;
-    private final ReceiptEditor receiptEditor;
-
-    @Override
-    public List<ReceiptItemResponse> getReceiptItem(UUID link, Long receiptId) {
-
-        User user = findUserPort.getUserByLink(link);
-        Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
-        return receipt.getReceiptItems()
-                .stream()
-                .map(ReceiptItemResponse::of)
-                .toList();
-    }
-
-    @Override
-    public List<ReceiptMonthlyExpenseResponse> getReceiptMonthlyExpenseList(UUID link, int year) {
-
-        User user = findUserPort.getUserByLink(link);
-        List<Receipt> receiptList = findReceiptPort.getReceiptMonthlyExpenseList(user, year);
-        List<ReceiptMonthlyExpenseResult> results = receiptEditor.calculateMonthlyExpense(
-                receiptList,
-                year
-        );
-
-        return results.stream()
-                .map(ReceiptMonthlyExpenseResponse::of)
-                .toList();
-    }
-
 
     @Override
     public PagingResponse<ReceiptResponse> getReceiptList(
@@ -81,11 +52,31 @@ public class FindReceiptService implements FindReceiptUseCase {
     }
 
     @Override
-    public ReceiptCategoryExpenseResponse getReceiptCategoryExpense(UUID link) {
-
+    public List<ReceiptItemResponse> getReceiptItem(UUID link, Long receiptId) {
         User user = findUserPort.getUserByLink(link);
-        List<Receipt> receiptList = findReceiptPort.getReceiptCategoryList(user);
-        ReceiptCategoryExpenseResult result = receiptEditor.calculateCategoryExpense(receiptList);
-        return ReceiptCategoryExpenseResponse.of(result);
+        Receipt receipt = findReceiptPort.getReceipt(user, receiptId);
+        return receipt.getReceiptItems()
+                .stream()
+                .map(ReceiptItemResponse::of)
+                .toList();
+    }
+
+    @Override
+    public List<ReceiptMonthlyExpenseResponse> getReceiptExpenseByMonth(UUID link, int year) {
+        User user = findUserPort.getUserByLink(link);
+        List<MonthlyExpenseResult> result = findReceiptPort.getReceiptExpenseByMonth(user, year);
+        return result.stream()
+                .map(ReceiptMonthlyExpenseResponse::of)
+                .toList();
+    }
+
+
+    @Override
+    public List<ReceiptCategoryExpenseResponse> getReceiptExpenseByCategory(UUID link) {
+        User user = findUserPort.getUserByLink(link);
+        List<CategoryExpenseResult> result = findReceiptPort.getReceiptExpenseByCategory(user);
+        return result.stream()
+                .map(ReceiptCategoryExpenseResponse::of)
+                .toList();
     }
 }

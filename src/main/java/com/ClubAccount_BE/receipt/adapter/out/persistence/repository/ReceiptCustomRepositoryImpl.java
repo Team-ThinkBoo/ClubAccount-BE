@@ -3,7 +3,11 @@ package com.ClubAccount_BE.receipt.adapter.out.persistence.repository;
 import static com.ClubAccount_BE.receipt.adapter.out.persistence.entity.QReceiptEntity.receiptEntity;
 
 import com.ClubAccount_BE.receipt.adapter.out.persistence.entity.ReceiptEntity;
+import com.ClubAccount_BE.receipt.domain.CategoryExpenseResult;
+import com.ClubAccount_BE.receipt.domain.MonthlyExpenseResult;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDate;
@@ -19,7 +23,7 @@ public class ReceiptCustomRepositoryImpl implements ReceiptCustomRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<ReceiptEntity> findAllByDate(
+    public Page<ReceiptEntity> findByDate(
             Long userId,
             LocalDate startDate,
             LocalDate endDate,
@@ -50,13 +54,33 @@ public class ReceiptCustomRepositoryImpl implements ReceiptCustomRepository {
     }
 
     @Override
-    public List<ReceiptEntity> findByUserIdAndYear(Long userId, int year) {
+    public List<MonthlyExpenseResult> calculateExpensesByMonth(Long userId, int year) {
         return queryFactory
-                .selectFrom(receiptEntity)
+                .select(Projections.constructor(
+                        MonthlyExpenseResult.class,
+                        Expressions.constant(year),
+                        receiptEntity.date.month(),
+                        receiptEntity.amount.sum()
+                ))
+                .from(receiptEntity)
                 .where(
                         receiptEntity.user.id.eq(userId),
                         receiptEntity.date.year().eq(year)
                 )
+                .groupBy(receiptEntity.date.month())
+                .fetch();
+    }
+
+    @Override
+    public List<CategoryExpenseResult> calculateExpensesByCategory(Long userId) {
+        return queryFactory
+                .select(Projections.constructor(CategoryExpenseResult.class,
+                        receiptEntity.category,
+                        receiptEntity.amount.sum()
+                ))
+                .from(receiptEntity)
+                .where(receiptEntity.user.id.eq(userId))
+                .groupBy(receiptEntity.category)
                 .fetch();
     }
 }
