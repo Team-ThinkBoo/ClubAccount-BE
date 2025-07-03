@@ -32,7 +32,7 @@ public class ProfileImageAdapter implements UploadProfileImagePort, DeleteProfil
 
     @Override
     public String uploadProfileImage(Long userId, MultipartFile image) {
-        String imageName = createImageName(image.getOriginalFilename());
+        String imageName = urlBuilder.createObjectName(image.getOriginalFilename());
         try {
             PutObjectRequest request = PutObjectRequest.builder()
                     .bucket(bucket)
@@ -46,10 +46,6 @@ public class ProfileImageAdapter implements UploadProfileImagePort, DeleteProfil
             throw new ApiException(ErrorCode.S3_UPLOAD_FAIL, e.getMessage());
         }
         return urlBuilder.toUrl(imageName);
-    }
-
-    private String createImageName(String originalFilename) {
-        return UUID.randomUUID() + IMAGE_KEY_DELIMITER + originalFilename;
     }
 
     @Override

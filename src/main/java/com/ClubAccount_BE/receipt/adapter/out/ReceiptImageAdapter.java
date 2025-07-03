@@ -4,6 +4,8 @@ import static com.ClubAccount_BE.core.constant.CommonConstant.IMAGE_KEY_DELIMITE
 import static com.ClubAccount_BE.core.exception.ErrorCode.S3_UPLOAD_FAIL;
 
 import com.ClubAccount_BE.core.exception.ApiException;
+import com.ClubAccount_BE.core.s3.S3KeyExtractor;
+import com.ClubAccount_BE.core.s3.S3UrlBuilder;
 import com.ClubAccount_BE.receipt.application.port.out.DeleteReceiptImagePort;
 import com.ClubAccount_BE.receipt.application.port.out.UploadReceiptImagePort;
 import java.io.IOException;
@@ -24,13 +26,15 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 public class ReceiptImageAdapter implements UploadReceiptImagePort, DeleteReceiptImagePort {
 
     private final S3Client amazonS3;
+    private final S3KeyExtractor keyExtractor;
+    private final S3UrlBuilder urlBuilder;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     @Override
     public String uploadReceipt(MultipartFile image) {
-        String imageName = createImageName(image.getOriginalFilename());
+        String imageName = urlBuilder.createObjectName(image.getOriginalFilename());
 
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
@@ -38,7 +42,6 @@ public class ReceiptImageAdapter implements UploadReceiptImagePort, DeleteReceip
                     .key(imageName)
                     .contentType(image.getContentType())
                     .build();
-
             amazonS3.putObject(
                     putObjectRequest,
                     RequestBody.fromInputStream(image.getInputStream(), image.getSize())
@@ -47,34 +50,18 @@ public class ReceiptImageAdapter implements UploadReceiptImagePort, DeleteReceip
         } catch (IOException e) {
             throw new ApiException(S3_UPLOAD_FAIL);
         }
-
-        return getImageUrl(imageName);
+        return urlBuilder.toUrl(imageName);
     }
 
-    // TODO: S3에서 이미지 삭제 로직 비동기 처리
     @Override
     public void deleteImages(List<String> receiptImage) {
         receiptImage.forEach(url -> {
-            String key = extractKey(url);
+            String key = keyExtractor.extractKey(url);
             DeleteObjectRequest request = DeleteObjectRequest.builder()
                     .bucket(bucket)
                     .key(key)
                     .build();
             amazonS3.deleteObject(request);
         });
-    }
-
-    private String createImageName(String originalFilename) {
-        return UUID.randomUUID() + IMAGE_KEY_DELIMITER + originalFilename;
-    }
-
-    private String getImageUrl(String fileName) {
-        return amazonS3.utilities()
-                .getUrl(builder -> builder.bucket(bucket).key(fileName))
-                .toExternalForm();
-    }
-
-    private String extractKey(String url) {
-        return URI.create(url).getPath().substring(1);
     }
 }
